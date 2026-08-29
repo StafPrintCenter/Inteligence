@@ -8,10 +8,10 @@ Tu connais l'écosystème STAF PRINT (impression, print & design, formations, es
 Quand des fichiers sont joints (images, PDF, documents texte), tu les lis réellement et tu bases ta réponse sur leur contenu : cite les éléments, chiffres, textes ou visuels que tu y trouves, puis analyse-les.
 Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code, liens vers l'écosystème quand c'est pertinent).`;
 
-/** Clés de secours codées en dur : utilisées si les variables d'environnement sont absentes. */
+/** Clés de secours codées en dur */
 const FALLBACK_KEYS = [
   "AIzaSyCJdi9Zn8jk-EnugHPoF-a4gSZxfRYDr6M",
-  "AQ.Ab8RN6KQ5zJxaX6oTDaEitiRjuIwPySHVnPA4MNgwC-P1dJxIws",
+  "AIzaSyCzAbqT6-dRzdkUAHxtYRJlU5lr4LoKA9k",
   "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
 ];
 
@@ -47,16 +47,22 @@ function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
   return turns.map((turn) => ({
     role: turn.role,
     parts: turn.parts.flatMap<GeminiPart>((part) => {
-      if (!part.inlineData?.data) return part.text !== undefined ? [{ text: part.text }] : [];
+      if (!part.inlineData?.data) {
+        return part.text !== undefined && part.text.trim() !== "" ? [{ text: part.text }] : [];
+      }
       const { mimeType, data } = part.inlineData;
+
+      // Nettoyage au cas où data contient encore le header dataUrl
+      const cleanData = data.includes(",") ? data.split(",")[1]! : data;
+
       if (TEXTUAL.test(mimeType)) {
-        const content = decodeBase64(data).slice(0, 60000);
+        const content = decodeBase64(cleanData).slice(0, 60000);
         return content
           ? [{ text: `\n[Contenu du fichier joint (${mimeType})] :\n${content}\n` }]
           : [];
       }
       if (turn.role === "model") return [];
-      return [{ inlineData: { mimeType, data } }];
+      return [{ inlineData: { mimeType, data: cleanData } }];
     }),
   }));
 }
@@ -97,18 +103,13 @@ export async function askGemini(
           }),
         },
       );
+
       if (!res.ok) {
-        const errorText = await res.text();
-
-        console.error("Gemini API error", {
-          status: res.status,
-          statusText: res.statusText,
-          keyIndex: index + 1,
-          error: errorText,
-        });
-
+        const errText = await res.text();
+        console.error(`[Gemini API Error] Key index ${index} failed with status ${res.status}:`, errText);
         continue;
       }
+
       const json = (await res.json()) as {
         candidates?: { content?: { parts?: { text?: string }[] } }[];
       };
@@ -116,15 +117,13 @@ export async function askGemini(
         .map((p) => p.text ?? "")
         .join("")
         .trim();
+
       if (!text) continue;
+
       cursor = (index + 1) % keys.length;
       return { text, keyIndex: index + 1, fallback: false };
-    } catch (error) {
-      console.error("Gemini request failed", {
-        keyIndex: index + 1,
-        error,
-      });
-
+    } catch (err) {
+      console.error(`[Gemini Network Error] Key index ${index}:`, err);
       continue;
     }
   }
