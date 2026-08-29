@@ -97,7 +97,18 @@ export async function askGemini(
           }),
         },
       );
-      if (!res.ok) continue;
+      if (!res.ok) {
+        const errorText = await res.text();
+
+        console.error("Gemini API error", {
+          status: res.status,
+          statusText: res.statusText,
+          keyIndex: index + 1,
+          error: errorText,
+        });
+
+        continue;
+      }
       const json = (await res.json()) as {
         candidates?: { content?: { parts?: { text?: string }[] } }[];
       };
@@ -108,7 +119,12 @@ export async function askGemini(
       if (!text) continue;
       cursor = (index + 1) % keys.length;
       return { text, keyIndex: index + 1, fallback: false };
-    } catch {
+    } catch (error) {
+      console.error("Gemini request failed", {
+        keyIndex: index + 1,
+        error,
+      });
+
       continue;
     }
   }
