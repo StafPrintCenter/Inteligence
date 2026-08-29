@@ -117,9 +117,8 @@ export function Composer({
         setDragging(false);
         void addFiles(e.dataTransfer.files);
       }}
-      className={`relative rounded-2xl border bg-card p-2 shadow-lg transition-colors ${
-        dragging ? "border-primary" : "border-border"
-      }`}
+      className={`relative rounded-2xl border bg-card p-2 shadow-lg transition-colors ${dragging ? "border-primary" : "border-border"
+        }`}
     >
       {suggestions.length > 0 && (
         <div className="absolute bottom-full left-0 z-20 mb-2 w-full max-w-md overflow-hidden rounded-xl border border-border bg-popover shadow-xl">
@@ -131,9 +130,8 @@ export function Composer({
                 e.preventDefault();
                 applyCommand(i);
               }}
-              className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm ${
-                i === highlight ? "bg-accent text-accent-foreground" : "hover:bg-accent/50"
-              }`}
+              className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm ${i === highlight ? "bg-accent text-accent-foreground" : "hover:bg-accent/50"
+                }`}
             >
               <Slash className="size-3.5 text-primary" />
               <span className="font-medium">{c.label}</span>
