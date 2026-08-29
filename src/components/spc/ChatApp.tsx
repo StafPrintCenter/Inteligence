@@ -123,6 +123,12 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     [conversations, activeId],
   );
 
+  const latestAssistantMessageId = useMemo(() => {
+    if (!active) return null;
+    const lastMsg = active.messages.at(-1);
+    return lastMsg?.role === "assistant" ? lastMsg.id : null;
+  }, [active]);
+
   useEffect(() => {
     if (typeof document === "undefined") return;
     document.title = active?.title
@@ -358,10 +364,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
               </div>
             ) : (
               <div className="space-y-6">
-                {active.messages.map((m, index) => {
-                  const isLatestAssistantMessage =
-                    m.role === "assistant" && index === active.messages.length - 1;
-
+                {active.messages.map((m) => {
                   if (m.role === "user") {
                     return (
                       <div
@@ -423,7 +426,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                       key={m.id}
                       message={m}
                       botLogo={botLogo}
-                      isLatest={isLatestAssistantMessage}
+                      isGenerating={loading && m.id === latestAssistantMessageId}
                     />
                   );
                 })}
