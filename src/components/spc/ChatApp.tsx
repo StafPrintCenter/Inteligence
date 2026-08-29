@@ -4,6 +4,7 @@ import { Download, Info, LogIn, Moon, PanelLeft, Sparkles, Sun } from "lucide-re
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
+import logos from "@/assets/logos.json";
 import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { CopyButton } from "@/components/spc/CopyButton";
@@ -90,6 +91,9 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
   const ownerId = user?.id ?? "anonymous";
   const activeId = conversationId ?? null;
 
+  const botLogo = theme === "dark" ? logos.mw : logos.mc;
+  const userInitial = user?.name ? user.name.trim().charAt(0).toUpperCase() : "U";
+
   useEffect(() => {
     const t = getTheme();
     setThemeState(t);
@@ -119,7 +123,6 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     [conversations, activeId],
   );
 
-  /* Titre de l'onglet dynamique selon la conversation */
   useEffect(() => {
     if (typeof document === "undefined") return;
     document.title = active?.title
@@ -175,7 +178,6 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     [ask, persist],
   );
 
-  /* Reprend une réponse en attente après navigation vers /c/$id */
   useEffect(() => {
     if (!ready || autoRun.current || loading) return;
     if (!active || active.messages.at(-1)?.role !== "user") return;
@@ -268,6 +270,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
         conversations={conversations}
         activeId={activeId}
         user={user}
+        onClose={() => setSidebarOpen(false)}
         onSelect={(id) =>
           void navigate({ to: "/c/$conversationId", params: { conversationId: id } })
         }
@@ -287,6 +290,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
             size="icon"
             variant="ghost"
             aria-label="Afficher/masquer la barre latérale"
+            className="cursor-pointer"
             onClick={() => setSidebarOpen((v) => !v)}
           >
             <PanelLeft className="size-4" />
@@ -297,19 +301,26 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
               {user ? SPACE_LABELS[user.role] : SPACE_LABELS.public}
             </p>
           </div>
-          <Button size="icon" variant="ghost" aria-label="Changer de thème" onClick={toggleTheme}>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="Changer de thème"
+            className="cursor-pointer"
+            onClick={toggleTheme}
+          >
             {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </Button>
           <Button
             size="icon"
             variant="ghost"
             aria-label="Détails de la conversation"
+            className="cursor-pointer"
             onClick={() => setDetailsOpen(true)}
           >
             <Info className="size-4" />
           </Button>
           {!user && (
-            <Button asChild size="sm">
+            <Button asChild size="sm" className="cursor-pointer">
               <Link to="/login">
                 <LogIn className="size-4" /> Connexion
               </Link>
@@ -321,9 +332,9 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           <div className="mx-auto w-full max-w-3xl px-4 py-6">
             {!active || active.messages.length === 0 ? (
               <div className="py-12 text-center">
-                <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-primary text-2xl font-black text-primary-foreground">
-                  S
-                </span>
+                <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-card border border-border p-2">
+                  <img src={botLogo} alt="SPC Intelligence" className="size-full object-contain" />
+                </div>
                 <h1 className="mt-4 text-2xl font-bold">Bonjour, je suis SPC Intelligence</h1>
                 <p className="mt-2 text-sm text-muted-foreground">
                   L'assistant IA de l'écosystème STAF PRINT CENTER.
@@ -334,7 +345,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                       key={s}
                       type="button"
                       onClick={() => void handleSend(s, [])}
-                      className="rounded-xl border border-border bg-card p-3 text-left text-sm transition-colors hover:border-primary"
+                      className="rounded-xl border border-border bg-card p-3 text-left text-sm transition-colors hover:border-primary cursor-pointer"
                     >
                       <Sparkles className="mb-1 size-4 text-primary" />
                       {s}
@@ -349,63 +360,91 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                     key={m.id}
                     className={
                       m.role === "user"
-                        ? "group flex flex-col items-end"
-                        : "group flex flex-col items-start"
+                        ? "group flex gap-3 flex-row-reverse items-start"
+                        : "group flex gap-3 flex-row items-start"
                     }
                   >
+                    {/* Icone Avatar */}
+                    {m.role === "user" ? (
+                      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
+                        {userInitial}
+                      </span>
+                    ) : (
+                      <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
+                        <img
+                          src={botLogo}
+                          alt="SPC Bot"
+                          className="size-full object-contain"
+                        />
+                      </div>
+                    )}
+
                     <div
                       className={
                         m.role === "user"
-                          ? "max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-4 py-2.5 text-sm text-primary-foreground"
-                          : "max-w-full min-w-0"
+                          ? "flex flex-col items-end max-w-[80%]"
+                          : "flex flex-col items-start max-w-full min-w-0 flex-1"
                       }
                     >
-                      {m.role === "user" ? (
-                        <p className="whitespace-pre-wrap">{m.content}</p>
-                      ) : (
-                        <Markdown>{m.content}</Markdown>
-                      )}
-                      {(m.attachments ?? []).length > 0 && (
-                        <div className="mt-3 space-y-2">
-                          {m.attachments!.map((a) =>
-                            a.kind === "image" ? (
-                              <figure
-                                key={a.id}
-                                className="overflow-hidden rounded-xl border border-border bg-card"
-                              >
-                                <img src={a.dataUrl} alt={a.name} className="w-full" />
-                                <figcaption className="flex items-center justify-between p-2 text-xs text-muted-foreground">
+                      <div
+                        className={
+                          m.role === "user"
+                            ? "rounded-2xl rounded-tr-xs bg-primary px-4 py-2.5 text-sm text-primary-foreground"
+                            : "w-full"
+                        }
+                      >
+                        {m.role === "user" ? (
+                          <p className="whitespace-pre-wrap">{m.content}</p>
+                        ) : (
+                          <Markdown>{m.content}</Markdown>
+                        )}
+                        {(m.attachments ?? []).length > 0 && (
+                          <div className="mt-3 space-y-2">
+                            {m.attachments!.map((a) =>
+                              a.kind === "image" ? (
+                                <figure
+                                  key={a.id}
+                                  className="overflow-hidden rounded-xl border border-border bg-card"
+                                >
+                                  <img src={a.dataUrl} alt={a.name} className="w-full" />
+                                  <figcaption className="flex items-center justify-between p-2 text-xs text-muted-foreground">
+                                    {a.name}
+                                    <a href={a.dataUrl} download={a.name} className="text-primary cursor-pointer">
+                                      <Download className="size-4" />
+                                    </a>
+                                  </figcaption>
+                                </figure>
+                              ) : (
+                                <a
+                                  key={a.id}
+                                  href={a.dataUrl}
+                                  download={a.name}
+                                  className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs hover:border-primary cursor-pointer"
+                                >
+                                  <Download className="size-4 text-primary" />
                                   {a.name}
-                                  <a href={a.dataUrl} download={a.name} className="text-primary">
-                                    <Download className="size-4" />
-                                  </a>
-                                </figcaption>
-                              </figure>
-                            ) : (
-                              <a
-                                key={a.id}
-                                href={a.dataUrl}
-                                download={a.name}
-                                className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs hover:border-primary"
-                              >
-                                <Download className="size-4 text-primary" />
-                                {a.name}
-                              </a>
-                            ),
-                          )}
-                        </div>
-                      )}
+                                </a>
+                              ),
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <CopyButton
+                        value={m.content}
+                        className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                      />
                     </div>
-                    <CopyButton
-                      value={m.content}
-                      className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100"
-                    />
                   </div>
                 ))}
                 {loading && (
-                  <p className="animate-pulse text-sm text-muted-foreground">
-                    SPC Intelligence réfléchit…
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1">
+                      <img src={botLogo} alt="SPC Bot" className="size-full object-contain" />
+                    </div>
+                    <p className="animate-pulse text-sm text-muted-foreground">
+                      SPC Intelligence réfléchit…
+                    </p>
+                  </div>
                 )}
               </div>
             )}
@@ -455,7 +494,9 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
             Connectez-vous à votre espace (Client, Apprenant, Formateur ou Administrateur) pour des
             messages illimités, l'analyse de fichiers et la génération de documents et visuels.
           </p>
-          <Button onClick={() => void navigate({ to: "/login" })}>Aller à la connexion</Button>
+          <Button className="cursor-pointer" onClick={() => void navigate({ to: "/login" })}>
+            Aller à la connexion
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
