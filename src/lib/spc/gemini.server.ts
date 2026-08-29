@@ -12,7 +12,8 @@ Réponds en français, de façon claire, structurée et professionnelle, en Mark
 
 const FALLBACK_KEYS = [
   "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
-  "AQ.Ab8RN6JGjjCsq0GWN1u4nmtHqX06ADxTMM23h3lLk4CqrSCU6g"
+  "AQ.Ab8RN6JGjjCsq0GWN1u4nmtHqX06ADxTMM23h3lLk4CqrSCU6g",
+  "AQ.Ab8RN6I4bu3f-Ah0ycFUEo90y5MBqv7z6XylIv4ZwT-_t-aovA"
 ];
 
 function keyPool(): string[] {
@@ -20,6 +21,7 @@ function keyPool(): string[] {
     process.env["GOOGLE_API_KEY"],
     process.env["GOOGLE_API_KEY_2"],
     process.env["GOOGLE_API_KEY_3"],
+    process.env["GOOGLE_API_KEY_4"],
   ].filter((k): k is string => Boolean(k && k.trim()));
   const all = [...fromEnv, ...FALLBACK_KEYS];
   return Array.from(new Set(all));
@@ -64,16 +66,38 @@ function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
   }));
 }
 
-function simulate(prompt: string): string {
+/**
+ * Génère un message de réponse simulée adapté au type d'erreur rencontré,
+ * sans jamais exposer de clés API, jetons ou secrets système.
+ */
+function simulate(prompt: string, lastErrorStatus?: string | number): string {
+  const safePrompt = prompt.slice(0, 120).replace(/\b(AIzaSy|AQ\.)[A-Za-z0-9_-]+\b/g, "[CLE_MASQUEE]");
+
+  let causeExplanation = "Le service de génération de texte subit une interruption temporaire.";
+
+  if (lastErrorStatus) {
+    const statusStr = String(lastErrorStatus);
+    if (statusStr.includes("429")) {
+      causeExplanation = "Le quota maximal de requêtes autorisées a été atteint pour le moment.";
+    } else if (statusStr.includes("401") || statusStr.includes("403")) {
+      causeExplanation = "Une difficulté d'authentification temporaire empêche de joindre le moteur principal.";
+    } else if (statusStr.includes("503") || statusStr.includes("500")) {
+      causeExplanation = "Les serveurs du modèle Gemini connaissent une forte affluence en ce moment.";
+    }
+  }
+
   return [
-    "> ⚠️ *Moteur de secours SPC (simulation) — le service Gemini est momentanément indisponible.*",
+    "> ⚠️ **Moteur de secours SPC Intelligence**",
     "",
-    `Voici une réponse générée localement à propos de : **${prompt.slice(0, 120)}**`,
+    `*Note : ${causeExplanation}*`,
     "",
-    "- L'écosystème STAF PRINT CENTER regroupe l'impression, le design, la formation et les espaces membres.",
-    "- Reformulez votre demande dans quelques instants pour obtenir une réponse complète de Gemini.",
+    `Nous avons bien pris en compte votre demande relative à : **${safePrompt}**`,
     "",
-    "[Explorer l'écosystème](https://stafprint.com/tools/ecosystem)",
+    "**Ressources utiles :**",
+    "- Vous pouvez réitérer votre requête dans quelques instants.",
+    "- Consultez l'ensemble de nos services sur notre plateforme.",
+    "",
+    "[Découvrir l'écosystème STAF PRINT](https://stafprint.com/tools/ecosystem)",
   ].join("\n");
 }
 
@@ -83,6 +107,7 @@ export async function askGemini(
   const keys = keyPool();
   const contents = normalizeTurns(turns).filter((t) => t.parts.length > 0);
   const lastText = turns.at(-1)?.parts.find((p) => p.text)?.text ?? "";
+  let lastStatus: string | number | undefined;
 
   for (let attempt = 0; attempt < keys.length; attempt++) {
     const index = (cursor + attempt) % keys.length;
@@ -107,10 +132,16 @@ export async function askGemini(
       cursor = (index + 1) % keys.length;
       return { text, keyIndex: index + 1, fallback: false };
     } catch (err: any) {
-      console.error(`[Gemini Error] Key index ${index}:`, err?.message || err);
+      lastStatus = err?.status || err?.code || "UNKNOWN";
+
+      // Journalisation côté serveur : on masque tout motif ressemblant à une clé API
+      const rawMessage = err?.message || JSON.stringify(err);
+      const sanitizedMessage = rawMessage.replace(/\b(AIzaSy|AQ\.)[A-Za-z0-9_-]+\b/g, "[REDACTED_KEY]");
+
+      console.error(`[Gemini API Error] Key index ${index} failed with status ${lastStatus}:`, sanitizedMessage);
       continue;
     }
   }
 
-  return { text: simulate(lastText), keyIndex: null, fallback: true };
+  return { text: simulate(lastText, lastStatus), keyIndex: null, fallback: true };
 }
