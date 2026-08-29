@@ -1,16 +1,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
-
+import { Outlet, createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
+import { type ReactNode } from "react";
+import { Toaster } from "sonner";
 import appCss from "../styles.css?url";
-import { Toaster } from "../components/ui/sonner";
+import { SITE } from "@/data/site";
+import { NotFoundComponent, ErrorComponent } from "@/components/errors";
+
+const DOCS_TITLE = `SPC Docs ${SITE.name}`;
+const DOCS_DESC = `Documentation officielle de l'écosystème ${SITE.name} : utilisateurs, développeurs et équipe support.`;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
