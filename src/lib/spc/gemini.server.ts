@@ -1,15 +1,15 @@
+import { GoogleGenAI } from "@google/genai";
+
 export type GeminiPart = { text?: string; inlineData?: { mimeType: string; data: string } };
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
 
-// Utilisation d'un modèle officiel valide
-const MODEL = "gemini-3.6-flash"; // ou "gemini-flash-latest"
+const MODEL = "gemini-3.6-flash";
 
 const SYSTEM_PROMPT = `Tu es SPC Intelligence, l'assistant IA officiel de STAF PRINT CENTER (ai.stafprint.com).
 Tu connais l'écosystème STAF PRINT (impression, print & design, formations, espaces client / apprenant / formateur, outils sur stafprint.com/tools/ecosystem).
 Quand des fichiers sont joints (images, PDF, documents texte), tu les lis réellement et tu bases ta réponse sur leur contenu : cite les éléments, chiffres, textes ou visuels que tu y trouves, puis analyse-les.
 Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code, liens vers l'écosystème quand c'est pertinent).`;
 
-/** Seules les clés standard au format AIzaSy... fonctionnent via le header x-goog-api-key */
 const FALLBACK_KEYS = [
   "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
   "AQ.Ab8RN6JGjjCsq0GWN1u4nmtHqX06ADxTMM23h3lLk4CqrSCU6g"
@@ -20,8 +20,7 @@ function keyPool(): string[] {
     process.env["GOOGLE_API_KEY"],
     process.env["GOOGLE_API_KEY_2"],
     process.env["GOOGLE_API_KEY_3"],
-  ].filter((k): k is string => Boolean(k && k.trim() && k.startsWith("AIzaSy")));
-
+  ].filter((k): k is string => Boolean(k && k.trim()));
   const all = [...fromEnv, ...FALLBACK_KEYS];
   return Array.from(new Set(all));
 }
@@ -87,41 +86,28 @@ export async function askGemini(
 
   for (let attempt = 0; attempt < keys.length; attempt++) {
     const index = (cursor + attempt) % keys.length;
-    const key = keys[index]!;
+    const apiKey = keys[index]!;
+
     try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
-        {
-          method: "POST",
-          headers: { "content-type": "application/json", "x-goog-api-key": key },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-            contents,
-            generationConfig: { temperature: 0.7, maxOutputTokens: 4096 },
-          }),
+      const ai = new GoogleGenAI({ apiKey });
+
+      const response = await ai.models.generateContent({
+        model: MODEL,
+        contents,
+        config: {
+          systemInstruction: SYSTEM_PROMPT,
+          temperature: 0.7,
+          maxOutputTokens: 4096,
         },
-      );
+      });
 
-      if (!res.ok) {
-        const errText = await res.text();
-        console.error(`[Gemini API Error] Key index ${index} failed with status ${res.status}:`, errText);
-        continue;
-      }
-
-      const json = (await res.json()) as {
-        candidates?: { content?: { parts?: { text?: string }[] } }[];
-      };
-      const text = (json.candidates?.[0]?.content?.parts ?? [])
-        .map((p) => p.text ?? "")
-        .join("")
-        .trim();
-
+      const text = response.text?.trim();
       if (!text) continue;
 
       cursor = (index + 1) % keys.length;
       return { text, keyIndex: index + 1, fallback: false };
-    } catch (err) {
-      console.error(`[Gemini Network Error] Key index ${index}:`, err);
+    } catch (err: any) {
+      console.error(`[Gemini Error] Key index ${index}:`, err?.message || err);
       continue;
     }
   }
