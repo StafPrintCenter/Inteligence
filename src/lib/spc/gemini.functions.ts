@@ -4,7 +4,7 @@ import { askGemini, type GeminiTurn } from "./gemini.server";
 export type ChatInput = { turns: GeminiTurn[] };
 
 export const chatWithSpc = createServerFn({ method: "POST" })
-  .inputValidator((data: ChatInput) => {
+  .validator((data: ChatInput) => {
     if (!data || !Array.isArray(data.turns) || data.turns.length === 0) {
       throw new Error("turns requis");
     }
