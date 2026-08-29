@@ -123,7 +123,7 @@ export function ChatSidebar({
               {user && (
                 <DropdownMenuItem onSelect={() => onTogglePin(c.id)}>
                   {c.pinned ? <PinOff className="size-4" /> : <Pin className="size-4" />}
-                  {c.pinned ? "Désépingler" : "Épingler (max 3)"}
+                  {c.pinned ? "Désépingler" : "Épingler"}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onSelect={onDetails}>
