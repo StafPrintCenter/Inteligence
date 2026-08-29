@@ -322,9 +322,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
             </Button>
           )}
           {!user && (
-            <Button asChild size="sm" className="cursor-pointer">
-              <Link to="/login">
-                <LogIn className="size-4" /> Connexion
+            <Button asChild size="sm" className="cursor-pointer md:px-3 px-2">
+              <Link to="/login" title="Connexion">
+                <LogIn className="size-4" />
+                <span className="hidden md:inline">Connexion</span>
               </Link>
             </Button>
           )}
@@ -410,7 +411,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                           </div>
                           <CopyButton
                             value={m.content}
-                            className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                            className="mt-1 opacity-0 max-md:opacity-100 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
                           />
                         </div>
                       </div>
