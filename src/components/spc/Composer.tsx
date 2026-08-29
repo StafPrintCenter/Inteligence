@@ -61,7 +61,8 @@ export function Composer({
     const el = areaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
+    const maxHeight = window.innerWidth < 640 ? 120 : 240;
+    el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
   }, [text]);
 
   const token = useMemo(() => detectToken(text, caret), [text, caret]);
@@ -117,7 +118,7 @@ export function Composer({
         setDragging(false);
         void addFiles(e.dataTransfer.files);
       }}
-      className={`relative rounded-2xl border bg-card p-2 shadow-lg transition-colors ${dragging ? "border-primary" : "border-border"
+      className={`relative rounded-2xl border bg-card p-1.5 sm:p-2 shadow-lg transition-colors ${dragging ? "border-primary" : "border-border"
         }`}
     >
       {suggestions.length > 0 && (
@@ -142,17 +143,18 @@ export function Composer({
       )}
 
       {files.length > 0 && (
-        <div className="flex flex-wrap gap-2 p-2">
+        <div className="flex flex-wrap gap-1.5 p-1 sm:p-2">
           {files.map((f) => (
             <span
               key={f.id}
-              className="flex items-center gap-1 rounded-lg bg-secondary px-2 py-1 text-xs"
+              className="flex items-center gap-1 rounded-lg bg-secondary px-2 py-0.5 text-xs max-w-40 truncate"
             >
-              {f.name}
+              <span className="truncate">{f.name}</span>
               <button
                 type="button"
                 aria-label={`Retirer ${f.name}`}
                 onClick={() => setFiles((prev) => prev.filter((x) => x.id !== f.id))}
+                className="shrink-0"
               >
                 <X className="size-3" />
               </button>
@@ -161,7 +163,7 @@ export function Composer({
         </div>
       )}
 
-      <div className="flex items-end gap-2">
+      <div className="flex items-end gap-1 sm:gap-2">
         <input
           ref={inputRef}
           type="file"
@@ -175,6 +177,7 @@ export function Composer({
           size="icon"
           variant="ghost"
           aria-label="Joindre un fichier"
+          className="size-8 sm:size-9 shrink-0"
           onClick={() => (canUpload ? inputRef.current?.click() : onBlockedUpload())}
         >
           <Paperclip className="size-4" />
@@ -185,7 +188,7 @@ export function Composer({
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            setCaret(e.target.selectionStart ?? e.target.value.length);
+            setCaret(e.target.value.length);
           }}
           onSelect={(e) => setCaret((e.target as HTMLTextAreaElement).selectionStart ?? 0)}
           onKeyDown={(e) => {
@@ -211,13 +214,14 @@ export function Composer({
               submit();
             }
           }}
-          placeholder="Posez votre question… tapez / pour une commande ou @ pour un contexte"
-          className="spc-scroll max-h-60 flex-1 resize-none bg-transparent py-2 text-sm outline-none"
+          placeholder="Posez votre question… (/ ou @)"
+          className="spc-scroll max-h-32 sm:max-h-60 flex-1 resize-none bg-transparent py-1.5 sm:py-2 text-sm outline-none leading-relaxed"
         />
         <Button
           type="button"
           size="icon"
           aria-label="Envoyer"
+          className="size-8 sm:size-9 shrink-0"
           disabled={disabled || (!text.trim() && files.length === 0)}
           onClick={submit}
         >
@@ -225,7 +229,7 @@ export function Composer({
         </Button>
       </div>
 
-      <p className="px-2 pb-1 text-[0.7rem] text-muted-foreground">
+      <p className="hidden sm:block px-2 pb-1 text-[0.7rem] text-muted-foreground">
         {quotaLabel ?? "Glissez-déposez vos fichiers (images, PDF, texte) pour les analyser."}
       </p>
     </div>
