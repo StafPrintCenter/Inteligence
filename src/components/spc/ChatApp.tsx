@@ -429,6 +429,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
               onSend={(t, a) => void handleSend(t, a)}
             />
           </div>
+
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            SPC Intelligence · Vérifiez les informations importantes.
+          </p>
         </div>
       </div>
 
