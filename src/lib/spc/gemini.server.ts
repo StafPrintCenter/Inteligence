@@ -1,18 +1,18 @@
 export type GeminiPart = { text?: string; inlineData?: { mimeType: string; data: string } };
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
 
-const MODEL = "gemini-2.5-flash";
+// Utilisation d'un modèle officiel valide
+const MODEL = "gemini-3.6-flash"; // ou "gemini-flash-latest"
 
 const SYSTEM_PROMPT = `Tu es SPC Intelligence, l'assistant IA officiel de STAF PRINT CENTER (ai.stafprint.com).
 Tu connais l'écosystème STAF PRINT (impression, print & design, formations, espaces client / apprenant / formateur, outils sur stafprint.com/tools/ecosystem).
 Quand des fichiers sont joints (images, PDF, documents texte), tu les lis réellement et tu bases ta réponse sur leur contenu : cite les éléments, chiffres, textes ou visuels que tu y trouves, puis analyse-les.
 Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code, liens vers l'écosystème quand c'est pertinent).`;
 
-/** Clés de secours codées en dur */
+/** Seules les clés standard au format AIzaSy... fonctionnent via le header x-goog-api-key */
 const FALLBACK_KEYS = [
   "AIzaSyCJdi9Zn8jk-EnugHPoF-a4gSZxfRYDr6M",
-  "AIzaSyCzAbqT6-dRzdkUAHxtYRJlU5lr4LoKA9k",
-  "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
+  "AIzaSyCzAbqT6-dRzdkUAHxtYRJlU5lr4LoKA9k"
 ];
 
 function keyPool(): string[] {
@@ -20,7 +20,8 @@ function keyPool(): string[] {
     process.env["GOOGLE_API_KEY"],
     process.env["GOOGLE_API_KEY_2"],
     process.env["GOOGLE_API_KEY_3"],
-  ].filter((k): k is string => Boolean(k && k.trim()));
+  ].filter((k): k is string => Boolean(k && k.trim() && k.startsWith("AIzaSy")));
+
   const all = [...fromEnv, ...FALLBACK_KEYS];
   return Array.from(new Set(all));
 }
@@ -42,7 +43,6 @@ function decodeBase64(data: string): string {
   return "";
 }
 
-/** Les fichiers texte sont convertis en texte lisible ; images et PDF restent en inlineData. */
 function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
   return turns.map((turn) => ({
     role: turn.role,
@@ -51,8 +51,6 @@ function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
         return part.text !== undefined && part.text.trim() !== "" ? [{ text: part.text }] : [];
       }
       const { mimeType, data } = part.inlineData;
-
-      // Nettoyage au cas où data contient encore le header dataUrl
       const cleanData = data.includes(",") ? data.split(",")[1]! : data;
 
       if (TEXTUAL.test(mimeType)) {
@@ -74,7 +72,7 @@ function simulate(prompt: string): string {
     `Voici une réponse générée localement à propos de : **${prompt.slice(0, 120)}**`,
     "",
     "- L'écosystème STAF PRINT CENTER regroupe l'impression, le design, la formation et les espaces membres.",
-    "- Reformulez votre demande dans quelques instants pour obtenir une réponse complète de Gemini 2.5 Flash.",
+    "- Reformulez votre demande dans quelques instants pour obtenir une réponse complète de Gemini.",
     "",
     "[Explorer l'écosystème](https://stafprint.com/tools/ecosystem)",
   ].join("\n");
