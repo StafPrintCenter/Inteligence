@@ -12,8 +12,9 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import logos from "@/assets/logos.json";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -22,9 +23,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { getTheme, type Theme } from "@/lib/spc/store";
 import type { SpcConversation, SpcUser } from "@/lib/spc/types";
 import { SPACE_LABELS } from "@/lib/spc/types";
+import { cn } from "@/lib/utils";
 
 type Props = {
   open: boolean;
@@ -58,6 +60,13 @@ export function ChatSidebar({
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
+  const [theme, setThemeState] = useState<Theme>("dark");
+
+  useEffect(() => {
+    setThemeState(getTheme());
+  }, []);
+
+  const botLogo = theme === "dark" ? logos.mw : logos.mc;
 
   const filtered = conversations.filter((c) =>
     c.title.toLowerCase().includes(query.trim().toLowerCase()),
@@ -175,9 +184,9 @@ export function ChatSidebar({
         <div className="flex w-72 flex-1 flex-col overflow-hidden">
           <div className="flex items-center justify-between px-4 py-4">
             <div className="flex items-center gap-2">
-              <span className="grid size-9 place-items-center rounded-xl bg-primary font-black text-primary-foreground">
-                S
-              </span>
+              <div className="grid size-9 place-items-center rounded-xl border border-border bg-card p-1 shadow-xs">
+                <img src={botLogo} alt="SPC Intelligence" className="size-full object-contain" />
+              </div>
               <div className="leading-tight">
                 <p className="text-sm font-bold">SPC Intelligence</p>
                 <p className="text-xs text-muted-foreground">ai.stafprint.com</p>
