@@ -50,9 +50,9 @@ export function DetailsPanel({
             <p className="text-muted-foreground">
               {conversation
                 ? new Date(conversation.createdAt).toLocaleString("fr-FR", {
-                    dateStyle: "full",
-                    timeStyle: "short",
-                  })
+                  dateStyle: "full",
+                  timeStyle: "short",
+                })
                 : "—"}
             </p>
           </div>
