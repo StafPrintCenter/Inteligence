@@ -10,6 +10,7 @@ Réponds en français, de façon claire, structurée et professionnelle, en Mark
 
 /** Clés de secours codées en dur : utilisées si les variables d'environnement sont absentes. */
 const FALLBACK_KEYS = [
+  "AIzaSyCJdi9Zn8jk-EnugHPoF-a4gSZxfRYDr6M",
   "AQ.Ab8RN6KQ5zJxaX6oTDaEitiRjuIwPySHVnPA4MNgwC-P1dJxIws",
   "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
 ];
