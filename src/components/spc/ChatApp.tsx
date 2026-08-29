@@ -281,7 +281,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
         onDelete={handleDelete}
         onTogglePin={handleTogglePin}
         onSignOut={handleSignOut}
-        onDetails={() => setDetailsOpen(true)}
+        onDetails={() => active && setDetailsOpen(true)}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -310,15 +310,17 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           >
             {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </Button>
-          <Button
-            size="icon"
-            variant="ghost"
-            aria-label="Détails de la conversation"
-            className="cursor-pointer"
-            onClick={() => setDetailsOpen(true)}
-          >
-            <Info className="size-4" />
-          </Button>
+          {active && (
+            <Button
+              size="icon"
+              variant="ghost"
+              aria-label="Détails de la conversation"
+              className="cursor-pointer"
+              onClick={() => setDetailsOpen(true)}
+            >
+              <Info className="size-4" />
+            </Button>
+          )}
           {!user && (
             <Button asChild size="sm" className="cursor-pointer">
               <Link to="/login">
@@ -364,7 +366,6 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                         : "group flex gap-3 flex-row items-start"
                     }
                   >
-                    {/* Icone Avatar */}
                     {m.role === "user" ? (
                       <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
                         {userInitial}
@@ -438,7 +439,8 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 ))}
                 {loading && (
                   <div className="flex items-center gap-3">
-                    <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1">
+                    <div className="relative grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
+                      <div className="absolute inset-0 rounded-lg border-2 border-primary border-t-transparent animate-spin" />
                       <img src={botLogo} alt="SPC Bot" className="size-full object-contain" />
                     </div>
                     <p className="animate-pulse text-sm text-muted-foreground">
