@@ -5,11 +5,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import logos from "@/assets/logos.json";
+import { AssistantMessageItem } from "@/components/spc/AssistantMessageItem";
 import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { CopyButton } from "@/components/spc/CopyButton";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
-import { Markdown } from "@/components/spc/Markdown";
 import { NoticeDialog } from "@/components/spc/NoticeDialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -357,86 +357,76 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
               </div>
             ) : (
               <div className="space-y-6">
-                {active.messages.map((m) => (
-                  <div
-                    key={m.id}
-                    className={
-                      m.role === "user"
-                        ? "group flex gap-3 flex-row-reverse items-start"
-                        : "group flex gap-3 flex-row items-start"
-                    }
-                  >
-                    {m.role === "user" ? (
-                      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
-                        {userInitial}
-                      </span>
-                    ) : (
-                      <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
-                        <img
-                          src={botLogo}
-                          alt="SPC Bot"
-                          className="size-full object-contain"
-                        />
-                      </div>
-                    )}
+                {active.messages.map((m, index) => {
+                  const isLatestAssistantMessage =
+                    m.role === "assistant" && index === active.messages.length - 1;
 
-                    <div
-                      className={
-                        m.role === "user"
-                          ? "flex flex-col items-end max-w-[80%]"
-                          : "flex flex-col items-start max-w-full min-w-0 flex-1"
-                      }
-                    >
+                  if (m.role === "user") {
+                    return (
                       <div
-                        className={
-                          m.role === "user"
-                            ? "rounded-2xl rounded-tr-xs bg-primary px-4 py-2.5 text-sm text-primary-foreground"
-                            : "w-full"
-                        }
+                        key={m.id}
+                        className="group flex gap-3 flex-row-reverse items-start"
                       >
-                        {m.role === "user" ? (
-                          <p className="whitespace-pre-wrap">{m.content}</p>
-                        ) : (
-                          <Markdown>{m.content}</Markdown>
-                        )}
-                        {(m.attachments ?? []).length > 0 && (
-                          <div className="mt-3 space-y-2">
-                            {m.attachments!.map((a) =>
-                              a.kind === "image" ? (
-                                <figure
-                                  key={a.id}
-                                  className="overflow-hidden rounded-xl border border-border bg-card"
-                                >
-                                  <img src={a.dataUrl} alt={a.name} className="w-full" />
-                                  <figcaption className="flex items-center justify-between p-2 text-xs text-muted-foreground">
-                                    {a.name}
-                                    <a href={a.dataUrl} download={a.name} className="text-primary cursor-pointer">
-                                      <Download className="size-4" />
+                        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
+                          {userInitial}
+                        </span>
+                        <div className="flex flex-col items-end max-w-[80%]">
+                          <div className="rounded-2xl rounded-tr-xs bg-primary px-4 py-2.5 text-sm text-primary-foreground">
+                            <p className="whitespace-pre-wrap">{m.content}</p>
+                            {(m.attachments ?? []).length > 0 && (
+                              <div className="mt-3 space-y-2">
+                                {m.attachments!.map((a) =>
+                                  a.kind === "image" ? (
+                                    <figure
+                                      key={a.id}
+                                      className="overflow-hidden rounded-xl border border-border bg-card"
+                                    >
+                                      <img src={a.dataUrl} alt={a.name} className="w-full" />
+                                      <figcaption className="flex items-center justify-between p-2 text-xs text-muted-foreground">
+                                        {a.name}
+                                        <a
+                                          href={a.dataUrl}
+                                          download={a.name}
+                                          className="text-primary cursor-pointer"
+                                        >
+                                          <Download className="size-4" />
+                                        </a>
+                                      </figcaption>
+                                    </figure>
+                                  ) : (
+                                    <a
+                                      key={a.id}
+                                      href={a.dataUrl}
+                                      download={a.name}
+                                      className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs hover:border-primary cursor-pointer"
+                                    >
+                                      <Download className="size-4 text-primary" />
+                                      {a.name}
                                     </a>
-                                  </figcaption>
-                                </figure>
-                              ) : (
-                                <a
-                                  key={a.id}
-                                  href={a.dataUrl}
-                                  download={a.name}
-                                  className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs hover:border-primary cursor-pointer"
-                                >
-                                  <Download className="size-4 text-primary" />
-                                  {a.name}
-                                </a>
-                              ),
+                                  ),
+                                )}
+                              </div>
                             )}
                           </div>
-                        )}
+                          <CopyButton
+                            value={m.content}
+                            className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                          />
+                        </div>
                       </div>
-                      <CopyButton
-                        value={m.content}
-                        className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
-                      />
-                    </div>
-                  </div>
-                ))}
+                    );
+                  }
+
+                  return (
+                    <AssistantMessageItem
+                      key={m.id}
+                      message={m}
+                      botLogo={botLogo}
+                      isLatest={isLatestAssistantMessage}
+                    />
+                  );
+                })}
+
                 {loading && (
                   <div className="flex items-center gap-3">
                     <div className="relative grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
