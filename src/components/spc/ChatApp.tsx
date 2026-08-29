@@ -60,10 +60,10 @@ function toTurns(messages: SpcMessage[]): GeminiTurn[] {
       { text: m.content },
       ...(m.role === "user"
         ? (m.attachments ?? [])
-            .filter((a) => a.origin === "uploaded")
-            .map((a) => ({
-              inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" },
-            }))
+          .filter((a) => a.origin === "uploaded")
+          .map((a) => ({
+            inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" },
+          }))
         : []),
     ],
   }));
