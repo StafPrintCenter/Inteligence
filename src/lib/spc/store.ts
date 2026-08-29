@@ -125,7 +125,7 @@ export function canPin(list: SpcConversation[]) {
 export type Theme = "light" | "dark";
 
 export function getTheme(): Theme {
-  return read<Theme>(KEYS.theme, "dark");
+  return read<Theme>(KEYS.theme, "light");
 }
 
 export function setTheme(theme: Theme) {
