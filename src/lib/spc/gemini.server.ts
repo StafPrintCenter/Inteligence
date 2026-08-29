@@ -10,12 +10,6 @@ Tu connais l'écosystème STAF PRINT (impression, print & design, formations, es
 Quand des fichiers sont joints (images, PDF, documents texte), tu les lis réellement et tu bases ta réponse sur leur contenu : cite les éléments, chiffres, textes ou visuels que tu y trouves, puis analyse-les.
 Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code, liens vers l'écosystème quand c'est pertinent).`;
 
-const FALLBACK_KEYS = [
-  "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
-  "AQ.Ab8RN6JGjjCsq0GWN1u4nmtHqX06ADxTMM23h3lLk4CqrSCU6g",
-  "AQ.Ab8RN6I4bu3f-Ah0ycFUEo90y5MBqv7z6XylIv4ZwT-_t-aovA"
-];
-
 function keyPool(): string[] {
   const fromEnv = [
     process.env["GOOGLE_API_KEY"],
@@ -23,8 +17,8 @@ function keyPool(): string[] {
     process.env["GOOGLE_API_KEY_3"],
     process.env["GOOGLE_API_KEY_4"],
   ].filter((k): k is string => Boolean(k && k.trim()));
-  const all = [...fromEnv, ...FALLBACK_KEYS];
-  return Array.from(new Set(all));
+
+  return Array.from(new Set(fromEnv));
 }
 
 let cursor = 0;
@@ -109,6 +103,12 @@ export async function askGemini(
   const lastText = turns.at(-1)?.parts.find((p) => p.text)?.text ?? "";
   let lastStatus: string | number | undefined;
 
+  // Si aucune clé n'est configurée dans l'environnement
+  if (keys.length === 0) {
+    console.error("Aucune clé API trouvée dans l'environnement.");
+    return { text: simulate(lastText, "401"), keyIndex: null, fallback: true };
+  }
+
   for (let attempt = 0; attempt < keys.length; attempt++) {
     const index = (cursor + attempt) % keys.length;
     const apiKey = keys[index]!;
@@ -134,7 +134,7 @@ export async function askGemini(
     } catch (err: any) {
       lastStatus = err?.status || err?.code || "UNKNOWN";
 
-      // Journalisation côté serveur : on masque tout motif ressemblant à une clé API
+      // Journalisation côté serveur avec masquage des clés
       const rawMessage = err?.message || JSON.stringify(err);
       const sanitizedMessage = rawMessage.replace(/\b(AIzaSy|AQ\.)[A-Za-z0-9_-]+\b/g, "[REDACTED_KEY]");
 
