@@ -57,7 +57,7 @@ export function AssistantMessageItem({ message, botLogo, isLatest }: AssistantMe
         </div>
         <CopyButton
           value={message.content}
-          className="mt-1 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+          className="mt-1 opacity-0 max-md:opacity-100 transition-opacity group-hover:opacity-100 focus:opacity-100 cursor-pointer"
         />
       </div>
     </div>
