@@ -84,6 +84,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
   const [showNotice, setShowNotice] = useState(false);
   const [theme, setThemeState] = useState<Theme>("dark");
   const [loading, setLoading] = useState(false);
+  const [isGeneratingText, setIsGeneratingText] = useState(false);
   const [quota, setQuota] = useState({ used: 0, left: 3, max: 3 });
   const bottomRef = useRef<HTMLDivElement>(null);
   const autoRun = useRef(false);
@@ -138,7 +139,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [active?.messages.length, loading]);
+  }, [active?.messages.length, loading, isGeneratingText]);
 
   const openGate = (reason: string) => {
     setGateReason(reason);
@@ -167,6 +168,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           attachments: generated,
         };
 
+        // On injecte le message et on passe en mode génération visuelle du texte
+        setIsGeneratingText(true);
+        setLoading(false);
+
         persist(
           list.map((c) =>
             c.id === conv.id
@@ -174,22 +179,31 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
               : c,
           ),
         );
+
         if (result.fallback) toast.warning("Moteur de secours activé (clés API indisponibles).");
+
+        // Calcul du temps nécessaire pour l'animation complète (ex: 20ms par mot)
+        const wordCount = result.text.split(" ").length;
+        const animationDuration = wordCount * 20 + 200;
+
+        setTimeout(() => {
+          setIsGeneratingText(false);
+        }, animationDuration);
       } catch {
-        toast.error("Impossible de contacter SPC Intelligence. Réessayez.");
-      } finally {
         setLoading(false);
+        setIsGeneratingText(false);
+        toast.error("Impossible de contacter SPC Intelligence. Réessayez.");
       }
     },
     [ask, persist],
   );
 
   useEffect(() => {
-    if (!ready || autoRun.current || loading) return;
+    if (!ready || autoRun.current || loading || isGeneratingText) return;
     if (!active || active.messages.at(-1)?.role !== "user") return;
     autoRun.current = true;
     void runCompletion(active, conversations);
-  }, [ready, active, conversations, loading, runCompletion]);
+  }, [ready, active, conversations, loading, isGeneratingText, runCompletion]);
 
   const handleSend = async (text: string, attachments: SpcAttachment[]) => {
     if (!user && quota.left <= 0) {
@@ -426,7 +440,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                       key={m.id}
                       message={m}
                       botLogo={botLogo}
-                      isGenerating={loading && m.id === latestAssistantMessageId}
+                      isGenerating={isGeneratingText && m.id === latestAssistantMessageId}
                     />
                   );
                 })}
@@ -451,7 +465,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
         <div className="border-t border-border bg-background px-4 py-3">
           <div className="mx-auto w-full max-w-3xl">
             <Composer
-              disabled={loading}
+              disabled={loading || isGeneratingText}
               canUpload={Boolean(user)}
               quotaLabel={
                 user
