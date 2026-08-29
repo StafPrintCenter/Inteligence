@@ -8,11 +8,15 @@ import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
 type AssistantMessageProps = {
   message: SpcMessage;
   botLogo: string;
-  isLatest: boolean;
+  isGenerating?: boolean;
 };
 
-export function AssistantMessageItem({ message, botLogo, isLatest }: AssistantMessageProps) {
-  const animatedContent = useTypingEffect(message.content, 20, isLatest);
+export function AssistantMessageItem({
+  message,
+  botLogo,
+  isGenerating = false,
+}: AssistantMessageProps) {
+  const animatedContent = useTypingEffect(message.content, 20, isGenerating);
 
   return (
     <div className="group flex gap-3 flex-row items-start">
