@@ -9,7 +9,7 @@ export function useTypingEffect(
   const indexRef = useRef(0);
 
   useEffect(() => {
-    // Si la génération n'est pas/plus en cours, afficher le texte intégral
+    // Si la génération est terminée ou inactive, afficher tout immédiatement
     if (!isGenerating) {
       setDisplayedText(fullText);
       indexRef.current = fullText.split(" ").length;
@@ -17,6 +17,8 @@ export function useTypingEffect(
     }
 
     const words = fullText.split(" ");
+    indexRef.current = 0;
+    setDisplayedText("");
 
     const interval = setInterval(() => {
       if (indexRef.current < words.length) {
