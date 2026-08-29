@@ -11,8 +11,8 @@ Réponds en français, de façon claire, structurée et professionnelle, en Mark
 
 /** Seules les clés standard au format AIzaSy... fonctionnent via le header x-goog-api-key */
 const FALLBACK_KEYS = [
-  "AIzaSyCJdi9Zn8jk-EnugHPoF-a4gSZxfRYDr6M",
-  "AIzaSyCzAbqT6-dRzdkUAHxtYRJlU5lr4LoKA9k"
+  "AQ.Ab8RN6IGhsVW6jUV4muHxynnvafPXLVqJEySnRIL0UyyW7gKpA",
+  "AQ.Ab8RN6JGjjCsq0GWN1u4nmtHqX06ADxTMM23h3lLk4CqrSCU6g"
 ];
 
 function keyPool(): string[] {
