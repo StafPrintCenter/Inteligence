@@ -1,31 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useTypingEffect(fullText: string, speedMs: number = 18, active: boolean = true) {
-  const [displayedText, setDisplayedText] = useState(active ? "" : fullText);
+export function useTypingEffect(
+  fullText: string,
+  speedMs: number = 20,
+  isGenerating: boolean = false,
+) {
+  const [displayedText, setDisplayedText] = useState(isGenerating ? "" : fullText);
+  const indexRef = useRef(0);
 
   useEffect(() => {
-    if (!active) {
+    // Si la génération n'est pas/plus en cours, afficher le texte intégral
+    if (!isGenerating) {
       setDisplayedText(fullText);
+      indexRef.current = fullText.split(" ").length;
       return;
     }
 
-    setDisplayedText("");
     const words = fullText.split(" ");
-    let currentIndex = 0;
 
     const interval = setInterval(() => {
-      if (currentIndex < words.length) {
-        setDisplayedText((prev) =>
-          prev ? `${prev} ${words[currentIndex]}` : words[currentIndex],
-        );
-        currentIndex++;
+      if (indexRef.current < words.length) {
+        indexRef.current++;
+        setDisplayedText(words.slice(0, indexRef.current).join(" "));
       } else {
         clearInterval(interval);
       }
     }, speedMs);
 
     return () => clearInterval(interval);
-  }, [fullText, speedMs, active]);
+  }, [fullText, speedMs, isGenerating]);
 
   return displayedText;
 }
