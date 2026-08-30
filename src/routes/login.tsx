@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Lock, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Clock, Lock, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -55,7 +55,7 @@ function LoginPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const submit = (e: React.FormEvent) => {
+  const submitAdmin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.includes("@") || password.length < 4) {
       toast.error("Email valide et mot de passe (4 caractères min.) requis.");
@@ -79,7 +79,7 @@ function LoginPage() {
           </div>
         </div>
         <div className="space-y-4">
-          <h1 className="text-4xl leading-tight font-black">
+          <h1 className="text-4xl font-black leading-tight">
             L'assistant IA de l'écosystème <span className="text-primary">STAF PRINT CENTER</span>
           </h1>
           <p className="max-w-md text-muted-foreground">
@@ -100,9 +100,9 @@ function LoginPage() {
           </Button>
 
           <div>
-            <h2 className="text-2xl font-bold">Connexion</h2>
+            <h2 className="text-2xl font-bold">Connexion aux Espaces</h2>
             <p className="text-sm text-muted-foreground">
-              Choisissez votre espace puis renseignez vos identifiants.
+              Accès réservé aux membres de la communauté SPC.
             </p>
           </div>
 
@@ -121,42 +121,73 @@ function LoginPage() {
             </TabsList>
           </Tabs>
 
-          <form
-            onSubmit={submit}
-            className="space-y-4 rounded-2xl border border-border bg-card p-6"
-          >
-            <p className="text-sm font-semibold text-primary">{SPACE_LABELS[space]}</p>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="vous@stafprint.com"
-                required
-              />
+          {space === "admin" && adminUnlocked ? (
+            <form
+              onSubmit={submitAdmin}
+              className="space-y-4 rounded-2xl border border-border bg-card p-6"
+            >
+              <p className="text-sm font-semibold text-primary">{SPACE_LABELS[space]}</p>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@stafprint.com"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Mot de passe</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                Se connecter en Administrateur
+              </Button>
+            </form>
+          ) : (
+            <div className="space-y-4 rounded-2xl border border-border bg-card p-6 text-center">
+              <div className="mx-auto grid size-12 place-items-center rounded-full bg-primary/10 text-primary">
+                <Clock className="size-6" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-semibold text-foreground">Accès en Bêta Fermée</h3>
+                <p className="text-sm text-muted-foreground">
+                  Les connexions pour l'espace{" "}
+                  <span className="font-medium text-foreground">{SPACE_LABELS[space]}</span> sont
+                  temporairement désactivées. La plateforme est actuellement en phase de test.
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground">
+                Le chat public reste 100% accessible avec vos 3 messages gratuits quotidiens.
+              </div>
+
+              <Button
+                variant="outline"
+                className="w-full cursor-pointer"
+                onClick={() => void navigate({ to: "/" })}
+              >
+                Continuer sur le Chat Public
+              </Button>
+
+              {/* {!adminUnlocked && (
+                <p className="text-xs text-muted-foreground/60 pt-2">
+                  <kbd className="rounded border bg-muted px-1">Ctrl</kbd> +{" "}
+                  <kbd className="rounded border bg-muted px-1">Shift</kbd> +{" "}
+                  <kbd className="rounded border bg-muted px-1">A</kbd>
+                </p>
+              )} */}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full">
-              Se connecter à {SPACE_LABELS[space]}
-            </Button>
-            {!adminUnlocked && (
-              <p className="text-center text-xs text-muted-foreground">
-                Espace Administrateur : raccourci <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd>
-              </p>
-            )}
-          </form>
+          )}
         </div>
       </section>
     </main>
