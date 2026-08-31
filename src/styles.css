@@ -154,3 +154,13 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }
+
+.spc-code pre {
+  margin: 0;
+  background: transparent !important;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.spc-code code {
+  font-family: inherit;
+}
