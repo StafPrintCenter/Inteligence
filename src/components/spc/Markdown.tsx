@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { CodeBlock } from "@/components/spc/CodeBlock";
 
 export function Markdown({ children }: { children: string }) {
   return (
@@ -29,10 +30,7 @@ export function Markdown({ children }: { children: string }) {
           ),
           code: ({ className, children, ...rest }) =>
             className?.includes("language-") ? (
-              <code
-                className="spc-scroll block overflow-x-auto rounded-lg bg-secondary p-3 font-mono text-[0.82rem]"
-                {...rest}
-              >
+              <code className={className} {...rest}>
                 {children}
               </code>
             ) : (
@@ -43,7 +41,13 @@ export function Markdown({ children }: { children: string }) {
                 {children}
               </code>
             ),
-          pre: (p) => <pre className="my-3" {...p} />,
+          pre: ({ children }) => {
+            const child = Array.isArray(children) ? children[0] : children;
+            const props = (child as { props?: { className?: string; children?: unknown } })?.props;
+            const language = /language-([\w-]+)/.exec(props?.className ?? "")?.[1] ?? "text";
+            const code = String(props?.children ?? "").replace(/\n$/, "");
+            return <CodeBlock code={code} language={language} />;
+          },
           table: (p) => (
             <div className="spc-scroll my-3 overflow-x-auto rounded-lg border border-border">
               <table className="w-full text-left text-sm" {...p} />
