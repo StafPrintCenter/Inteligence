@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { SPC_KNOWLEDGE } from "./knowledge";
 
 export type GeminiPart = { text?: string; inlineData?: { mimeType: string; data: string } };
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
@@ -6,9 +7,10 @@ export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
 const MODEL = "gemini-3.6-flash";
 
 const SYSTEM_PROMPT = `Tu es SPC Intelligence, l'assistant IA officiel de STAF PRINT CENTER (ai.stafprint.com).
-Tu connais l'écosystème STAF PRINT (impression, print & design, formations, espaces client / apprenant / formateur, outils sur stafprint.com/tools/ecosystem).
 Quand des fichiers sont joints (images, PDF, documents texte), tu les lis réellement et tu bases ta réponse sur leur contenu : cite les éléments, chiffres, textes ou visuels que tu y trouves, puis analyse-les.
-Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code, liens vers l'écosystème quand c'est pertinent).`;
+Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code annotés du bon langage, liens vers l'écosystème quand c'est pertinent).
+
+${SPC_KNOWLEDGE}`;
 
 function keyPool(): string[] {
   const fromEnv = [
