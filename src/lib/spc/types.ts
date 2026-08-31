@@ -25,6 +25,9 @@ export type SpcAttachment = {
   dataUrl: string;
   origin: "uploaded" | "generated";
   kind: "image" | "document";
+  /** Texte réellement extrait côté client et transmis à l'IA. */
+  extractedText?: string;
+  extractStatus?: "pending" | "ok" | "empty" | "visual" | "error";
 };
 
 export type SpcMessage = {
