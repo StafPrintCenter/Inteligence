@@ -203,7 +203,7 @@ export function Composer({
                   <button
                     type="button"
                     onClick={() => setPreview(f)}
-                    className="inline-flex items-center gap-1 text-[0.7rem] text-primary hover:underline"
+                    className="inline-flex items-center gap-1 text-[0.7rem] text-primary hover:underline cursor-pointer"
                   >
                     <Eye className="size-3" /> Prévisualiser
                   </button>
