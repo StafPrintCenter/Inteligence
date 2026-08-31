@@ -175,6 +175,8 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           content: result.text,
           createdAt: Date.now(),
           attachments: generated,
+          reasoning: result.reasoning,
+          sources: result.sources,
         };
 
         // On injecte le message et on passe en mode génération visuelle du texte
