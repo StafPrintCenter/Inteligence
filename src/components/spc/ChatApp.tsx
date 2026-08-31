@@ -62,9 +62,18 @@ function toTurns(messages: SpcMessage[]): GeminiTurn[] {
       ...(m.role === "user"
         ? (m.attachments ?? [])
           .filter((a) => a.origin === "uploaded")
-          .map((a) => ({
-            inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" },
-          }))
+          .flatMap((a) => [
+            ...(a.extractedText?.trim()
+              ? [
+                {
+                  text: `\n[Texte extrait du fichier « ${a.name} » (${a.mimeType})] :\n${a.extractedText.slice(0, 120000)}\n`,
+                },
+              ]
+              : []),
+            ...(a.mimeType.startsWith("image/") || a.mimeType === "application/pdf"
+              ? [{ inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" } }]
+              : []),
+          ])
         : []),
     ],
   }));
