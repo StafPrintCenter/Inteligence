@@ -246,6 +246,6 @@ export async function askGemini(
   return {
     text: simulate(lastText, lastStatus),
     keyIndex: null,
-    fallback: true
+    fallback: true,
   };
 }
