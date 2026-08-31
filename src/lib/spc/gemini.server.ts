@@ -161,8 +161,7 @@ async function browse(rawUrl: string): Promise<{ ok: boolean; content: string; u
 }
 
 /**
- * Génère un message de réponse simulée adapté au type d'erreur rencontré,
- * sans jamais exposer de clés API, jetons ou secrets système.
+ * Génère un message de réponse simulée adapté au type d'erreur rencontré
  */
 function simulate(prompt: string, lastErrorStatus?: string | number): string {
   const safePrompt = prompt.slice(0, 120).replace(/\b(AIzaSy|AQ\.)[A-Za-z0-9_-]+\b/g, "[CLE_MASQUEE]");
