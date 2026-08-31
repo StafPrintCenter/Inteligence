@@ -425,7 +425,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                                       key={a.id}
                                       href={a.dataUrl}
                                       download={a.name}
-                                      className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs hover:border-primary cursor-pointer"
+                                      className="flex items-center gap-2 rounded-xl border border-border bg-card-foreground/40 p-3 text-xs hover:border-primary cursor-pointer"
                                     >
                                       <Download className="size-4 text-primary" />
                                       {a.name}
