@@ -11,6 +11,7 @@ import { Composer } from "@/components/spc/Composer";
 import { CopyButton } from "@/components/spc/CopyButton";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
 import { NoticeDialog } from "@/components/spc/NoticeDialog";
+import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -457,14 +458,17 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 })}
 
                 {loading && (
-                  <div className="flex items-center gap-3">
-                    <div className="relative grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
-                      <div className="absolute inset-0 rounded-lg border-2 border-primary border-t-transparent animate-spin" />
-                      <img src={botLogo} alt="SPC Bot" className="size-full object-contain" />
+                  <div className="flex flex-col gap-2">
+                    <ReasoningPanel reasoning="" live />
+                    <div className="flex items-center gap-3">
+                      <div className="relative grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-card p-1 shadow-sm">
+                        <div className="absolute inset-0 rounded-lg border-2 border-primary border-t-transparent animate-spin" />
+                        <img src={botLogo} alt="SPC Bot" className="size-full object-contain" />
+                      </div>
+                      <p className="animate-pulse text-sm text-muted-foreground">
+                        SPC Intelligence réfléchit…
+                      </p>
                     </div>
-                    <p className="animate-pulse text-sm text-muted-foreground">
-                      SPC Intelligence réfléchit…
-                    </p>
                   </div>
                 )}
               </div>
