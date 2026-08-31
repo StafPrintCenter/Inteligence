@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { SPC_KNOWLEDGE } from "./knowledge";
 
 export type GeminiPart = {
@@ -6,6 +6,14 @@ export type GeminiPart = {
   inlineData?: { mimeType: string; data: string }
 };
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
+
+export type SpcAnswer = {
+  text: string;
+  reasoning: string;
+  sources: string[];
+  keyIndex: number | null;
+  fallback: boolean;
+};
 
 const MODEL = "gemini-3.6-flash";
 
@@ -48,6 +56,7 @@ annotés du bon langage, liens vers l'écosystème quand c'est pertinent).
 
 ${SPC_KNOWLEDGE}`;
 
+/** Déclaration de l'outil de scraping autonome pour le SDK */
 const TOOLS = [
   {
     functionDeclarations: [
@@ -56,10 +65,10 @@ const TOOLS = [
         description:
           "Consulte et lit le contenu textuel d'une page des sites STAF PRINT CENTER (stafprint.com, docs.stafprint.com, ai.stafprint.com).",
         parameters: {
-          type: "object",
+          type: Type.OBJECT,
           properties: {
             url: {
-              type: "string",
+              type: Type.STRING,
               description: "URL absolue https d'une page STAF PRINT CENTER.",
             },
           },
@@ -194,18 +203,22 @@ function simulate(prompt: string, lastErrorStatus?: string | number): string {
   ].join("\n");
 }
 
-export async function askGemini(
-  turns: GeminiTurn[],
-): Promise<{ text: string; keyIndex: number | null; fallback: boolean }> {
+export async function askGemini(turns: GeminiTurn[]): Promise<SpcAnswer> {
   const keys = keyPool();
-  const contents = normalizeTurns(turns).filter((t) => t.parts.length > 0);
+  const baseContents = normalizeTurns(turns).filter((t) => t.parts.length > 0);
   const lastText = turns.at(-1)?.parts.find((p) => p.text)?.text ?? "";
   let lastStatus: string | number | undefined;
 
   // Si aucune clé n'est configurée dans l'environnement
   if (keys.length === 0) {
     console.error("Aucune clé API trouvée dans l'environnement.");
-    return { text: simulate(lastText, "401"), keyIndex: null, fallback: true };
+    return {
+      text: simulate(lastText, "401"),
+      reasoning: "",
+      sources: [],
+      keyIndex: null,
+      fallback: true,
+    };
   }
 
   for (let attempt = 0; attempt < keys.length; attempt++) {
@@ -214,22 +227,80 @@ export async function askGemini(
 
     try {
       const ai = new GoogleGenAI({ apiKey });
+      const contents: any[] = [...baseContents];
+      const reasoningChunks: string[] = [];
+      const sources: string[] = [];
 
-      const response = await ai.models.generateContent({
-        model: MODEL,
-        contents,
-        config: {
-          systemInstruction: SYSTEM_PROMPT,
-          temperature: 0.7,
-          maxOutputTokens: 4096,
-        },
-      });
+      // Boucle d'exécution pour gérer la réflexion et le Function Calling avec le SDK
+      for (let step = 0; step < 4; step++) {
+        const response = await ai.models.generateContent({
+          model: MODEL,
+          contents,
+          config: {
+            systemInstruction: SYSTEM_PROMPT,
+            temperature: 0.7,
+            maxOutputTokens: 4096,
+            tools: TOOLS,
+            thinkingConfig: {
+              thinkingBudget: 2048,
+            },
+          },
+        });
 
-      const text = response.text?.trim();
-      if (!text) continue;
+        const candidate = response.candidates?.[0];
+        const parts = candidate?.content?.parts ?? [];
 
-      cursor = (index + 1) % keys.length;
-      return { text, keyIndex: index + 1, fallback: false };
+        // Récupération des pensées / raisonnement
+        for (const p of parts as any[]) {
+          if (p.thought && p.text) {
+            reasoningChunks.push(p.text);
+          }
+        }
+
+        // Vérification des appels de fonctions (function calls)
+        const functionCalls = response.functionCalls;
+        if (functionCalls && functionCalls.length > 0) {
+          contents.push({
+            role: "model",
+            parts: parts,
+          });
+
+          const functionResponses = [];
+          for (const call of functionCalls) {
+            if (call.name === "consulter_site") {
+              const target = String(call.args?.["url"] ?? "");
+              const result = await browse(target);
+              if (result.ok) sources.push(result.url);
+
+              functionResponses.push({
+                functionResponse: {
+                  name: call.name,
+                  response: { url: result.url, ok: result.ok, contenu: result.content },
+                },
+              });
+            }
+          }
+
+          contents.push({
+            role: "user",
+            parts: functionResponses,
+          });
+          continue;
+        }
+
+        // Récupération du texte final de la réponse
+        const text = response.text?.trim();
+        if (!text) break;
+
+        cursor = (index + 1) % keys.length;
+        return {
+          text,
+          reasoning: reasoningChunks.join("\n\n").trim(),
+          sources: Array.from(new Set(sources)),
+          keyIndex: index + 1,
+          fallback: false,
+        };
+      }
     } catch (err: any) {
       lastStatus = err?.status || err?.code || "UNKNOWN";
 
@@ -244,6 +315,8 @@ export async function askGemini(
 
   return {
     text: simulate(lastText, lastStatus),
+    reasoning: "",
+    sources: [],
     keyIndex: null,
     fallback: true,
   };
