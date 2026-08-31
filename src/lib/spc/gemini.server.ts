@@ -1,7 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import { SPC_KNOWLEDGE } from "./knowledge";
 
-export type GeminiPart = { text?: string; inlineData?: { mimeType: string; data: string } };
+export type GeminiPart = {
+  text?: string;
+  inlineData?: { mimeType: string; data: string }
+};
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
 
 const MODEL = "gemini-3.6-flash";
