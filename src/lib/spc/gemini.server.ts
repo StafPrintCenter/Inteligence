@@ -48,6 +48,28 @@ annotés du bon langage, liens vers l'écosystème quand c'est pertinent).
 
 ${SPC_KNOWLEDGE}`;
 
+const TOOLS = [
+  {
+    functionDeclarations: [
+      {
+        name: "consulter_site",
+        description:
+          "Consulte et lit le contenu textuel d'une page des sites STAF PRINT CENTER (stafprint.com, docs.stafprint.com, ai.stafprint.com).",
+        parameters: {
+          type: "object",
+          properties: {
+            url: {
+              type: "string",
+              description: "URL absolue https d'une page STAF PRINT CENTER.",
+            },
+          },
+          required: ["url"],
+        },
+      },
+    ],
+  },
+];
+
 function keyPool(): string[] {
   const fromEnv = [
     process.env["GOOGLE_API_KEY"],
