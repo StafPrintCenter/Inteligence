@@ -74,7 +74,7 @@ export function CodeBlock({ code, language }: { code: string; language: string }
             onClick={() => void copy()}
             aria-label="Copier le code"
             title="Copier le code"
-            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground "
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
           >
             {copied ? <Check className="size-3.5 text-primary" /> : <Copy className="size-3.5" />}
             {copied ? "Copié" : "Copier"}
