@@ -120,6 +120,46 @@ function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
   }));
 }
 
+function htmlToText(html: string): string {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+async function browse(rawUrl: string): Promise<{ ok: boolean; content: string; url: string }> {
+  let url: URL;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    return { ok: false, content: "URL invalide.", url: rawUrl };
+  }
+  if (url.protocol !== "https:" || !ALLOWED_HOSTS.includes(url.hostname)) {
+    return {
+      ok: false,
+      content:
+        "Accès refusé : seule la consultation des sites STAF PRINT CENTER (stafprint.com, docs.stafprint.com) est autorisée.",
+      url: url.toString(),
+    };
+  }
+  try {
+    const res = await fetch(url.toString(), {
+      headers: { "user-agent": "SPC-Intelligence/1.0", accept: "text/html,text/plain" },
+    });
+    if (!res.ok) return { ok: false, content: `Page indisponible (HTTP ${res.status}).`, url: url.toString() };
+    const text = htmlToText(await res.text()).slice(0, 20000);
+    return { ok: true, content: text || "Page vide.", url: url.toString() };
+  } catch {
+    return { ok: false, content: "Impossible de charger la page.", url: url.toString() };
+  }
+}
+
 /**
  * Génère un message de réponse simulée adapté au type d'erreur rencontré,
  * sans jamais exposer de clés API, jetons ou secrets système.
