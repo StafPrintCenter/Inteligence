@@ -2,6 +2,7 @@ import { Download } from "lucide-react";
 
 import { CopyButton } from "@/components/spc/CopyButton";
 import { Markdown } from "@/components/spc/Markdown";
+import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
 import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
 
@@ -26,6 +27,12 @@ export function AssistantMessageItem({
 
       <div className="flex flex-col items-start max-w-full min-w-0 flex-1">
         <div className="w-full">
+          {/* Panneau de réflexion */}
+          <ReasoningPanel
+            reasoning={message.reasoning ?? ""}
+            sources={message.sources ?? []}
+          />
+
           <Markdown>{animatedContent}</Markdown>
 
           {(message.attachments ?? []).length > 0 && (
