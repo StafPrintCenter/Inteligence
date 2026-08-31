@@ -37,7 +37,12 @@ export type SpcMessage = {
   createdAt: number;
   attachments?: SpcAttachment[];
   pending?: boolean;
+  /** Résumé du raisonnement de l'IA (repliable dans l'interface). */
+  reasoning?: string;
+  /** Pages de l'écosystème STAF PRINT consultées par l'IA. */
+  sources?: string[];
 };
+
 
 export type SpcConversation = {
   id: string;
