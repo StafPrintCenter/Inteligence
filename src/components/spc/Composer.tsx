@@ -211,7 +211,7 @@ export function Composer({
                     type="button"
                     aria-label={`Retirer ${f.name}`}
                     onClick={() => setFiles((prev) => prev.filter((x) => x.id !== f.id))}
-                    className="inline-flex items-center gap-1 text-[0.7rem] text-muted-foreground hover:text-foreground"
+                    className="inline-flex items-center gap-1 text-[0.7rem] text-muted-foreground hover:text-foreground cursor-pointer"
                   >
                     <X className="size-3" /> Retirer
                   </button>
