@@ -20,9 +20,14 @@ const EXT: Record<string, string> = {
   php: "php",
 };
 
+const RUNNABLE = new Set(["html", "css", "js", "javascript"]);
+
 export function CodeBlock({ code, language }: { code: string; language: string }) {
   const [html, setHtml] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const preview = usePreview();
+  const lang = (language || "").toLowerCase();
+  const runnable = RUNNABLE.has(lang);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,7 +60,7 @@ export function CodeBlock({ code, language }: { code: string; language: string }
   };
 
   const download = () => {
-    const ext = EXT[language] ?? "txt";
+    const ext = EXT[lang] ?? "txt";
     const url = URL.createObjectURL(new Blob([code], { type: "text/plain;charset=utf-8" }));
     const a = document.createElement("a");
     a.href = url;
@@ -71,12 +76,30 @@ export function CodeBlock({ code, language }: { code: string; language: string }
           {language || "code"}
         </span>
         <div className="flex items-center gap-1">
+          {runnable ? (
+            <button
+              type="button"
+              onClick={() =>
+                preview.open({
+                  kind: "html",
+                  title: `Aperçu ${lang.toUpperCase()}`,
+                  content: code,
+                  language: lang,
+                })
+              }
+              aria-label="Exécuter le code"
+              title="Exécuter et prévisualiser"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs font-medium text-primary hover:bg-accent"
+            >
+              <Play className="size-3.5" /> Exécuter
+            </button>
+          ) : null}
           <button
             type="button"
             onClick={() => void copy()}
             aria-label="Copier le code"
             title="Copier le code"
-            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           >
             {copied ? <Check className="size-3.5 text-primary" /> : <Copy className="size-3.5" />}
             {copied ? "Copié" : "Copier"}
@@ -86,7 +109,7 @@ export function CodeBlock({ code, language }: { code: string; language: string }
             onClick={download}
             aria-label="Télécharger le code"
             title="Télécharger le code"
-            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           >
             <Download className="size-3.5" />
           </button>
