@@ -18,7 +18,7 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
             automatiquement et peuvent contenir des erreurs : vérifiez toute information avant usage
             professionnel.
           </p>
-          <ul className="list-disc space-y-1 pl-4 sm:pl-5">
+          <ul className="list-disc space-y-1 pl-5">
             <li>Ne partagez aucune donnée sensible ou confidentielle.</li>
             <li>
               Les conversations sont stockées localement dans votre navigateur et liées à votre
