@@ -15,12 +15,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SPC Intelligence — Assistant IA STAF PRINT CENTER" },
-      {
-        name: "description",
-        content: "Assistant IA de l'écosystème STAF PRINT CENTER : chat, analyse et génération.",
-      },
-      { name: "author", content: "STAF PRINT CENTER" },
+      { title: DOCS_TITLE },
+      { name: "description", content: DOCS_DESC },
+      { name: "author", content: SITE.name },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
