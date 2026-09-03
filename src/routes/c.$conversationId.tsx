@@ -10,11 +10,8 @@ export const Route = createFileRoute("/c/$conversationId")({
     meta: [
       { title: PAGE_TITLE },
       { name: "description", content: PAGE_DESC },
-      { property: "og:title", content: "Conversation · SPC Intelligence" },
-      {
-        property: "og:description",
-        content: "Historique de discussion avec l'assistant IA STAF PRINT CENTER.",
-      },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
     ],
   }),
   component: ConversationPage,
