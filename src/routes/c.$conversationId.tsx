@@ -8,12 +8,8 @@ const PAGE_DESC = `Conversation avec SPC Intelligence, l'assistant IA de l'écos
 export const Route = createFileRoute("/c/$conversationId")({
   head: () => ({
     meta: [
-      { title: "Conversation · SPC Intelligence" },
-      {
-        name: "description",
-        content:
-          "Conversation avec SPC Intelligence, l'assistant IA de l'écosystème STAF PRINT CENTER.",
-      },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
       { property: "og:title", content: "Conversation · SPC Intelligence" },
       {
         property: "og:description",
