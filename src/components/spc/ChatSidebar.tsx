@@ -101,7 +101,7 @@ export function ChatSidebar({
           <button
             type="button"
             onClick={() => onSelect(c.id)}
-            className="flex-1 truncate text-left"
+            className="flex-1 cursor-pointer truncate text-left"
             title={c.title}
           >
             {c.pinned && <Pin className="mr-1 inline size-3 text-primary" />}
@@ -112,7 +112,7 @@ export function ChatSidebar({
               <button
                 type="button"
                 aria-label="Options de la conversation"
-                className="rounded p-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
+                className="cursor-context-menu rounded p-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
               >
                 <MoreHorizontal className="size-4" />
               </button>
