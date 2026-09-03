@@ -2,18 +2,5 @@
   "mc": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-MC.png",
   "mw": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-MW.png",
   "dc": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-DC.png",
-  "dw": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-DW.png",
-  "meta": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Other/meta.avif",
-  "base": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/BASE-MC.png",
-  "baseW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/BASE-MW.png",
-  "shortener": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/SHORT-MC.png",
-  "shortenerW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/SHORT-MW.png",
-  "instructor": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/INSTRUCTOR-MC.png",
-  "instructorW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/INSTRUCTOR-MW.png",
-  "student": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/STUDENT-MC.png",
-  "studentW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/STUDENT-MW.png",
-  "meet": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/MEET-MC.png",
-  "meetW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/MEET-MW.png",
-  "arcade": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/ARCADE-MC.png",
-  "arcadeW": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/ARCADE-MW.png"
+  "dw": "https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-DW.png"
 }
