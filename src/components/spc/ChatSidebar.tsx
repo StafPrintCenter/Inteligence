@@ -112,7 +112,11 @@ export function ChatSidebar({
               <button
                 type="button"
                 aria-label="Options de la conversation"
-                className="cursor-pointer rounded p-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
+                className={cn(
+                  "cursor-pointer rounded-md p-1 transition-colors",
+                  "hover:bg-sidebar-accent-foreground/10 active:bg-sidebar-accent-foreground/20",
+                  "opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100",
+                )}
               >
                 <MoreHorizontal className="size-4" />
               </button>
