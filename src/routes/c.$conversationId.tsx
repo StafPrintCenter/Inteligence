@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import { ChatApp } from "@/components/spc/ChatApp";
 import { SITE } from "@/data/site";
 
