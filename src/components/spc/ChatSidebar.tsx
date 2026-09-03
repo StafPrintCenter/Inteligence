@@ -179,10 +179,7 @@ export function ChatSidebar({
             <SpcDeskLogo className="h-12 w-auto" />
           </div>
 
-          <div className="space-y-2 px-3">
-            <Button className="w-full justify-start" onClick={onNew}>
-              <MessageSquarePlus className="size-4" /> Nouvelle discussion
-            </Button>
+          <div className="space-y-2 px-3 pt-2">
             <div className="relative">
               <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
