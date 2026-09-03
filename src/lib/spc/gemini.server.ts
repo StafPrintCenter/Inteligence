@@ -82,14 +82,17 @@ const TOOLS = [
 
 /** Pool de clés API (variables d'environnement uniquement). */
 function keyPool(): string[] {
-  const list = [
-    process.env["GOOGLE_API_KEY_1"],
+  const fromEnv = [
+    process.env["GOOGLE_API_KEY"],
     process.env["GOOGLE_API_KEY_2"],
     process.env["GOOGLE_API_KEY_3"],
     process.env["GOOGLE_API_KEY_4"],
-  ].filter((k): k is string => Boolean(k && k.trim()));
-
-  return Array.from(new Set(fromEnv));
+    process.env["GOOGLE_API_KEY"],
+    ...(process.env["GOOGLE_API_KEYS"] ?? "").split(","),
+  ]
+    .map((k) => k?.trim())
+    .filter((k): k is string => Boolean(k));
+  return Array.from(new Set(list));
 }
 
 let cursor = 0;
