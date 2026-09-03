@@ -18,3 +18,17 @@ export function SpcLogo({ className }: { className?: string }) {
     />
   );
 }
+
+export function SpcDeskLogo({ className }: { className?: string }) {
+  const dark = useDarkMode();
+
+  return (
+    <img
+      src={dark ? logos.dw : logos.dc}
+      alt="Logo STAF PRINT CENTER"
+      className={cn("object-contain", className)}
+      loading="eager"
+      decoding="async"
+    />
+  );
+}
