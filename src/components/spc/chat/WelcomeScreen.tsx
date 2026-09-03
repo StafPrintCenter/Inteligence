@@ -23,7 +23,7 @@ export function WelcomeScreen({ onPick }: { onPick: (prompt: string) => void }) 
             key={s}
             type="button"
             onClick={() => onPick(s)}
-            className="rounded-xl border border-border bg-card p-3 text-left text-sm transition-colors hover:border-primary"
+            className="rounded-xl border border-border bg-card p-3 text-left text-sm transition-colors hover:border-primary cursor-pointer"
           >
             <Sparkles className="mb-1 size-4 text-primary" />
             {s}
