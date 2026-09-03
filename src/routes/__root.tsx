@@ -7,8 +7,8 @@ import { PreviewProvider } from "@/components/spc/PreviewPanel";
 import { SITE } from "@/data/site";
 import { NotFoundComponent, ErrorComponent } from "@/components/errors";
 
-const PAGE_TITLE = `SPC Docs ${SITE.name}`;
-const PAGE_DESC = `Documentation officielle de l'écosystème ${SITE.name} : utilisateurs, développeurs et équipe support.`;
+const PAGE_TITLE = `SPC Intelligence - Assistant IA de ${SITE.name}`;
+const PAGE_DESC = `Assistant IA de l'écosystème ${SITE.name} :  chat, analyse et génération.`;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
