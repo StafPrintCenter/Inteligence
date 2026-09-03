@@ -175,12 +175,8 @@ export function ChatSidebar({
         )}
       >
         <div className="flex w-72 flex-1 flex-col overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-4">
-            <SpcLogo className="size-9" />
-            <div className="leading-tight">
-              <p className="text-sm font-bold">SPC Intelligence</p>
-              <p className="text-xs text-muted-foreground">ai.stafprint.com</p>
-            </div>
+          <div className="flex items-center gap-2 px-4 py-1.5 border border-b">
+            <SpcDeskLogo className="h-12 w-auto" />
           </div>
 
           <div className="space-y-2 px-3">
