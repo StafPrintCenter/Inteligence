@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Clock, Lock, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
+import { SpcDeskLogo } from "@/components/spc/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -70,13 +70,7 @@ function LoginPage() {
     <main className="grid min-h-dvh lg:grid-cols-2">
       <section className="relative hidden flex-col justify-between bg-sidebar p-12 text-sidebar-foreground lg:flex">
         <div className="flex items-center gap-3">
-          <span className="grid size-11 place-items-center rounded-2xl bg-primary text-lg font-black text-primary-foreground">
-            S
-          </span>
-          <div>
-            <p className="text-lg font-bold">SPC Intelligence</p>
-            <p className="text-sm text-muted-foreground">ai.stafprint.com</p>
-          </div>
+          <SpcDeskLogo className="h-12 w-auto" />
         </div>
         <div className="space-y-4">
           <h1 className="text-4xl font-black leading-tight">
