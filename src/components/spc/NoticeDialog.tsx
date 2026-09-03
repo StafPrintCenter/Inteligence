@@ -8,7 +8,7 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
     <Dialog open={open}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-lg mx-auto rounded-xl p-4 sm:p-6 gap-4">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <DialogTitle className="flex items-center gap-2">
             <ShieldCheck className="size-5 text-primary" /> Avant de discuter
           </DialogTitle>
         </DialogHeader>
