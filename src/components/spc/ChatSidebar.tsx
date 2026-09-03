@@ -59,6 +59,7 @@ export function ChatSidebar({
   onSignOut,
   onDetails,
 }: Props) {
+  const dark = useDarkMode();
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
