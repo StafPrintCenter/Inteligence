@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-import { SpcLogo } from "@/components/spc/SpcLogo";
+import { SpcDeskLogo } from "@/components/spc/SpcLogo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
