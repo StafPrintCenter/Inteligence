@@ -12,7 +12,7 @@ import { SPACE_LABELS, type SpaceId } from "@/lib/spc/types";
 import { SITE } from "@/data/site";
 
 const PAGE_TITLE = `Connexion - SPC Intelligence | SPC Intelligence`;
-const PAGE_DESC = `Connectez-vous à SPC Intelligence selon votre espace.`;
+const PAGE_DESC = `Connectez-vous à SPC Intelligence, l'IA de ${SITE.name} selon votre espace.`;
 
 export const Route = createFileRoute("/login-remove-for-security-question-dont-apparear-easyly-in-public-file")({
   head: () => ({
