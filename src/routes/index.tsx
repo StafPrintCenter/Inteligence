@@ -1,20 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ChatApp } from "@/components/spc/ChatApp";
+import { SITE } from "@/data/site";
+
+const PAGE_TITLE = `SPC Intelligence - Assistant IA de ${SITE.name}`;
+const PAGE_DESC = `Assistant IA de l'écosystème ${SITE.name} :  chat, analyse et génération.`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SPC Intelligence — Assistant IA de STAF PRINT CENTER" },
-      {
-        name: "description",
-        content:
-          "Chat IA connecté à l'écosystème STAF PRINT CENTER : analyse de documents, génération de visuels et accompagnement client, apprenant et formateur.",
-      },
-      { property: "og:title", content: "SPC Intelligence — Assistant IA STAF PRINT CENTER" },
-      {
-        property: "og:description",
-        content: "Discutez avec l'assistant IA officiel de l'écosystème STAF PRINT CENTER.",
-      },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { name: "author", content: SITE.name },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
     ],
   }),
   component: () => <ChatApp />,
