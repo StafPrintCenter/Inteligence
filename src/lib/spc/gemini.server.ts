@@ -209,7 +209,7 @@ function simulate(prompt: string, lastErrorStatus: string | number | null): stri
   }
 
   return [
-    `> ⚠️ *Moteur de secours SPC (simulation) — ${causeExplanation}*`,
+    `> ⚠️ *Désolé - ${causeExplanation}*`,
     "",
     `Votre demande a bien été reçue : **${prompt.slice(0, 120) || "(sans texte)"}**`,
     "",
