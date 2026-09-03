@@ -92,7 +92,10 @@ export function ChatSidebar({
           onBlur={() => commitRename(c.id)}
           onKeyDown={(e) => {
             if (e.key === "Enter") commitRename(c.id);
-            if (e.key === "Escape") setEditing(null);
+            if (e.key === "Escape") {
+              setDraft(c.title);
+              setEditing(null);
+            }
           }}
           className="h-7 text-sm"
         />
