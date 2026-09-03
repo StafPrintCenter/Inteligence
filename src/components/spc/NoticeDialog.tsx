@@ -27,8 +27,8 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
             <li>Visiteurs anonymes : 3 messages par jour, sans envoi de fichiers.</li>
           </ul>
         </div>
-        <div className="pt-2">
-          <Button className="w-full cursor-pointer text-xs sm:text-sm" onClick={onAccept}>
+        <div>
+          <Button className="w-full cursor-pointer" onClick={onAccept}>
             J&apos;accepte les conditions d&apos;utilisation
           </Button>
         </div>
