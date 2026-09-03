@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport } from './routes/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
 import { Route as CConversationIdRouteImport } from './routes/c.$conversationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,14 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute =
+  LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport.update(
+    {
+      id: '/login-remove-for-security-question-dont-apparear-easyly-in-public-file',
+      path: '/login-remove-for-security-question-dont-apparear-easyly-in-public-file',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 const CConversationIdRoute = CConversationIdRouteImport.update({
   id: '/c/$conversationId',
   path: '/c/$conversationId',
@@ -32,30 +41,47 @@ const CConversationIdRoute = CConversationIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/c/$conversationId'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/c/$conversationId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/c/$conversationId'
-  id: '__root__' | '/' | '/login' | '/c/$conversationId'
+  to:
+    | '/'
+    | '/login'
+    | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/c/$conversationId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/c/$conversationId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   CConversationIdRoute: typeof CConversationIdRoute
 }
 
@@ -75,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': {
+      id: '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+      path: '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+      fullPath: '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+      preLoaderRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$conversationId': {
       id: '/c/$conversationId'
       path: '/c/$conversationId'
@@ -88,6 +121,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute:
+    LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute,
   CConversationIdRoute: CConversationIdRoute,
 }
 export const routeTree = rootRouteImport
