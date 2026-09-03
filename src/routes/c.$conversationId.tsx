@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ChatApp } from "@/components/spc/ChatApp";
+import { SITE } from "@/data/site";
+
+const PAGE_TITLE = `Conversation · SPC Intelligence`;
+const PAGE_DESC = `Conversation avec SPC Intelligence, l'assistant IA de l'écosystème ${SITE.name}.`;
 
 export const Route = createFileRoute("/c/$conversationId")({
   head: () => ({
