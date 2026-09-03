@@ -129,7 +129,7 @@ export function ChatSidebar({
               {user && (
                 <DropdownMenuItem onSelect={() => onTogglePin(c.id)}>
                   {c.pinned ? <PinOff className="size-4" /> : <Pin className="size-4" />}
-                  {c.pinned ? "Désépingler" : "Épingler (max 3)"}
+                  {c.pinned ? "Désépingler" : "Épingler"}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onSelect={onDetails}>
@@ -177,64 +177,64 @@ export function ChatSidebar({
           </div>
 
 
-        <div className="space-y-2 px-3">
-          <Button className="w-full justify-start" onClick={onNew}>
-            <MessageSquarePlus className="size-4" /> Nouvelle discussion
-          </Button>
-          <div className="relative">
-            <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher…"
-              className="h-9 pl-8"
-            />
+          <div className="space-y-2 px-3">
+            <Button className="w-full justify-start" onClick={onNew}>
+              <MessageSquarePlus className="size-4" /> Nouvelle discussion
+            </Button>
+            <div className="relative">
+              <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Rechercher…"
+                className="h-9 pl-8"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="spc-scroll mt-3 flex-1 space-y-4 overflow-y-auto px-3 pb-4">
-          {pinned.length > 0 && (
+          <div className="spc-scroll mt-3 flex-1 space-y-4 overflow-y-auto px-3 pb-4">
+            {pinned.length > 0 && (
+              <div className="space-y-1">
+                <p className="px-2 text-[0.7rem] font-semibold tracking-wide text-muted-foreground uppercase">
+                  Épinglées
+                </p>
+                {pinned.map(renderItem)}
+              </div>
+            )}
             <div className="space-y-1">
               <p className="px-2 text-[0.7rem] font-semibold tracking-wide text-muted-foreground uppercase">
-                Épinglées
+                Discussions
               </p>
-              {pinned.map(renderItem)}
+              {others.length === 0 && pinned.length === 0 ? (
+                <p className="px-2 py-4 text-xs text-muted-foreground">Aucune conversation.</p>
+              ) : (
+                others.map(renderItem)
+              )}
             </div>
-          )}
-          <div className="space-y-1">
-            <p className="px-2 text-[0.7rem] font-semibold tracking-wide text-muted-foreground uppercase">
-              Discussions
-            </p>
-            {others.length === 0 && pinned.length === 0 ? (
-              <p className="px-2 py-4 text-xs text-muted-foreground">Aucune conversation.</p>
+          </div>
+
+          <div className="border-t border-sidebar-border p-3">
+            {user ? (
+              <div className="flex items-center gap-2">
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
+                  {user.name.slice(0, 1).toUpperCase()}
+                </span>
+                <div className="min-w-0 flex-1 leading-tight">
+                  <p className="truncate text-sm font-semibold">{user.name}</p>
+                  <p className="truncate text-xs text-primary">{SPACE_LABELS[user.role]}</p>
+                </div>
+                <Button size="icon" variant="ghost" aria-label="Déconnexion" onClick={onSignOut}>
+                  <LogOut className="size-4" />
+                </Button>
+              </div>
             ) : (
-              others.map(renderItem)
+              <Button asChild variant="outline" className="w-full justify-start">
+                <Link to="/login">
+                  <LogIn className="size-4" /> Se connecter
+                </Link>
+              </Button>
             )}
           </div>
-        </div>
-
-        <div className="border-t border-sidebar-border p-3">
-          {user ? (
-            <div className="flex items-center gap-2">
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
-                {user.name.slice(0, 1).toUpperCase()}
-              </span>
-              <div className="min-w-0 flex-1 leading-tight">
-                <p className="truncate text-sm font-semibold">{user.name}</p>
-                <p className="truncate text-xs text-primary">{SPACE_LABELS[user.role]}</p>
-              </div>
-              <Button size="icon" variant="ghost" aria-label="Déconnexion" onClick={onSignOut}>
-                <LogOut className="size-4" />
-              </Button>
-            </div>
-          ) : (
-            <Button asChild variant="outline" className="w-full justify-start">
-              <Link to="/login">
-                <LogIn className="size-4" /> Se connecter
-              </Link>
-            </Button>
-          )}
-        </div>
         </div>
       </aside>
     </>
