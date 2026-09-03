@@ -189,6 +189,9 @@ export function ChatSidebar({
                 className="h-9 pl-8"
               />
             </div>
+            <Button className="w-full justify-start" onClick={onNew}>
+              <MessageSquarePlus className="size-4" /> Nouvelle discussion
+            </Button>
           </div>
 
           <div className="spc-scroll mt-3 flex-1 space-y-4 overflow-y-auto px-3 pb-4">
