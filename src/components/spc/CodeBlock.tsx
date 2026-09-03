@@ -1,4 +1,4 @@
-import { Check, Copy, Download } from "lucide-react";
+import { Check, Copy, Download, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const EXT: Record<string, string> = {
