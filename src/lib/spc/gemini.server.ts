@@ -3,7 +3,7 @@ import { SPC_KNOWLEDGE } from "./knowledge";
 
 export type GeminiPart = {
   text?: string;
-  inlineData?: { mimeType: string; data: string }
+  inlineData?: { mimeType: string; data: string };
 };
 export type GeminiTurn = { role: "user" | "model"; parts: GeminiPart[] };
 
