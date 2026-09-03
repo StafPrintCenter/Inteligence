@@ -199,7 +199,7 @@ function simulate(prompt: string, lastErrorStatus: string | number | null): stri
       /UNAVAILABLE|INTERNAL/i.test(statusStr)
     ) {
       causeExplanation =
-        "Les serveurs du modèle Gemini connaissent une forte affluence en ce moment.";
+        "Les serveurs du modèle connaissent une forte affluence en ce moment.";
     } else if (statusStr.includes("400") || /INVALID_ARGUMENT/i.test(statusStr)) {
       causeExplanation =
         "La demande n'a pas pu être interprétée par le moteur (contenu trop volumineux ou format non pris en charge).";
