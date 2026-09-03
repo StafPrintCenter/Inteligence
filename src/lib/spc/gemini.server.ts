@@ -112,6 +112,7 @@ function decodeBase64(data: string): string {
   return "";
 }
 
+/** Les fichiers texte sont convertis en texte lisible ; images et PDF restent en inlineData. */
 function normalizeTurns(turns: GeminiTurn[]): GeminiTurn[] {
   return turns.map((turn) => ({
     role: turn.role,
