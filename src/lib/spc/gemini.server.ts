@@ -82,8 +82,8 @@ const TOOLS = [
 
 /** Pool de clés API (variables d'environnement uniquement). */
 function keyPool(): string[] {
-  const fromEnv = [
-    process.env["GOOGLE_API_KEY"],
+  const list = [
+    process.env["GOOGLE_API_KEY_1"],
     process.env["GOOGLE_API_KEY_2"],
     process.env["GOOGLE_API_KEY_3"],
     process.env["GOOGLE_API_KEY_4"],
