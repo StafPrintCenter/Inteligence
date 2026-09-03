@@ -12,7 +12,7 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
             <ShieldCheck className="size-5 text-primary" /> Avant de discuter
           </DialogTitle>
         </DialogHeader>
-        <div className="space-y-3 text-xs sm:text-sm text-muted-foreground">
+        <div className="space-y-3 text-sm text-muted-foreground">
           <p>
             SPC Intelligence est l'assistant IA de STAF PRINT CENTER. Les réponses sont générées
             automatiquement et peuvent contenir des erreurs : vérifiez toute information avant usage
