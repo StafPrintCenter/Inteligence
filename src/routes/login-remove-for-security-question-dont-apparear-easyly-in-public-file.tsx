@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Lock, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
 import { SpcDeskLogo } from "@/components/spc/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
