@@ -1,8 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Lock, ShieldCheck } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
+import { SpcDeskLogo } from "@/components/spc/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,25 +36,43 @@ const TABS: { id: SpaceId; label: string }[] = [
   { id: "formateur", label: "Formateur" },
 ];
 
+/** Phrase de passe administrateur (3 mots, ordre imposé). */
+const ADMIN_WORDS = ["securité", "principale", "concerné"];
+
 function LoginPage() {
   const navigate = useNavigate();
   const [space, setSpace] = useState<SpaceId>("client");
   const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [phrase, setPhrase] = useState("");
+  const [attempts, setAttempts] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
-        e.preventDefault();
-        setAdminUnlocked(true);
-        setSpace("admin");
-        toast.success("Espace Administrateur déverrouillé");
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  const locked = attempts >= 3;
+
+  const unlockAdmin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (locked) return;
+    const words = phrase.trim().toLowerCase().split(/\s+/);
+    const ok =
+      words.length === ADMIN_WORDS.length && words.every((w, i) => w === ADMIN_WORDS[i]);
+    if (!ok) {
+      const next = attempts + 1;
+      setAttempts(next);
+      toast.error(
+        next >= 3
+          ? "Trop de tentatives — accès administrateur bloqué. Rechargez la page."
+          : `Phrase de sécurité incorrecte (${3 - next} tentative(s) restante(s)).`,
+      );
+      return;
+    }
+    setAdminUnlocked(true);
+    setAdminOpen(false);
+    setPhrase("");
+    setSpace("admin");
+    toast.success("Espace Administrateur déverrouillé");
+  };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,22 +80,21 @@ function LoginPage() {
       toast.error("Email valide et mot de passe (4 caractères min.) requis.");
       return;
     }
+    if (space === "admin" && !adminUnlocked) {
+      toast.error("Espace Administrateur verrouillé.");
+      return;
+    }
     const user = signIn(email, space);
     toast.success(`Bienvenue ${user.name} — ${user.space}`);
     void navigate({ to: "/" });
   };
 
+
   return (
     <main className="grid min-h-dvh lg:grid-cols-2">
       <section className="relative hidden flex-col justify-between bg-sidebar p-12 text-sidebar-foreground lg:flex">
         <div className="flex items-center gap-3">
-          <span className="grid size-11 place-items-center rounded-2xl bg-primary text-lg font-black text-primary-foreground">
-            S
-          </span>
-          <div>
-            <p className="text-lg font-bold">SPC Intelligence</p>
-            <p className="text-sm text-muted-foreground">ai.stafprint.com</p>
-          </div>
+          <SpcDeskLogo className="h-12 w-auto" />
         </div>
         <div className="space-y-4">
           <h1 className="text-4xl leading-tight font-black">
@@ -151,13 +169,55 @@ function LoginPage() {
             <Button type="submit" className="w-full">
               Se connecter à {SPACE_LABELS[space]}
             </Button>
-            {!adminUnlocked && (
-              <p className="text-center text-xs text-muted-foreground">
-                Espace Administrateur : raccourci <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd>
-              </p>
-            )}
           </form>
+
+          {!adminUnlocked && (
+            <div className="rounded-2xl border border-dashed border-border p-4">
+              {adminOpen ? (
+                <form onSubmit={unlockAdmin} className="space-y-2">
+                  <Label htmlFor="phrase" className="text-xs">
+                    Phrase de sécurité administrateur (3 mots séparés par des espaces)
+                  </Label>
+                  <Input
+                    id="phrase"
+                    autoComplete="off"
+                    value={phrase}
+                    onChange={(e) => setPhrase(e.target.value)}
+                    placeholder="mot1 mot2 mot3"
+                    disabled={locked}
+                  />
+                  <div className="flex gap-2">
+                    <Button type="submit" size="sm" disabled={locked}>
+                      <Lock className="size-3" /> Déverrouiller
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setAdminOpen(false)}
+                    >
+                      Annuler
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {locked
+                      ? "Accès bloqué après 3 tentatives. Rechargez la page."
+                      : `Tentatives restantes : ${3 - attempts}`}
+                  </p>
+                </form>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setAdminOpen(true)}
+                  className="flex w-full items-center justify-center gap-2 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <Lock className="size-3" /> Accès Espace Administrateur
+                </button>
+              )}
+            </div>
+          )}
         </div>
+
       </section>
     </main>
   );
