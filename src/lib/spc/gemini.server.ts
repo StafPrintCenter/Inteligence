@@ -1,4 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
+
 import { SPC_KNOWLEDGE } from "./knowledge";
 
 export type GeminiPart = {
