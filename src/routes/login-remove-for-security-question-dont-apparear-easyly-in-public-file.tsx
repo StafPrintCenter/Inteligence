@@ -18,17 +18,10 @@ const PAGE_DESC = `Conversation avec SPC Intelligence, l'assistant IA de l'écos
 export const Route = createFileRoute("/login-remove-for-security-question-dont-apparear-easyly-in-public-file")({
   head: () => ({
     meta: [
-      { title: "Connexion — SPC Intelligence | STAF PRINT CENTER" },
-      {
-        name: "description",
-        content:
-          "Connectez-vous à SPC Intelligence selon votre espace : Client, Apprenant, Formateur ou Administrateur.",
-      },
-      { property: "og:title", content: "Connexion — SPC Intelligence" },
-      {
-        property: "og:description",
-        content: "Accédez à l'assistant IA de l'écosystème STAF PRINT CENTER.",
-      },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
     ],
   }),
   component: LoginPage,
