@@ -25,6 +25,8 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { SpcConversation, SpcUser } from "@/lib/spc/types";
 import { SPACE_LABELS } from "@/lib/spc/types";
+import logos from "@/assets/logos.json";
+import { useDarkMode } from "@/hooks/use-dark-mode";
 
 type Props = {
   open: boolean;
