@@ -162,6 +162,8 @@ async function browse(rawUrl: string): Promise<{ ok: boolean; content: string; u
   try {
     const res = await fetch(url.toString(), {
       headers: { "user-agent": "SPC-Intelligence/1.0", accept: "text/html,text/plain" },
+      // La navigation autonome ne doit jamais bloquer la réponse : 8 s maximum par page.
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok)
       return { ok: false, content: `Page indisponible (HTTP ${res.status}).`, url: url.toString() };
@@ -254,7 +256,7 @@ export async function askGemini(turns: GeminiTurn[]): Promise<SpcAnswer> {
       const reasoningChunks: string[] = [];
       const sources: string[] = [];
 
-      for (let step = 0; step < 4; step++) {
+      for (let step = 0; step < 3; step++) {
         const response = await ai.models.generateContent({
           model: MODEL,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -262,34 +264,36 @@ export async function askGemini(turns: GeminiTurn[]): Promise<SpcAnswer> {
           config: {
             systemInstruction: SYSTEM_PROMPT,
             temperature: 0.7,
-            maxOutputTokens: 4096,
+            maxOutputTokens: 3072,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             tools: TOOLS as any,
-            thinkingConfig: { includeThoughts: true, thinkingBudget: 2048 },
+            // Budget de réflexion réduit : réponses nettement plus rapides.
+            thinkingConfig: { includeThoughts: true, thinkingBudget: 512 },
           },
         });
 
-        const parts = (response.candidates?.[0]?.content?.parts ?? []) as AnyPart[];
+        const modelContent = response.candidates?.[0]?.content;
+        const parts = (modelContent?.parts ?? []) as AnyPart[];
         for (const p of parts) if (p.thought && p.text) reasoningChunks.push(p.text);
 
         const calls = parts.filter((p) => p.functionCall);
         if (calls.length > 0) {
-          contents.push({
-            role: "model",
-            parts: calls.map((p) => ({ functionCall: p.functionCall })),
-          });
-          const responses = [];
-          for (const c of calls) {
-            const target = String(c.functionCall?.args?.["url"] ?? "");
-            const result = await browse(target);
+          // On renvoie le contenu du modèle TEL QUEL : les parts conservent ainsi leur
+          // `thoughtSignature`, obligatoire pour les appels d'outils (erreur 400 sinon).
+          contents.push(modelContent ?? { role: "model", parts });
+          // Consultations en parallèle pour réduire le temps d'attente.
+          const results = await Promise.all(
+            calls.map((c) => browse(String(c.functionCall?.args?.["url"] ?? ""))),
+          );
+          const responses = results.map((result, i) => {
             if (result.ok) sources.push(result.url);
-            responses.push({
+            return {
               functionResponse: {
-                name: c.functionCall?.name ?? "consulter_site",
+                name: calls[i]?.functionCall?.name ?? "consulter_site",
                 response: { url: result.url, ok: result.ok, contenu: result.content },
               },
-            });
-          }
+            };
+          });
           contents.push({ role: "user", parts: responses });
           continue;
         }
