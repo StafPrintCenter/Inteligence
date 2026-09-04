@@ -313,7 +313,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
         <main className="spc-scroll flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-3xl px-4 py-6">
             {!hasMessages ? (
-              <WelcomeScreen onPick={(s) => void handleSend(s, [])} />
+              <WelcomeScreen
+                userName={user?.name ?? null}
+                onPick={(s) => void handleSend(s, [])}
+              />
             ) : (
               <MessageList
                 messages={active!.messages}
