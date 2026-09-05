@@ -7,6 +7,10 @@ import { Markdown } from "@/components/spc/Markdown";
 import { SpcLogo } from "@/components/spc/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { decodeShare, type SharedPayload } from "@/lib/spc/share";
+import { SITE } from "@/data/site";
+
+const PAGE_TITLE = `Conversation partagée · SPC Intelligence`;
+const PAGE_DESC = `Lecture d'une conversation partagée avec SPC Intelligence, l'assistant IA de ${SITE.name}.`;
 
 export const Route = createFileRoute("/s")({
   head: () => ({
