@@ -2,6 +2,8 @@ import {
   ANON_DAILY_QUOTA,
   MAX_PINNED,
   SPACE_LABELS,
+  USER_BURST_QUOTA,
+  USER_COOLDOWN_MS,
   type SpaceId,
   type SpcConversation,
   type SpcUser,
@@ -11,6 +13,7 @@ const KEYS = {
   user: "spc.user",
   conversations: "spc.conversations",
   quota: "spc.quota",
+  userQuota: "spc.user-quota",
   theme: "spc.theme",
   notice: "spc.notice-accepted",
 };
@@ -81,6 +84,53 @@ export function getAnonQuota(): { used: number; left: number; max: number } {
 export function consumeAnonQuota() {
   const { used } = getAnonQuota();
   write(KEYS.quota, { day: today(), used: used + 1 } satisfies Quota);
+}
+
+/* ---------------- Quota utilisateur connecté (6 messages / pause 3 h) ---------------- */
+
+type UserQuota = { userId: string; used: number; blockedUntil: number };
+
+export type UserQuotaState = {
+  used: number;
+  left: number;
+  max: number;
+  blockedUntil: number;
+  blocked: boolean;
+};
+
+export function getUserQuota(userId: string): UserQuotaState {
+  const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, blockedUntil: 0 });
+  const now = Date.now();
+  const sameUser = raw.userId === userId;
+  /* Le blocage expiré remet le compteur à zéro */
+  const expired = raw.blockedUntil > 0 && raw.blockedUntil <= now;
+  const used = !sameUser || expired ? 0 : raw.used;
+  const blockedUntil = !sameUser || expired ? 0 : raw.blockedUntil;
+  return {
+    used,
+    left: Math.max(0, USER_BURST_QUOTA - used),
+    max: USER_BURST_QUOTA,
+    blockedUntil,
+    blocked: blockedUntil > now,
+  };
+}
+
+export function consumeUserQuota(userId: string): UserQuotaState {
+  const current = getUserQuota(userId);
+  if (current.blocked) return current;
+  const used = current.used + 1;
+  const blockedUntil = used >= USER_BURST_QUOTA ? Date.now() + USER_COOLDOWN_MS : 0;
+  write(KEYS.userQuota, { userId, used, blockedUntil } satisfies UserQuota);
+  return getUserQuota(userId);
+}
+
+export function formatCooldown(blockedUntil: number) {
+  const ms = Math.max(0, blockedUntil - Date.now());
+  const totalMinutes = Math.ceil(ms / 60000);
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  if (h > 0) return `${h} h ${String(m).padStart(2, "0")} min`;
+  return `${m} min`;
 }
 
 /* ---------------- Conversations ---------------- */
