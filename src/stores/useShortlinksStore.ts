@@ -40,3 +40,19 @@ export async function createShortlink(longUrl: string, category?: ShortlinkCateg
   const json: ShortlinkResponse = await response.json();
   return json.data;
 }
+
+/**
+ * Tente d'abord de résoudre l'URL longue via GET, sinon la crée via POST.
+ */
+export async function getOrCreateShortlink(
+  longUrl: string,
+  category: ShortlinkCategory = "chat"
+): Promise<APIShortlink> {
+  try {
+    const existing = await resolveShortlink(longUrl);
+    if (existing) return existing;
+  } catch {
+    // Si la résolution échoue, on tente la création
+  }
+  return await createShortlink(longUrl, category);
+}
