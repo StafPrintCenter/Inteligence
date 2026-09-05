@@ -1,4 +1,4 @@
-import { Download, Eye, Share2 } from "lucide-react";
+import { Download, Eye, RotateCcw, Share2 } from "lucide-react";
 
 import { CopyButton } from "@/components/spc/CopyButton";
 import { Markdown } from "@/components/spc/Markdown";
@@ -83,11 +83,13 @@ export function MessageItem({
   message,
   userName,
   animate,
+  onRetry,
   onShare,
 }: {
   message: SpcMessage;
   userName: string;
   animate: boolean;
+  onRetry?: () => void;
   onShare?: (id: string) => void;
 }) {
   const isUser = message.role === "user";
@@ -123,13 +125,24 @@ export function MessageItem({
         </div>
         <div className="mt-1 flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
           <CopyButton value={message.content} />
+          {onRetry && (
+            <button
+              type="button"
+              onClick={onRetry}
+              aria-label="Réessayer la réponse"
+              title="Réessayer"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <RotateCcw className="size-3.5" /> Réessayer
+            </button>
+          )}
           {onShare && (
             <button
               type="button"
               onClick={() => onShare(message.id)}
               aria-label="Partager ce message"
               title="Partager"
-              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               <Share2 className="size-3.5" /> Partager
             </button>
