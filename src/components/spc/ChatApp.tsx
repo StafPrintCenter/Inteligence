@@ -10,6 +10,7 @@ import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
 import { NoticeDialog } from "@/components/spc/NoticeDialog";
+import { ShareDialog } from "@/components/spc/ShareDialog";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -83,6 +84,8 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
   const [gateOpen, setGateOpen] = useState(false);
   const [gateReason, setGateReason] = useState("");
   const [showNotice, setShowNotice] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareMessageId, setShareMessageId] = useState<string | undefined>(undefined);
   const [theme, setThemeState] = useState<Theme>("light");
   const [loading, setLoading] = useState(false);
   const [animatedId, setAnimatedId] = useState<string | null>(null);
@@ -336,6 +339,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           onToggleSidebar={() => setSidebarOpen((v) => !v)}
           onToggleTheme={toggleTheme}
           onDetails={() => setDetailsOpen(true)}
+          onShare={() => {
+            setShareMessageId(undefined);
+            setShareOpen(true);
+          }}
         />
 
         <main className="spc-scroll flex-1 overflow-y-auto">
@@ -351,6 +358,10 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 userName={user?.name ?? "Visiteur"}
                 loading={loading}
                 animatedId={animatedId}
+                onShare={(id) => {
+                  setShareMessageId(id);
+                  setShareOpen(true);
+                }}
               />
             )}
             <div ref={bottomRef} />
@@ -383,6 +394,12 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
       {hasMessages && (
         <DetailsPanel conversation={active} open={detailsOpen} onOpenChange={setDetailsOpen} />
       )}
+      <ShareDialog
+        conversation={active}
+        {...(shareMessageId ? { messageId: shareMessageId } : {})}
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+      />
       <NoticeDialog
         open={showNotice}
         onAccept={() => {
