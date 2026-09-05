@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport } from './routes/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+import { Route as SRouteImport } from './routes/s'
 import { Route as CConversationIdRouteImport } from './routes/c.$conversationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -32,6 +33,11 @@ const LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute =
       getParentRoute: () => rootRouteImport,
     } as any,
   )
+const SRoute = SRouteImport.update({
+  id: '/s',
+  path: '/s',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CConversationIdRoute = CConversationIdRouteImport.update({
   id: '/c/$conversationId',
   path: '/c/$conversationId',
@@ -42,12 +48,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
+  '/s': typeof SRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
+  '/s': typeof SRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesById {
@@ -55,6 +63,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
+  '/s': typeof SRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRouteTypes {
@@ -63,18 +72,21 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/s'
     | '/c/$conversationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/s'
     | '/c/$conversationId'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
+    | '/s'
     | '/c/$conversationId'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +94,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
+  SRoute: typeof SRoute
   CConversationIdRoute: typeof CConversationIdRoute
 }
 
@@ -108,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/s': {
+      id: '/s'
+      path: '/s'
+      fullPath: '/s'
+      preLoaderRoute: typeof SRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$conversationId': {
       id: '/c/$conversationId'
       path: '/c/$conversationId'
@@ -123,6 +143,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute:
     LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute,
+  SRoute: SRoute,
   CConversationIdRoute: CConversationIdRoute,
 }
 export const routeTree = rootRouteImport
