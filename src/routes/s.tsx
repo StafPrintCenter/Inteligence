@@ -15,17 +15,10 @@ const PAGE_DESC = `Lecture d'une conversation partagée avec SPC Intelligence, l
 export const Route = createFileRoute("/s")({
   head: () => ({
     meta: [
-      { title: "Conversation partagée · SPC Intelligence" },
-      {
-        name: "description",
-        content:
-          "Lecture d'une conversation partagée avec SPC Intelligence, l'assistant IA de STAF PRINT CENTER.",
-      },
-      { property: "og:title", content: "Conversation partagée · SPC Intelligence" },
-      {
-        property: "og:description",
-        content: "Consultez un échange partagé avec l'assistant IA STAF PRINT CENTER.",
-      },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
     ],
