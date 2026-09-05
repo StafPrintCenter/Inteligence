@@ -49,7 +49,8 @@ function SharedPage() {
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <header className="flex items-center gap-3 border-b border-border px-4 py-3">
+      {/* Header fixe avec flou d'arrière-plan */}
+      <header className="sticky top-0 z-50 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur support-[backdrop-filter]:bg-background/60">
         <span className="grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-card p-1">
           <SpcLogo className="size-full" />
         </span>
