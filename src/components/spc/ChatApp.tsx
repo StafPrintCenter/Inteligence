@@ -89,6 +89,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
   const [theme, setThemeState] = useState<Theme>("light");
   const [loading, setLoading] = useState(false);
   const [animatedId, setAnimatedId] = useState<string | null>(null);
+  const [failedConvId, setFailedConvId] = useState<string | null>(null);
   const [quota, setQuota] = useState({ used: 0, left: 3, max: 3 });
   const [userQuota, setUserQuota] = useState<UserQuotaState | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -194,7 +195,9 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           ),
         );
         if (result.fallback) toast.warning("Moteur de secours activé (clés API indisponibles).");
+        setFailedConvId(null);
       } catch {
+        setFailedConvId(conv.id);
         toast.error("Impossible de contacter SPC Intelligence. Réessayez.");
       } finally {
         setLoading(false);
@@ -358,6 +361,15 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 userName={user?.name ?? "Visiteur"}
                 loading={loading}
                 animatedId={animatedId}
+                retryMessageId={
+                  failedConvId === active!.id
+                    ? (active!.messages.filter((m) => m.role === "user").at(-1)?.id ?? null)
+                    : null
+                }
+                onRetry={() => {
+                  setFailedConvId(null);
+                  void runCompletion(active!, conversations);
+                }}
                 onShare={(id) => {
                   setShareMessageId(id);
                   setShareOpen(true);
@@ -377,7 +389,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 !user
                   ? `${quota.left}/${quota.max} messages restants aujourd'hui · connectez-vous pour plus de messages`
                   : userQuota?.blocked
-                    ? `Limite atteinte (${userQuota.max} messages) · reprise dans ${formatCooldown(userQuota.blockedUntil)}`
+                    ? `Limite atteinte (${userQuota.max} messages) · reprise dans ${formatCooldown(userQuota.blockedUntil)}, vers ${new Date(userQuota.blockedUntil).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
                     : userQuota
                       ? `${userQuota.left}/${userQuota.max} messages avant une pause de 3 h`
                       : null
