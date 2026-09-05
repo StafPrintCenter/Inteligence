@@ -40,18 +40,3 @@ export async function createShortlink(longUrl: string, category?: ShortlinkCateg
   const json: ShortlinkResponse = await response.json();
   return json.data;
 }
-
-
-/**
- * Rédiriger vers un lien court
- */
-export async function fetchShortlinkByAlias(alias: string): Promise<APIShortlink | null> {
-  const url = resolveApiUrl(`/api/public/shortlinks/${alias}`);
-  const response = await fetch(url);
-  if (response.status === 404) return null;
-  if (!response.ok) {
-    throw new Error("Erreur lors de la récupération du lien court");
-  }
-  const json: ShortlinkResponse = await response.json();
-  return json.data;
-}
