@@ -1,4 +1,4 @@
-import { Download, Eye } from "lucide-react";
+import { Download, Eye, Share2 } from "lucide-react";
 
 import { CopyButton } from "@/components/spc/CopyButton";
 import { Markdown } from "@/components/spc/Markdown";
@@ -58,10 +58,10 @@ function Attachments({ items }: { items: SpcAttachment[] }) {
                   a.mimeType === "application/pdf"
                     ? { kind: "pdf", title: a.name, url: a.dataUrl }
                     : {
-                        kind: /\.md$/i.test(a.name) ? "markdown" : "text",
-                        title: a.name,
-                        content: a.extractedText ?? "",
-                      },
+                      kind: /\.md$/i.test(a.name) ? "markdown" : "text",
+                      title: a.name,
+                      content: a.extractedText ?? "",
+                    },
                 )
               }
               className="flex min-w-0 flex-1 items-center gap-2 text-left"
@@ -83,10 +83,12 @@ export function MessageItem({
   message,
   userName,
   animate,
+  onShare,
 }: {
   message: SpcMessage;
   userName: string;
   animate: boolean;
+  onShare?: (id: string) => void;
 }) {
   const isUser = message.role === "user";
   const shown = useTypewriter(message.content, !isUser && animate);
@@ -94,9 +96,8 @@ export function MessageItem({
   return (
     <div className={`group flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       <span
-        className={`grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-border ${
-          isUser ? "bg-accent text-xs font-bold text-accent-foreground" : "bg-card p-1"
-        }`}
+        className={`grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-border ${isUser ? "bg-accent text-xs font-bold text-accent-foreground" : "bg-card p-1"
+          }`}
         aria-hidden
       >
         {isUser ? initials(userName) : <SpcLogo className="size-full" />}
@@ -120,10 +121,20 @@ export function MessageItem({
           )}
           <Attachments items={message.attachments ?? []} />
         </div>
-        <CopyButton
-          value={message.content}
-          className="mt-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
-        />
+        <div className="mt-1 flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
+          <CopyButton value={message.content} />
+          {onShare && (
+            <button
+              type="button"
+              onClick={() => onShare(message.id)}
+              aria-label="Partager ce message"
+              title="Partager"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <Share2 className="size-3.5" /> Partager
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
