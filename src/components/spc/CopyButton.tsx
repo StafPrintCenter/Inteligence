@@ -28,7 +28,7 @@ export function CopyButton({ value, className }: { value: string; className?: st
       aria-label={copied ? "Copié" : "Copier le message"}
       title="Copier"
       className={cn(
-        "inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
+        "inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
         className,
       )}
     >
