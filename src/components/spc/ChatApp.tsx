@@ -26,9 +26,12 @@ import {
   acceptNotice,
   canPin,
   consumeAnonQuota,
+  consumeUserQuota,
+  formatCooldown,
   getAnonQuota,
   getTheme,
   getUser,
+  getUserQuota,
   loadConversations,
   newConversation,
   noticeAccepted,
@@ -38,6 +41,7 @@ import {
   titleFrom,
   uid,
   type Theme,
+  type UserQuotaState,
 } from "@/lib/spc/store";
 import type { SpcAttachment, SpcConversation, SpcMessage, SpcUser } from "@/lib/spc/types";
 
@@ -48,19 +52,19 @@ function toTurns(messages: SpcMessage[]): GeminiTurn[] {
       { text: m.content },
       ...(m.role === "user"
         ? (m.attachments ?? [])
-            .filter((a) => a.origin === "uploaded")
-            .flatMap((a) => [
-              ...(a.extractedText?.trim()
-                ? [
-                    {
-                      text: `\n[Texte extrait du fichier « ${a.name} » (${a.mimeType})] :\n${a.extractedText.slice(0, 120000)}\n`,
-                    },
-                  ]
-                : []),
-              ...(a.mimeType.startsWith("image/") || a.mimeType === "application/pdf"
-                ? [{ inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" } }]
-                : []),
-            ])
+          .filter((a) => a.origin === "uploaded")
+          .flatMap((a) => [
+            ...(a.extractedText?.trim()
+              ? [
+                {
+                  text: `\n[Texte extrait du fichier « ${a.name} » (${a.mimeType})] :\n${a.extractedText.slice(0, 120000)}\n`,
+                },
+              ]
+              : []),
+            ...(a.mimeType.startsWith("image/") || a.mimeType === "application/pdf"
+              ? [{ inlineData: { mimeType: a.mimeType, data: a.dataUrl.split(",")[1] ?? "" } }]
+              : []),
+          ])
         : []),
     ],
   }));
@@ -79,10 +83,11 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
   const [gateOpen, setGateOpen] = useState(false);
   const [gateReason, setGateReason] = useState("");
   const [showNotice, setShowNotice] = useState(false);
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
   const [loading, setLoading] = useState(false);
   const [animatedId, setAnimatedId] = useState<string | null>(null);
   const [quota, setQuota] = useState({ used: 0, left: 3, max: 3 });
+  const [userQuota, setUserQuota] = useState<UserQuotaState | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const autoRun = useRef(false);
 
@@ -97,9 +102,17 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     setUser(u);
     setConversations(loadConversations(u?.id ?? "anonymous"));
     setQuota(getAnonQuota());
+    setUserQuota(u ? getUserQuota(u.id) : null);
     setShowNotice(!noticeAccepted());
     setReady(true);
   }, []);
+
+  /* Rafraîchit l'état de la pause pour lever le blocage à son expiration */
+  useEffect(() => {
+    if (!user || !userQuota?.blocked) return;
+    const timer = window.setInterval(() => setUserQuota(getUserQuota(user.id)), 30000);
+    return () => window.clearInterval(timer);
+  }, [user, userQuota?.blocked]);
 
   /* La barre latérale reste fermée par défaut sur mobile */
   useEffect(() => {
@@ -201,6 +214,18 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
       return;
     }
 
+    if (user) {
+      const state = getUserQuota(user.id);
+      setUserQuota(state);
+      if (state.blocked) {
+        toast.error(
+          `Limite atteinte : ${state.max} messages envoyés. Réessayez dans ${formatCooldown(state.blockedUntil)}.`,
+        );
+        return;
+      }
+    }
+
+
     const isNew = !active;
     const conv = active ?? newConversation(ownerId);
     const base = isNew ? [conv, ...conversations] : conversations;
@@ -224,6 +249,8 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     if (!user) {
       consumeAnonQuota();
       setQuota(getAnonQuota());
+    } else {
+      setUserQuota(consumeUserQuota(user.id));
     }
 
     if (isNew) {
@@ -262,6 +289,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     setUser(null);
     setConversations(loadConversations("anonymous"));
     setQuota(getAnonQuota());
+    setUserQuota(null);
     toast.success("Déconnecté — historique du compte masqué.");
     void navigate({ to: "/" });
   };
@@ -332,12 +360,16 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
         <div className="border-t border-border bg-background px-3 py-3 sm:px-4">
           <div className="mx-auto w-full max-w-3xl">
             <Composer
-              disabled={loading}
+              disabled={loading || Boolean(userQuota?.blocked)}
               canUpload={Boolean(user)}
               quotaLabel={
-                user
-                  ? null
-                  : `${quota.left}/${quota.max} messages restants aujourd'hui · connectez-vous pour un accès illimité`
+                !user
+                  ? `${quota.left}/${quota.max} messages restants aujourd'hui · connectez-vous pour plus de messages`
+                  : userQuota?.blocked
+                    ? `Limite atteinte (${userQuota.max} messages) · reprise dans ${formatCooldown(userQuota.blockedUntil)}`
+                    : userQuota
+                      ? `${userQuota.left}/${userQuota.max} messages avant une pause de 3 h`
+                      : null
               }
               onBlockedUpload={() =>
                 openGate("L'envoi de fichiers est réservé aux espaces connectés.")
