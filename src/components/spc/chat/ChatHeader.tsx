@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Info, LogIn, Moon, PanelLeft, Sun } from "lucide-react";
+import { Info, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { Theme } from "@/lib/spc/store";
@@ -13,6 +13,7 @@ export function ChatHeader({
   onToggleSidebar,
   onToggleTheme,
   onDetails,
+  onShare,
 }: {
   title: string;
   user: SpcUser | null;
@@ -21,6 +22,7 @@ export function ChatHeader({
   onToggleSidebar: () => void;
   onToggleTheme: () => void;
   onDetails: () => void;
+  onShare: () => void;
 }) {
   return (
     <header className="flex items-center gap-2 border-b border-border px-3 py-3 sm:px-4">
@@ -39,6 +41,16 @@ export function ChatHeader({
       <Button size="icon" variant="ghost" aria-label="Changer de thème" onClick={onToggleTheme}>
         {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
       </Button>
+      {hasConversation && (
+        <Button
+          size="icon"
+          variant="ghost"
+          aria-label="Partager la conversation"
+          onClick={onShare}
+        >
+          <Share2 className="size-4" />
+        </Button>
+      )}
       {hasConversation && (
         <Button
           size="icon"
