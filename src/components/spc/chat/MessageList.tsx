@@ -7,12 +7,16 @@ export function MessageList({
   userName,
   loading,
   animatedId,
+  retryMessageId,
+  onRetry,
   onShare,
 }: {
   messages: SpcMessage[];
   userName: string;
   loading: boolean;
   animatedId: string | null;
+  retryMessageId?: string | null;
+  onRetry?: () => void;
   onShare?: (id: string) => void;
 }) {
   return (
@@ -23,6 +27,7 @@ export function MessageList({
           message={m}
           userName={userName}
           animate={m.id === animatedId}
+          {...(retryMessageId === m.id && onRetry ? { onRetry } : {})}
           {...(onShare ? { onShare } : {})}
         />
       ))}
