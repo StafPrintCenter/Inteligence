@@ -20,7 +20,7 @@ export async function resolveShortlink(longUrl: string): Promise<APIShortlink | 
 }
 
 /**
- * Crée un lien court pour cette URL longue. Le backend gère lui-même la déduplication.
+ * Crée un lien court pour cette URL longue. Le backend gère lui-même la déduplication
  */
 export async function createShortlink(longUrl: string, category?: ShortlinkCategory): Promise<APIShortlink> {
   const formData = new FormData();
