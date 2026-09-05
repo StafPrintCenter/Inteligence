@@ -57,13 +57,19 @@ export function ShareDialog({
         if (!alive) return;
         setLongUrl(generatedLongUrl);
 
+        // Si l'URL dépasse 2048 caractères, on évite le raccourcisseur
+        if (generatedLongUrl.length > 2048) {
+          setIsLoading(false);
+          return;
+        }
+
         try {
           const link = await getOrCreateShortlink(generatedLongUrl, "chat");
           if (alive && link) {
             setShortlink(link);
           }
         } catch {
-          // Si le service backend échoue, longUrl reste utilisé sans planter l'UI
+          // Si le service backend de raccourcissement échoue, on conserve longUrl
         } finally {
           if (alive) setIsLoading(false);
         }
@@ -80,9 +86,10 @@ export function ShareDialog({
     };
   }, [open, conversation, messageId]);
 
-  // Récupération stricte du shortUrl renvoyé par l'API backend
+  // Si shortlink existe on l'utilise, sinon fallback direct sur longUrl
   const displayUrl = shortlink?.shortUrl || longUrl;
   const alias = shortlink?.alias ?? null;
+  const isTooLongForShortener = longUrl.length > 2048;
 
   const handleCopy = async () => {
     if (!displayUrl || isLoading) return;
@@ -114,7 +121,7 @@ export function ShareDialog({
             </DialogTitle>
             <DialogDescription>
               Toute personne disposant de ce lien pourra lire{" "}
-              {messageId ? "ce message" : "cet échange"} en lecture seule.
+              {messageId ? "ce message" : "cet échange"} en lecture seule. Les fichiers joints ne sont pas inclus.
             </DialogDescription>
           </DialogHeader>
 
@@ -164,6 +171,13 @@ export function ShareDialog({
               )}
             </div>
           </div>
+
+          {/* Note d'information réaffichée si la conversation est très longue */}
+          {!isLoading && isTooLongForShortener && (
+            <p className="text-xs text-amber-600 dark:text-amber-400 wrap-break-word">
+              Conversation très volumineuse, le lien direct complet est utilisé.
+            </p>
+          )}
         </DialogContent>
       </Dialog>
 
