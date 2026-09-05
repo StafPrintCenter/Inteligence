@@ -5,7 +5,7 @@ export type ShortlinkStatus = "active" | "disabled" | string;
  */
 export type ShortlinkCategory =
   | "chat"
-  | "document"
+  | "documentation"
   | "formation"
   | "service"
   | "event"
