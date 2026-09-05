@@ -129,7 +129,7 @@ export function MessageItem({
               onClick={() => onShare(message.id)}
               aria-label="Partager ce message"
               title="Partager"
-              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
             >
               <Share2 className="size-3.5" /> Partager
             </button>
