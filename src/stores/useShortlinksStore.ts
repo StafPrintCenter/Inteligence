@@ -1,37 +1,57 @@
-import { useQuery } from "@tanstack/react-query";
-import { createResourceStore } from "./createResourceStore";
-import { adminFetch } from "@/lib/api-url";
-import type { APIAdminShortLinkDetail, AdminShortLinkPayload, ShortLinkStats } from "@/data/shortlinks";
+import { type APIShortlink, type ShortlinkCategory } from "@/data/shortlinks";
+import { resolveApiUrl } from "@/lib/api-url";
 
-const store = createResourceStore<APIAdminShortLinkDetail, AdminShortLinkPayload>({
-  resourceKey: "shortlinks",
-  basePath: "shortlinks",
-});
+type ShortlinkResponse = { data: APIShortlink };
 
-export const fetchAdminShortLinks = store.fetchList;
-export const fetchAdminShortLinkById = store.fetchById;
-export const createAdminShortLink = store.createItem;
-export const updateAdminShortLink = store.updateItem;
-export const deleteAdminShortLink = store.removeItem;
-
-export const useAdminShortLinksList = store.useList;
-export const useAdminShortLinkDetail = store.useDetail;
-export const useCreateAdminShortLink = store.useCreate;
-export const useUpdateAdminShortLink = store.useUpdate;
-export const useDeleteAdminShortLink = store.useRemove;
-
-// Endpoint additionnel : /admin/shortlinks/{id}/stats (non couvert par createResourceStore)
-export async function fetchAdminShortLinkStats(id: string): Promise<ShortLinkStats> {
-  const response = await adminFetch(`/api/admin/shortlinks/${id}/stats`);
-  if (!response.ok) throw new Error("Erreur lors de la récupération des statistiques du lien");
-  return response.json();
+/**
+ * Vérifie si un lien court existe déjà pour cette URL longue.
+ * Retourne null si aucun lien court n'existe encore (404).
+ */
+export async function resolveShortlink(longUrl: string): Promise<APIShortlink | null> {
+  const params = new URLSearchParams({ long_url: longUrl });
+  const url = resolveApiUrl(`/api/public/shortlinks/resolve?${params.toString()}`);
+  const response = await fetch(url);
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    throw new Error("Erreur lors de la résolution du lien court");
+  }
+  const json: ShortlinkResponse = await response.json();
+  return json.data;
 }
 
-export function useAdminShortLinkStats(id: string | undefined) {
-  const query = useQuery({
-    queryKey: ["shortlinks", "admin-stats", id],
-    queryFn: () => fetchAdminShortLinkStats(id as string),
-    enabled: !!id,
+/**
+ * Crée un lien court pour cette URL longue. Le backend gère lui-même la déduplication
+ */
+export async function createShortlink(longUrl: string, category?: ShortlinkCategory): Promise<APIShortlink> {
+  const formData = new FormData();
+  formData.append("long_url", longUrl);
+  if (category) {
+    formData.append("category", category);
+  }
+
+  const url = resolveApiUrl(`/api/public/shortlinks/create`);
+  const response = await fetch(url, {
+    method: "POST",
+    body: formData,
   });
-  return { stats: query.data ?? null, isLoading: query.isLoading, isError: query.isError, refetch: query.refetch };
+  if (!response.ok) {
+    throw new Error("Erreur lors de la création du lien court");
+  }
+  const json: ShortlinkResponse = await response.json();
+  return json.data;
+}
+
+
+/**
+ * Rédiriger vers un lien court
+ */
+export async function fetchShortlinkByAlias(alias: string): Promise<APIShortlink | null> {
+  const url = resolveApiUrl(`/api/public/shortlinks/${alias}`);
+  const response = await fetch(url);
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    throw new Error("Erreur lors de la récupération du lien court");
+  }
+  const json: ShortlinkResponse = await response.json();
+  return json.data;
 }
