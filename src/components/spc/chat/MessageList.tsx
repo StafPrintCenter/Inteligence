@@ -7,11 +7,13 @@ export function MessageList({
   userName,
   loading,
   animatedId,
+  onShare,
 }: {
   messages: SpcMessage[];
   userName: string;
   loading: boolean;
   animatedId: string | null;
+  onShare?: (id: string) => void;
 }) {
   return (
     <div className="space-y-6">
@@ -21,6 +23,7 @@ export function MessageList({
           message={m}
           userName={userName}
           animate={m.id === animatedId}
+          {...(onShare ? { onShare } : {})}
         />
       ))}
       {loading && <ReasoningPanel reasoning="" live />}
