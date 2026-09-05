@@ -56,3 +56,7 @@ export type SpcConversation = {
 
 export const MAX_PINNED = 3;
 export const ANON_DAILY_QUOTA = 3;
+/** Messages autorisés par fenêtre pour un utilisateur connecté. */
+export const USER_BURST_QUOTA = 6;
+/** Durée du blocage après épuisement du quota (3 heures). */
+export const USER_COOLDOWN_MS = 3 * 60 * 60 * 1000;
