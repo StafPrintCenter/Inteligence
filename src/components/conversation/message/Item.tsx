@@ -28,18 +28,22 @@ function Attachments({ items }: { items: SpcAttachment[] }) {
         a.kind === "image" ? (
           <figure key={a.id} className="overflow-hidden rounded-xl border border-border bg-card">
             <img src={a.dataUrl} alt={a.name} className="w-full" />
-            <figcaption className="flex items-center justify-between gap-2 p-2 text-xs text-muted-foreground">
+            <figcaption className="flex items-center justify-between gap-2 p-2 text-xs text-foreground">
               <span className="truncate">{a.name}</span>
-              <span className="flex shrink-0 items-center gap-2">
+              <span className="flex shrink-0 items-center gap-1">
                 <button
                   type="button"
                   aria-label="Prévisualiser"
                   onClick={() => preview.open({ kind: "image", title: a.name, url: a.dataUrl })}
-                  className="text-primary"
+                  className="rounded-md p-1 text-primary transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   <Eye className="size-4" />
                 </button>
-                <a href={a.dataUrl} download={a.name} className="text-primary">
+                <a
+                  href={a.dataUrl}
+                  download={a.name}
+                  className="rounded-md p-1 text-primary transition-colors hover:bg-secondary hover:text-foreground"
+                >
                   <Download className="size-4" />
                 </a>
               </span>
@@ -48,7 +52,7 @@ function Attachments({ items }: { items: SpcAttachment[] }) {
         ) : (
           <div
             key={a.id}
-            className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs"
+            className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-xs text-foreground transition-colors has-[button:hover]:border-primary/50 has-[button:hover]:bg-accent"
           >
             <button
               type="button"
@@ -66,12 +70,16 @@ function Attachments({ items }: { items: SpcAttachment[] }) {
                     },
                 )
               }
-              className="flex min-w-0 flex-1 items-center gap-2 text-left"
+              className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-left"
             >
               <Eye className="size-4 shrink-0 text-primary" />
               <span className="truncate">{a.name}</span>
             </button>
-            <a href={a.dataUrl} download={a.name} className="shrink-0 text-primary">
+            <a
+              href={a.dataUrl}
+              download={a.name}
+              className="shrink-0 rounded-md p-1 text-primary transition-colors hover:bg-secondary hover:text-foreground"
+            >
               <Download className="size-4" />
             </a>
           </div>
