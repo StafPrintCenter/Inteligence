@@ -1,2 +1,2 @@
-export { SignInGateDialog } from "./SignInGateDialog";
-export { WelcomeScreen } from "./WelcomeScreen";
+export { SignInGateDialog } from "../../chat/message/SignInGateDialog";
+export { WelcomeScreen } from "../../chat/message/WelcomeScreen";
