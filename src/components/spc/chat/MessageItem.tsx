@@ -3,7 +3,7 @@ import { CopyButton } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
 import { usePreview } from "@/components/spc/preview-context";
 import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
-import { SpcLogo } from "@/components/spc/SpcLogo";
+import { SpcLogo } from "@/components/site/SpcLogo";
 import { decodeDataUrlText } from "@/lib/spc/dataurl";
 import { useTypewriter } from "@/lib/spc/useTypewriter";
 import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
