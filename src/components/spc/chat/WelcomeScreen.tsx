@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useMemo } from "react";
-import { SpcMobLogo } from "@/components/site/SpcLogo";
+import { SpcMobLogo } from "@/components/site";
 
 const SUGGESTIONS = [
   "Présente-moi l'écosystème STAF PRINT CENTER",
