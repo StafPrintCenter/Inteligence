@@ -3,7 +3,6 @@ export type SpcCommand = {
   key: string;
   label: string;
   description: string;
-  /** Texte inséré dans le composer à la place du token. */
   insert: string;
 };
 
