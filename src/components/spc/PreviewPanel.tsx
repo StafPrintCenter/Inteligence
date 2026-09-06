@@ -80,9 +80,14 @@ function PreviewBody({ item }: { item: PreviewItem }) {
     );
   }
   if (item.kind === "markdown") {
+    const md = item.content?.trim();
     return (
       <div className="spc-scroll h-full overflow-y-auto p-5">
-        <Markdown>{item.content ?? ""}</Markdown>
+        {md ? (
+          <Markdown>{md}</Markdown>
+        ) : (
+          <p className="text-sm text-muted-foreground">Aucun contenu à afficher.</p>
+        )}
       </div>
     );
   }
