@@ -1,29 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Info,
-  LogIn,
-  LogOut,
-  MessageSquarePlus,
-  MoreHorizontal,
-  Pencil,
-  Pin,
-  PinOff,
-  Search,
-  Trash2,
-} from "lucide-react";
+import { Info, LogIn, LogOut, MessageSquarePlus, MoreHorizontal, Pencil, Pin, PinOff, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { SpcDeskLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { SpcConversation, SpcUser } from "@/lib/spc/types";
-import { SPACE_LABELS } from "@/lib/spc/types";
+import { SPACE_LABELS, type SpcConversation, SpcUser } from "@/lib/spc/types";
 
 type Props = {
   open: boolean;
