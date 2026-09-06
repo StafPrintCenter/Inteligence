@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/components/spc/chat";
 import { ChatSidebar } from "@/components/spc/ChatSidebar";
-import { Composer } from "@/components/spc/Composer";
+import { ComposerBlock } from "@/components/spc/composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
 import { NoticeDialog } from "@/components/site";
 import { ShareDialog } from "@/components/site/ShareDialog";
@@ -72,7 +72,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
 
         <div className="border-t border-border bg-background px-3 py-3 sm:px-4">
           <div className="mx-auto w-full max-w-3xl">
-            <Composer
+            <ComposerBlock
               disabled={chat.loading || chat.blocked}
               canUpload={Boolean(chat.user)}
               quotaLabel={chat.quotaLabel}
