@@ -4,3 +4,4 @@ export { ShareDialog } from "./ShareDialog";
 export { QrCodeAutoPanel } from "./QrCodeAutoPanel";
 export { SpcMobLogo, SpcDeskLogo } from "./SpcLogo";
 export { ChatSidebar } from "./ChatSidebar";
+export { DetailsPanel } from "./DetailsPanel";
