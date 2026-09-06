@@ -5,6 +5,7 @@ import { Markdown } from "@/components/spc/Markdown";
 import { usePreview } from "@/components/spc/preview-context";
 import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
 import { SpcLogo } from "@/components/spc/SpcLogo";
+import { decodeDataUrlText } from "@/lib/spc/dataurl";
 import { useTypewriter } from "@/lib/spc/useTypewriter";
 import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
 
@@ -58,9 +59,12 @@ function Attachments({ items }: { items: SpcAttachment[] }) {
                   a.mimeType === "application/pdf"
                     ? { kind: "pdf", title: a.name, url: a.dataUrl }
                     : {
-                      kind: /\.md$/i.test(a.name) ? "markdown" : "text",
+                      kind:
+                        /\.md$/i.test(a.name) || a.mimeType === "text/markdown"
+                          ? "markdown"
+                          : "text",
                       title: a.name,
-                      content: a.extractedText ?? "",
+                      content: a.extractedText?.trim() || decodeDataUrlText(a.dataUrl),
                     },
                 )
               }
