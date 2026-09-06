@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-
 export type PreviewKind = "html" | "image" | "pdf" | "markdown" | "text";
 
 export type PreviewItem = {
