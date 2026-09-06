@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
  * Logo STAF PRINT CENTER.
  * `mc` = version thème clair, `mw` = version thème sombre.
  */
-export function SpcLogo({ className }: { className?: string }) {
+export function SpcMobLogo({ className }: { className?: string }) {
   const dark = useDarkMode();
   return (
     <img
