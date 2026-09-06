@@ -2,7 +2,7 @@ import { Download, ExternalLink, X } from "lucide-react";
 import { useCallback, useMemo, useState, type ReactNode } from "react";
 
 import { Markdown } from "@/components/spc/Markdown";
-import { PreviewContext, type PreviewItem } from "@/components/site/Preview/preview-context";
+import { PreviewContext, type PreviewItem } from "@/components/site/Preview/Context";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
