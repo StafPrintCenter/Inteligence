@@ -1,16 +1,9 @@
 import { Check, Copy, Link2, QrCode } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 import { QrCodeAutoPanel } from "@/components/spc/QrCodeAutoPanel";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { APIShortlink } from "@/data/shortlinks";
 import { getOrCreateShortlink } from "@/stores/useShortlinksStore";
