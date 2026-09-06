@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { useMemo } from "react";
-import { SpcLogo } from "@/components/site/SpcLogo";
+import { SpcMobLogo } from "@/components/site/SpcLogo";
 
 const SUGGESTIONS = [
   "Présente-moi l'écosystème STAF PRINT CENTER",
@@ -103,7 +103,7 @@ export function WelcomeScreen({
 
   return (
     <div className="py-12 text-center">
-      <SpcLogo className="mx-auto h-14 w-auto" />
+      <SpcMobLogo className="mx-auto h-14 w-auto" />
       <h1 className="mt-4 text-2xl font-bold">{greeting}</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Je suis SPC Intelligence, l'assistant IA de l'écosystème STAF PRINT CENTER.
