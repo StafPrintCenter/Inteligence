@@ -1,6 +1,7 @@
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { SITE } from "@/data/site";
 
 export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () => void }) {
   return (
@@ -13,7 +14,7 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
         </DialogHeader>
         <div className="space-y-3 text-sm text-muted-foreground">
           <p>
-            SPC Intelligence est l'assistant IA de STAF PRINT CENTER. Les réponses sont générées
+            SPC Intelligence est l'assistant IA de {SITE.name}. Les réponses sont générées
             automatiquement et peuvent contenir des erreurs : vérifiez toute information avant usage
             professionnel.
           </p>
