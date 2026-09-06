@@ -1,7 +1,7 @@
 import { Download, Eye, RotateCcw, Share2 } from "lucide-react";
 import { CopyButton, SpcMobLogo } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
-import { usePreview } from "@/components/site/Preview/preview-context";
+import { usePreview } from "@/components/site/Preview/Context";
 import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
 import { decodeDataUrlText } from "@/lib/spc/dataurl";
 import { useTypewriter } from "@/lib/spc/useTypewriter";
