@@ -1,7 +1,7 @@
 import { Paperclip, SendHorizonal } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AttachmentTray, STATUS_LABEL, CommandMenu } from "./";
-import { usePreview } from "@/components/site/Preview/preview-context";
+import { usePreview } from "@/components/site/Preview/Context";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { detectToken, SPC_COMMANDS } from "@/lib/spc/commands";
