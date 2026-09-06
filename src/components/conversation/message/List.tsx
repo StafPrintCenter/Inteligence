@@ -1,4 +1,4 @@
-import { MessageItem } from "@/components/conversation/message";
+import { MessageItem } from "@/components/conversation";
 import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
 import type { SpcMessage } from "@/lib/spc/types";
 
