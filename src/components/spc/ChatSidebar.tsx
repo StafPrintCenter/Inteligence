@@ -12,7 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
-import { SpcDeskLogo } from "@/components/site/SpcLogo";
+import { SpcDeskLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
