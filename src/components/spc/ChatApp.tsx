@@ -4,7 +4,7 @@ import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
 import { NoticeDialog } from "@/components/site";
-import { ShareDialog } from "@/components/spc/ShareDialog";
+import { ShareDialog } from "@/components/site/ShareDialog";
 import { acceptNotice } from "@/lib/spc/store";
 import { useSpcChat } from "@/lib/spc/useSpcChat";
 
