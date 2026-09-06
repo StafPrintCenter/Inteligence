@@ -1,6 +1,5 @@
 import { Sparkles } from "lucide-react";
 import { useMemo } from "react";
-
 import { SpcLogo } from "@/components/spc/SpcLogo";
 
 const SUGGESTIONS = [
