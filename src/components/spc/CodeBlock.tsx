@@ -88,7 +88,7 @@ export function CodeBlock({ code, language }: { code: string; language: string }
               }
               aria-label="Exécuter le code"
               title="Exécuter et prévisualiser"
-              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs font-medium text-primary hover:bg-accent"
+              className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs font-medium text-primary hover:bg-accent cursor-pointer"
             >
               <Play className="size-3.5" /> Exécuter
             </button>
@@ -108,7 +108,7 @@ export function CodeBlock({ code, language }: { code: string; language: string }
             onClick={download}
             aria-label="Télécharger le code"
             title="Télécharger le code"
-            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
           >
             <Download className="size-3.5" />
           </button>
