@@ -3,7 +3,7 @@ import { MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
-import { SpcLogo } from "@/components/site/SpcLogo";
+import { SpcMobLogo } from "@/components/site/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { decodeShare, type SharedPayload } from "@/lib/spc/share";
 import { SITE } from "@/data/site";
@@ -51,7 +51,7 @@ function SharedPage() {
       {/* Header fixe avec flou d'arrière-plan */}
       <header className="sticky top-0 z-50 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur support-[backdrop-filter]:bg-background/60">
         <span className="grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-card p-1">
-          <SpcLogo className="size-full" />
+          <SpcMobLogo className="size-full" />
         </span>
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-sm font-semibold">
@@ -84,7 +84,7 @@ function SharedPage() {
                     }`}
                   aria-hidden
                 >
-                  {m.role === "user" ? "V" : <SpcLogo className="size-full" />}
+                  {m.role === "user" ? "V" : <SpcMobLogo className="size-full" />}
                 </span>
                 <div
                   className={`flex min-w-0 flex-col ${m.role === "user" ? "items-end" : "items-start"}`}
