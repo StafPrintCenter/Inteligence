@@ -148,7 +148,7 @@ export function useSpcChat(conversationId?: string) {
               : c,
           ),
         );
-        if (result.fallback) toast.warning("Moteur de secours activé (clés API indisponibles).");
+        if (result.fallback) toast.warning("Moteur de secours activé.");
         setFailedConvId(null);
       } catch {
         setFailedConvId(conv.id);
