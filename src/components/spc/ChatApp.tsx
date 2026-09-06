@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/components/chat/message";
+import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/components/conversation/message";
 import { ComposerBlock } from "@/components/conversation/composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
 import { NoticeDialog, ShareDialog, ChatSidebar } from "@/components/site";
