@@ -1,12 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 /** Invite à se connecter lorsqu'une action dépasse les limites du mode visiteur. */
 export function SignInGateDialog({
@@ -28,8 +22,7 @@ export function SignInGateDialog({
           <DialogDescription>{reason}</DialogDescription>
         </DialogHeader>
         <p className="text-sm text-muted-foreground">
-          Connectez-vous à votre espace (Client, Apprenant, Formateur ou Administrateur) pour des
-          messages illimités, l'analyse de fichiers et la génération de documents et visuels.
+          Connectez-vous à votre espace pour plus de message, l'analyse de fichiers et la génération de documents et visuels.
         </p>
         <Button onClick={() => void navigate({ to: "/login" })}>Aller à la connexion</Button>
       </DialogContent>
