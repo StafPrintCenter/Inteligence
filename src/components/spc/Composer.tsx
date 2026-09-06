@@ -157,9 +157,8 @@ export function Composer({
           setDragging(false);
           void addFiles(e.dataTransfer.files);
         }}
-        className={`relative rounded-2xl border bg-card p-2 shadow-lg transition-colors ${
-          dragging ? "border-primary" : "border-border"
-        }`}
+        className={`relative rounded-2xl border bg-card p-2 shadow-lg transition-colors ${dragging ? "border-primary" : "border-border"
+          }`}
       >
         <CommandMenu suggestions={suggestions} highlight={highlight} onPick={applyCommand} />
 
