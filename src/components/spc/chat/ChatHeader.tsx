@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Info, Loader2, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import type { Theme } from "@/lib/spc/store";
 import { SPACE_LABELS, type SpcUser } from "@/lib/spc/types";
