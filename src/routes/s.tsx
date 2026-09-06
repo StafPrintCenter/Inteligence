@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { CopyButton } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
 import { SpcLogo } from "@/components/spc/SpcLogo";
