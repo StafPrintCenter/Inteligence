@@ -2,10 +2,6 @@ import logos from "@/assets/logos.json";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 import { cn } from "@/lib/utils";
 
-/**
- * Logo STAF PRINT CENTER.
- * `mc` = version thème clair, `mw` = version thème sombre.
- */
 export function SpcMobLogo({ className }: { className?: string }) {
   const dark = useDarkMode();
   return (
