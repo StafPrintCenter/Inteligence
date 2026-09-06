@@ -3,7 +3,7 @@ import { MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
-import { SpcLogo } from "@/components/spc/SpcLogo";
+import { SpcLogo } from "@/components/site/SpcLogo";
 import { Button } from "@/components/ui/button";
 import { decodeShare, type SharedPayload } from "@/lib/spc/share";
 import { SITE } from "@/data/site";
