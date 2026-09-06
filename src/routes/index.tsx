@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ChatApp } from "@/components/spc/ChatApp";
+import { ChatApp } from "@/components/conversation/ChatApp";
 import { SITE } from "@/data/site";
 
 const PAGE_TITLE = `SPC Intelligence - Assistant IA de ${SITE.name}`;
