@@ -1,12 +1,5 @@
 import { FileText, Image as ImageIcon } from "lucide-react";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import type { SpcConversation } from "@/lib/spc/types";
 
 export function DetailsPanel({
@@ -50,9 +43,9 @@ export function DetailsPanel({
             <p className="text-muted-foreground">
               {conversation
                 ? new Date(conversation.createdAt).toLocaleString("fr-FR", {
-                    dateStyle: "full",
-                    timeStyle: "short",
-                  })
+                  dateStyle: "full",
+                  timeStyle: "short",
+                })
                 : "—"}
             </p>
           </div>
