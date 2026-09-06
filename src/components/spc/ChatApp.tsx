@@ -1,9 +1,5 @@
 import { useEffect, useRef } from "react";
-
-import { ChatHeader } from "@/components/spc/chat/ChatHeader";
-import { MessageList } from "@/components/spc/chat/MessageList";
-import { SignInGateDialog } from "@/components/spc/chat/SignInGateDialog";
-import { WelcomeScreen } from "@/components/spc/chat/WelcomeScreen";
+import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/components/spc/chat";
 import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
