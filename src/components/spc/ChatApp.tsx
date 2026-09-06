@@ -3,7 +3,7 @@ import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/comp
 import { ChatSidebar } from "@/components/spc/ChatSidebar";
 import { Composer } from "@/components/spc/Composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
-import { NoticeDialog } from "@/components/spc/NoticeDialog";
+import { NoticeDialog } from "@/components/site/NoticeDialog";
 import { ShareDialog } from "@/components/spc/ShareDialog";
 import { acceptNotice } from "@/lib/spc/store";
 import { useSpcChat } from "@/lib/spc/useSpcChat";
