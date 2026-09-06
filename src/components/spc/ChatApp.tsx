@@ -2,8 +2,7 @@ import { useEffect, useRef } from "react";
 import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen } from "@/components/chat/message";
 import { ComposerBlock } from "@/components/chat/composer";
 import { DetailsPanel } from "@/components/spc/DetailsPanel";
-import { NoticeDialog } from "@/components/site";
-import { ShareDialog, ChatSidebar } from "@/components/site";
+import { NoticeDialog, ShareDialog, ChatSidebar } from "@/components/site";
 import { acceptNotice } from "@/lib/spc/store";
 import { useSpcChat } from "@/lib/spc/useSpcChat";
 
