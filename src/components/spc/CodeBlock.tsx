@@ -1,6 +1,5 @@
 import { Check, Copy, Download, Play } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { usePreview } from "@/components/spc/preview-context";
 
 const EXT: Record<string, string> = {
