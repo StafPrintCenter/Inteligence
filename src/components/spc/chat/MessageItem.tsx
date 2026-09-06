@@ -1,5 +1,5 @@
 import { Download, Eye, RotateCcw, Share2 } from "lucide-react";
-import { CopyButton } from "@/components/spc/CopyButton";
+import { CopyButton } from "@/components/site";
 import { Markdown } from "@/components/spc/Markdown";
 import { usePreview } from "@/components/spc/preview-context";
 import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
