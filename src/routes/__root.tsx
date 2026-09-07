@@ -66,7 +66,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </PreviewProvider>
-      <Toaster richColors position="top-center" />
+      <Toaster richColors position="top-center" closeButton />
     </QueryClientProvider>
   );
 }
