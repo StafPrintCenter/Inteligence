@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport } from './routes/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
 import { Route as SRouteImport } from './routes/s'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CConversationIdRouteImport } from './routes/c.$conversationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -38,6 +39,11 @@ const SRoute = SRouteImport.update({
   path: '/s',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CConversationIdRoute = CConversationIdRouteImport.update({
   id: '/c/$conversationId',
   path: '/c/$conversationId',
@@ -49,6 +55,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesByTo {
@@ -56,6 +63,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRoutesById {
@@ -64,6 +72,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/c/$conversationId': typeof CConversationIdRoute
 }
 export interface FileRouteTypes {
@@ -73,6 +82,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
+    | '/sitemap.xml'
     | '/c/$conversationId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -80,6 +90,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
+    | '/sitemap.xml'
     | '/c/$conversationId'
   id:
     | '__root__'
@@ -87,6 +98,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
+    | '/sitemap.xml'
     | '/c/$conversationId'
   fileRoutesById: FileRoutesById
 }
@@ -95,6 +107,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   SRoute: typeof SRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CConversationIdRoute: typeof CConversationIdRoute
 }
 
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$conversationId': {
       id: '/c/$conversationId'
       path: '/c/$conversationId'
@@ -144,6 +164,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute:
     LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute,
   SRoute: SRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CConversationIdRoute: CConversationIdRoute,
 }
 export const routeTree = rootRouteImport
