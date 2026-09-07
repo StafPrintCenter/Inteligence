@@ -25,11 +25,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: PAGE_TITLE },
       { property: "og:description", content: PAGE_DESC },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: `SPC Docs - ${SITE.name}` },
+      { property: "og:site_name", content: `SPC Intelligence - ${SITE.name}` },
       { property: "og:image", content: `${logo.meta}` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: `Documentation Officielle ${SITE.name}` },
+      { property: "og:image:alt", content: `SPC Intelligence - Assistant IA de ${SITE.name}` },
       { property: "og:url", content: `${SITE_LINK.aiUrl}` },
       { property: "og:locale", content: "fr_BJ" },
 
@@ -53,26 +53,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
     ],
     scripts: [
-      /* 1. Schéma WebPage / TechArticle pour le hub de documentation */
+      /* 1. Schéma SoftwareApplication pour le Chatbot IA */
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "WebPage",
-          "@id": `${SITE_LINK.aiUrl}/#webpage`,
+          "@type": "SoftwareApplication",
+          "@id": `${SITE_LINK.aiUrl}/#software`,
           url: SITE_LINK.aiUrl,
-          name: PAGE_TITLE,
+          name: `SPC Intelligence`,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "All",
           description: PAGE_DESC,
           inLanguage: "fr-BJ",
           publisher: {
             "@type": "Organization",
             name: SITE.name,
             logo: { "@type": "ImageObject", url: `${logo.meta}` }
-          },
-          mainEntity: {
-            "@type": "ItemList",
-            name: "Rubriques de documentation",
-            description: "Guides utilisateurs, procédures de suivi de commande, formations et support technique."
           }
         }),
       }
