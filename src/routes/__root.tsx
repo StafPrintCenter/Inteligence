@@ -4,7 +4,8 @@ import { type ReactNode } from "react";
 import { Toaster } from "sonner";
 import appCss from "../styles.css?url";
 import { PreviewProvider } from "@/components/site";
-import { SITE } from "@/data/site";
+import { SITE, SITE_LINK } from "@/data/site";
+import logo from "@/assets/logos.json";
 import { NotFoundComponent, ErrorComponent } from "@/components/errors";
 
 const PAGE_TITLE = `SPC Intelligence - Assistant IA de ${SITE.name}`;
