@@ -3,7 +3,7 @@ import { Cookie } from "lucide-react";
 import { SITE_LINK } from "@/data/site";
 
 const STORAGE_KEY = "spc_toolkit_cookie_consent_v1";
-const GA_ID = "G-MJ47YJ4V60";
+const GA_ID = "G-5PP91S5CSV";
 
 type Consent = "accepted" | "declined";
 
