@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CopyButton, SpcMobLogo } from "@/components/site";
-import { Markdown } from "@/components/spc/Markdown";
+import { Markdown } from "@/components/action";
 import { Button } from "@/components/ui/button";
 import { decodeShare, type SharedPayload } from "@/lib/spc/share";
 import { SITE } from "@/data/site";
