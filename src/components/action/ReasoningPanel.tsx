@@ -1,6 +1,6 @@
 import { Brain, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { Markdown } from "@/components/spc/Markdown";
+import { Markdown } from "@/components/action";
 
 export function ReasoningPanel({
   reasoning,
