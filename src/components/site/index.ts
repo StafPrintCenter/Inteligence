@@ -6,4 +6,4 @@ export { SpcMobLogo, SpcDeskLogo } from "./SpcLogo";
 export { ChatSidebar } from "./ChatSidebar";
 export { DetailsPanel } from "./DetailsPanel";
 export { PreviewProvider } from "./Preview/Provider";
-export { CookieConsent } from "./CookieConsent";
+export { updateGaConsent } from "./CookieConsent";
