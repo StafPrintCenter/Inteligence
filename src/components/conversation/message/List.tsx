@@ -1,5 +1,5 @@
 import { MessageItem } from "@/components/conversation";
-import { ReasoningPanel } from "@/components/spc/ReasoningPanel";
+import { ReasoningPanel } from "@/components/action";
 import type { SpcMessage } from "@/lib/spc/types";
 
 export function MessageList({
