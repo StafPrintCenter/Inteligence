@@ -29,7 +29,7 @@ export function ErrorComponent({ error, reset }: { error: Error; reset: () => vo
                 Erreur de rendu de la documentation
               </h1>
               <p className="text-sm text-muted-foreground mt-0.5">
-                Un problème technique est survenu lors du chargement de la documentation {SITE.name}.
+                Un problème technique est survenu lors du chargement de l'interface Intelligence de {SITE.name}.
               </p>
             </div>
           </div>
