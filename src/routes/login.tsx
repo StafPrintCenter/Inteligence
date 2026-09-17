@@ -71,7 +71,7 @@ function LoginPage() {
         </div>
         <div className="space-y-4">
           <h1 className="text-4xl font-black leading-tight">
-            L'assistant IA de l'écosystème <span className="text-primary">STAF PRINT CENTER</span>
+            L'assistant IA de l'écosystème <span className="text-primary">{SITE.name}</span>
           </h1>
           <p className="max-w-md text-muted-foreground">
             Analyse de documents, génération de visuels et de contenus, accompagnement des clients,
