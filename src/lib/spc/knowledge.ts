@@ -1,11 +1,14 @@
 /**
- * Base de connaissances STAF PRINT CENTER injectée dans le prompt système.
+ * Base de connaissances injectée dans le prompt système.
  * Sources : stafprint.com, stafprint.com/tools/ecosystem, docs.stafprint.com
+ * 
  */
-export const SPC_KNOWLEDGE = `# Base de connaissances STAF PRINT CENTER (interne, à utiliser pour répondre avec précision)
+import { SITE } from "@/data/site";
+
+export const SPC_KNOWLEDGE = `# Base de connaissances ${SITE.name} (interne, à utiliser pour répondre avec précision)
 
 ## Identité
-- STAF PRINT CENTER : studio de création et d'impression basé à Porto-Novo, Bénin, depuis 2019 (~7 ans d'ancrage local).
+- ${SITE.name} : studio de création et d'impression basé à Porto-Novo, Bénin, depuis 2019 (~7 ans d'ancrage local).
 - Positionnement : « On donne forme à vos idées en impression. » De la carte de visite à la bâche grand format, du logo au site web — un seul interlocuteur.
 - Réputation : 4,9/5 sur 120+ avis Google (https://search.google.com/local/reviews?placeid=ChIJPb8nmaNbOxARzgX2S_y9o_M), +220 marques, institutions et créateurs béninois accompagnés.
 - Atouts : qualité premium (fichiers et finitions soignés), délais courts (production 48–72h sur la plupart des supports), prix accessibles alignés sur le marché local, devis transparent, expertise locale.
@@ -38,13 +41,14 @@ Précise toujours que les dates, tarifs et places disponibles doivent être vér
 
 ## Écosystème (https://stafprint.com/tools/ecosystem) — 7 plateformes
 1. Site vitrine — stafprint.com — services, réalisations, formations, blog, contact. (Disponible)
-2. SPC Shortener — go.stafprint.com — raccourcisseur de liens officiel, réservé aux contenus STAF PRINT CENTER. (Disponible)
+2. SPC Shortener — go.stafprint.com — raccourcisseur de liens officiel, réservé aux contenus ${SITE.name}. (Disponible)
 3. Espace Formateur — instructor.stafprint.com — préparer, animer et évaluer les sessions : parcours, supports, présence, notation, suivi des apprenants. (En construction)
 4. Espace Apprenant — student.stafprint.com — s'inscrire à une formation, suivre ses cours, rendre ses devoirs, récupérer ses attestations (Student Hub). (En construction)
 5. SPC Meet — meet.stafprint.com — visioconférence pour réunions et sessions à distance. (En construction)
 6. SPC Arcade — arcade.stafprint.com — hub de 10 jeux de simulation PAO/Web/Design, XP, badges, niveaux. (Disponible)
 7. Documentation officielle — docs.stafprint.com — guides, procédures, ressources techniques. (Disponible)
 Et ai.stafprint.com : SPC Intelligence, l'assistant IA de l'écosystème (cette application).
+NB : les écosystèmes evoluent. Il faut parfois vérifier pour avoir la dernière version.
 
 ## Documentation (https://docs.stafprint.com) — 33 articles + 31 articles d'aide
 - Site Vitrine : 12 articles (ex. s'inscrire à la newsletter, demander un devis) — /docs/landing/...
