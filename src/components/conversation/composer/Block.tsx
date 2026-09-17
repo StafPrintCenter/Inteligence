@@ -8,6 +8,7 @@ import { detectToken, SPC_COMMANDS } from "@/lib/spc/commands";
 import { extractAttachmentText } from "@/lib/spc/extract";
 import { uid } from "@/lib/spc/store";
 import type { SpcAttachment } from "@/lib/spc/types";
+import { SITE } from "@/data/site";
 
 const ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.pdf,.txt,.md,.csv,.json";
 
@@ -242,7 +243,7 @@ export function ComposerBlock({
       </div>
 
       <p className="text-center text-[0.7rem] text-muted-foreground">
-        SPC Intelligence · Vérifiez les informations importantes.
+        {SITE.tool} · Vérifiez les informations importantes.
       </p>
     </div>
   );
