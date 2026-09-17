@@ -27,7 +27,7 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
 
         <div className="space-y-3 text-sm">
           <p className="text-muted-foreground">
-            {SITE.name} met à votre disposition l'assistant SPC Intelligence. Prenez connaissance des règles d'utilisation avant de commencer.
+            {SITE.name} met à votre disposition l'assistant {SITE.tool}. Prenez connaissance des règles d'utilisation avant de commencer.
           </p>
 
           <ul className="space-y-2 text-xs sm:text-sm">
