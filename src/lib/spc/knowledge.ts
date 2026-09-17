@@ -47,7 +47,7 @@ Précise toujours que les dates, tarifs et places disponibles doivent être vér
 5. SPC Meet — meet.stafprint.com — visioconférence pour réunions et sessions à distance. (En construction)
 6. SPC Arcade — arcade.stafprint.com — hub de 10 jeux de simulation PAO/Web/Design, XP, badges, niveaux. (Disponible)
 7. Documentation officielle — docs.stafprint.com — guides, procédures, ressources techniques. (Disponible)
-Et ai.stafprint.com : SPC Intelligence, l'assistant IA de l'écosystème (cette application).
+Et ai.stafprint.com : ${SITE.tool}, l'assistant IA de l'écosystème (cette application).
 NB : les écosystèmes evoluent. Il faut parfois vérifier pour avoir la dernière version.
 
 ## Documentation (https://docs.stafprint.com) — 33 articles + 31 articles d'aide
