@@ -30,7 +30,7 @@ export function makeGeneratedImage(prompt: string): SpcAttachment {
 <rect width="960" height="540" fill="url(#g)"/>
 <circle cx="820" cy="120" r="140" fill="#ffffff" opacity="0.08"/>
 <circle cx="140" cy="470" r="180" fill="#ffffff" opacity="0.06"/>
-<text x="60" y="250" fill="#ffffff" font-family="sans-serif" font-size="46" font-weight="700">SPC Intelligence</text>
+<text x="60" y="250" fill="#ffffff" font-family="sans-serif" font-size="46" font-weight="700">${SITE.tool}</text>
 <text x="60" y="310" fill="#ffffff" font-family="sans-serif" font-size="26" opacity="0.85">${label}</text>
 <text x="60" y="480" fill="#ffffff" font-family="sans-serif" font-size="20" opacity="0.6">${SITE.name} · visuel généré</text>
 </svg>`;
@@ -47,7 +47,7 @@ export function makeGeneratedImage(prompt: string): SpcAttachment {
 }
 
 export function makeGeneratedDocument(prompt: string, content: string): SpcAttachment {
-  const md = `# Document SPC Intelligence\n\n**Demande :** ${prompt}\n\n---\n\n${content}\n\n---\n\n*${SITE.name} — ai.stafprint.com*\n`;
+  const md = `# Document ${SITE.tool}\n\n**Demande :** ${prompt}\n\n---\n\n${content}\n\n---\n\n*${SITE.name} — ai.stafprint.com*\n`;
   return {
     id: uid(),
     name: `spc-document-${Date.now()}.md`,
