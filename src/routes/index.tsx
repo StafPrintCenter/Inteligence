@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatApp } from "@/components/conversation";
 import { SITE } from "@/data/site";
 
-const PAGE_TITLE = `SPC Intelligence - Assistant IA de ${SITE.name}`;
+const PAGE_TITLE = `${SITE.tool} - Assistant IA de ${SITE.name}`;
 const PAGE_DESC = `Assistant IA de l'écosystème ${SITE.name} :  chat, analyse et génération.`;
 
 export const Route = createFileRoute("/")({
