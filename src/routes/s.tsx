@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { decodeShare, type SharedPayload } from "@/lib/spc/share";
 import { SITE } from "@/data/site";
 
-const PAGE_TITLE = `Conversation partagée · SPC Intelligence`;
-const PAGE_DESC = `Lecture d'une conversation partagée avec SPC Intelligence, l'assistant IA de ${SITE.name}.`;
+const PAGE_TITLE = `Conversation partagée · ${SITE.tool}`;
+const PAGE_DESC = `Lecture d'une conversation partagée avec ${SITE.tool}, l'assistant IA de ${SITE.name}.`;
 
 export const Route = createFileRoute("/s")({
   head: () => ({
@@ -41,7 +41,7 @@ function SharedPage() {
       }
       setPayload(data);
       setState("ready");
-      document.title = `${data.title} · Partagé — SPC Intelligence`;
+      document.title = `${data.title} · Partagé — ${SITE.tool}`;
     });
   }, []);
 
@@ -56,7 +56,7 @@ function SharedPage() {
           <h1 className="truncate text-sm font-semibold">
             {payload?.title ?? "Conversation partagée"}
           </h1>
-          <p className="text-xs text-primary">Lecture seule · SPC Intelligence</p>
+          <p className="text-xs text-primary">Lecture seule · ${SITE.tool}</p>
         </div>
         <Button asChild size="sm">
           <Link to="/">
