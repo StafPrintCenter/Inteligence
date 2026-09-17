@@ -1,11 +1,9 @@
 import { useEffect, useRef } from "react";
-import {
-  ChatHeader, MessageList, SignInGateDialog, WelcomeScreen,
-  ComposerBlock
-} from "@/components/conversation";
+import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen, ComposerBlock } from "@/components/conversation";
 import { NoticeDialog, ShareDialog, ChatSidebar, DetailsPanel } from "@/components/site";
 import { acceptNotice } from "@/lib/spc/store";
 import { useSpcChat } from "@/lib/spc/useSpcChat";
+import { SITE } from "@/data/site";
 
 export function ChatApp({ conversationId }: { conversationId?: string }) {
   const chat = useSpcChat(conversationId);
@@ -37,7 +35,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <ChatHeader
-          title={chat.active?.title ?? "SPC Intelligence"}
+          title={chat.active?.title ?? `${SITE.tool}`}
           user={chat.user}
           theme={chat.theme}
           hasConversation={chat.hasMessages}
