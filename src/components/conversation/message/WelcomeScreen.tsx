@@ -4,7 +4,7 @@ import { SpcMobLogo } from "@/components/site";
 import { SITE } from "@/data/site";
 
 const SUGGESTIONS = [
-  "Présente-moi l'écosystème STAF PRINT CENTER",
+  `Présente-moi l'écosystème ${SITE.name}`,
   "Quels services d'impression proposez-vous ?",
   "Rédige un devis type pour 500 flyers A5",
   "Comment fonctionne l'espace apprenant ?",
