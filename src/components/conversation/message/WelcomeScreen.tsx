@@ -107,7 +107,7 @@ export function WelcomeScreen({
       <SpcMobLogo className="mx-auto h-14 w-auto" />
       <h1 className="mt-4 text-2xl font-bold">{greeting}</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Je suis SPC Intelligence, l'assistant IA de l'écosystème {SITE.name}.
+        Je suis {SITE.tool}, l'assistant IA de l'écosystème {SITE.name}.
       </p>
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
         {suggestions.map((s) => (
