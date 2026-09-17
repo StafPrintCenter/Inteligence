@@ -108,8 +108,8 @@ export function useSpcChat(conversationId?: string) {
   useEffect(() => {
     if (typeof document === "undefined") return;
     document.title = active?.title
-      ? `${active.title} · SPC Intelligence`
-      : `SPC Intelligence — Assistant IA de ${SITE.name}`;
+      ? `${active.title} · ${SITE.tool}`
+      : `${SITE.tool} — Assistant IA de ${SITE.name}`;
   }, [active?.title]);
 
   const openGate = useCallback((reason: string) => {
@@ -153,7 +153,7 @@ export function useSpcChat(conversationId?: string) {
         setFailedConvId(null);
       } catch {
         setFailedConvId(conv.id);
-        toast.error("Impossible de contacter SPC Intelligence. Réessayez.");
+        toast.error(`Impossible de contacter ${SITE.tool}. Réessayez.`);
       } finally {
         setLoading(false);
       }
