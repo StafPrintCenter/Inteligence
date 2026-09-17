@@ -1,6 +1,7 @@
 import { Brain, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Markdown } from "@/components/action";
+import { SITE } from "@/data/site";
 
 export function ReasoningPanel({
   reasoning,
@@ -24,7 +25,7 @@ export function ReasoningPanel({
       >
         <Brain className={`size-4 text-primary ${live ? "animate-pulse" : ""}`} />
         {live
-          ? "SPC Intelligence réfléchit…"
+          ? `${SITE.tool} réfléchit…`
           : reasoning.trim()
             ? "Raisonnement de l'IA"
             : "Sites consultés"}
