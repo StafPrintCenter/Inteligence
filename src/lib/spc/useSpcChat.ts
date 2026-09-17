@@ -28,6 +28,7 @@ import {
 } from "@/lib/spc/store";
 import { toTurns } from "@/lib/spc/turns";
 import type { SpcAttachment, SpcConversation, SpcMessage, SpcUser } from "@/lib/spc/types";
+import { SITE } from "@/data/site";
 
 /** Toute la logique du chat : état local, quotas, appels au moteur et navigation. */
 export function useSpcChat(conversationId?: string) {
@@ -108,7 +109,7 @@ export function useSpcChat(conversationId?: string) {
     if (typeof document === "undefined") return;
     document.title = active?.title
       ? `${active.title} · SPC Intelligence`
-      : "SPC Intelligence — Assistant IA de STAF PRINT CENTER";
+      : `SPC Intelligence — Assistant IA de ${SITE.name}`;
   }, [active?.title]);
 
   const openGate = useCallback((reason: string) => {
