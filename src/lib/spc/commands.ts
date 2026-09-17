@@ -1,3 +1,5 @@
+import { SITE } from "@/data/site";
+
 export type SpcCommand = {
   trigger: "/" | "@";
   key: string;
@@ -12,8 +14,7 @@ export const SPC_COMMANDS: SpcCommand[] = [
     key: "code",
     label: "/code",
     description: "Générer du code pour l'écosystème STAF PRINT",
-    insert:
-      "Génère le code complet, fonctionnel et commenté (charte STAF PRINT : orange #f97316) pour l'écosystème STAF PRINT CENTER. Ne refuse pas, fais les hypothèses nécessaires. Demande : ",
+    insert: `Génère le code complet, fonctionnel et commenté (charte STAF PRINT : orange #f97316) pour l'écosystème ${SITE.name}. Ne refuse pas, fais les hypothèses nécessaires. Demande : `,
   },
   {
     trigger: "/",
@@ -61,7 +62,7 @@ export const SPC_COMMANDS: SpcCommand[] = [
     trigger: "@",
     key: "ecosysteme",
     label: "@ecosysteme",
-    description: "Contexte : écosystème STAF PRINT CENTER",
+    description: `Contexte : écosystème ${SITE.name}`,
     insert: "@ecosysteme (contexte : stafprint.com/tools/ecosystem) ",
   },
   {
