@@ -35,8 +35,12 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/login", lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
         ];
 
-        const urls = entries.map((e) =>
-          [
+        // 4. Génération XML
+        const urls = entries.map((e) => {
+          const cleanPath = e.path.startsWith("/") ? e.path : `/${e.path}`;
+          const fullUrl = `${origin}${cleanPath}`;
+
+          return [
             `  <url>`,
             `    <loc>${BASE_URL}${e.path}</loc>`,
             e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
