@@ -209,7 +209,7 @@ export function ChatSidebar({
 
           <div className="border-t border-sidebar-border p-3">
             {user ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 pt-1 border-t border-sidebar-border/50">
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
                   {user.name.slice(0, 1).toUpperCase()}
                 </span>
