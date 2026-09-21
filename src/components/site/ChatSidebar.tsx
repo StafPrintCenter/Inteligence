@@ -167,7 +167,7 @@ export function ChatSidebar({
         )}
       >
         <div className="flex w-72 flex-1 flex-col overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-1.5 border border-b bg-background">
+          <div className="flex items-center gap-2 border-b bg-background px-4 py-1.5">
             <SpcDeskLogo className="h-12 w-auto" />
           </div>
 
