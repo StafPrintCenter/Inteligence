@@ -2,13 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { BookOpen, Info, LogIn, LogOut, MessageSquarePlus, MoreHorizontal, Pencil, Pin, PinOff, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { SpcDeskLogo } from "@/components/site";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  LinkedinIcon,
-  WhatsAppIcon,
-  XIcon,
-} from "@/components/site/icons";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "@/components/site/icons";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
