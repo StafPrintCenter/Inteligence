@@ -189,7 +189,7 @@ export function ChatSidebar({
           <div className="spc-scroll mt-3 flex-1 space-y-4 overflow-y-auto px-3 pb-4">
             {pinned.length > 0 && (
               <div className="space-y-1">
-                <p className="px-2 text-[0.7rem] font-semibold tracking-wide text-muted-foreground uppercase">
+                <p className="px-2 text-[0.7rem] font-semibold uppercase tracking-wide text-muted-foreground">
                   Épinglées
                 </p>
                 {pinned.map(renderItem)}
