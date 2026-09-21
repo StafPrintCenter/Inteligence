@@ -6,6 +6,7 @@ import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { SITE, SITE_LINK } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { SPACE_LABELS, type SpcConversation, SpcUser } from "@/lib/spc/types";
 
