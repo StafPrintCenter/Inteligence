@@ -196,7 +196,7 @@ export function ChatSidebar({
               </div>
             )}
             <div className="space-y-1">
-              <p className="px-2 text-[0.7rem] font-semibold tracking-wide text-muted-foreground uppercase">
+              <p className="px-2 text-[0.7rem] font-semibold uppercase tracking-wide text-muted-foreground">
                 Discussions
               </p>
               {others.length === 0 && pinned.length === 0 ? (
