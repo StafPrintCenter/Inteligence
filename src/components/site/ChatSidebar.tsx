@@ -52,6 +52,14 @@ export function ChatSidebar({
   const pinned = filtered.filter((c) => c.pinned);
   const others = filtered.filter((c) => !c.pinned);
 
+  const socialLinks = [
+    { label: "Facebook", href: SITE.socials.facebook, Icon: FacebookIcon },
+    { label: "Instagram", href: SITE.socials.instagram, Icon: InstagramIcon },
+    { label: "LinkedIn", href: SITE.socials.linkedin, Icon: LinkedinIcon },
+    { label: "X", href: SITE.socials.x, Icon: XIcon },
+    { label: "WhatsApp", href: SITE.whatsappLink, Icon: WhatsAppIcon },
+  ];
+
   const commitRename = (id: string) => {
     const next = draft.trim();
     if (next) onRename(id, next);
