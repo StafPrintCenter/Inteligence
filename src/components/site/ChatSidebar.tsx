@@ -178,7 +178,7 @@ export function ChatSidebar({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Rechercher…"
-                className="h-9 pl-8 bg-card"
+                className="h-9 bg-card pl-8"
               />
             </div>
             <Button className="w-full justify-start" onClick={onNew}>
