@@ -207,7 +207,37 @@ export function ChatSidebar({
             </div>
           </div>
 
-          <div className="border-t border-sidebar-border p-3">
+          {/* Pied de page du menu latéral */}
+          <div className="space-y-3 border-t border-sidebar-border p-3">
+            {/* Documentation & Réseaux sociaux */}
+            <div className="flex items-center justify-between text-xs">
+              <a
+                href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
+              >
+                <BookOpen className="size-3.5" />
+                <span>Documentation</span>
+              </a>
+
+              <div className="flex items-center gap-1">
+                {socialLinks.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="rounded p-1 text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-primary"
+                  >
+                    <Icon className="size-3.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Informations utilisateur / Connexion */}
             {user ? (
               <div className="flex items-center gap-2 pt-1 border-t border-sidebar-border/50">
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
