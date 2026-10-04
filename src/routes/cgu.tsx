@@ -115,8 +115,8 @@ function CguPage() {
           </p>
           <p className="text-muted-foreground">
             Seuls les devis formels émis par le service commercial de {SITE.name} (par email officiel à{" "}
-            <a href="mailto:contact@stafprint.com" className="text-primary underline underline-offset-4">
-              contact@stafprint.com
+            <a href={`mailto:${SITE.email}`} className="text-primary underline underline-offset-4">
+              {SITE.email}
             </a>{" "}
             ou validés par WhatsApp officiel au{" "}
             <a href="https://wa.me/2290160300607" className="text-primary underline underline-offset-4">
