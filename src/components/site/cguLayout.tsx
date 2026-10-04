@@ -92,15 +92,6 @@ export function CguLayout({ children }: CguLayoutProps) {
               >
                 Confidentialité
               </a>
-
-              <span className="text-muted-foreground/50">·</span>
-
-              <Link
-                to="/cgu"
-                className="underline underline-offset-4 transition-colors hover:text-primary"
-              >
-                Conditions Générales d'Utilisation
-              </Link>
             </nav>
 
             <span className="hidden text-muted-foreground/30 sm:inline">|</span>
