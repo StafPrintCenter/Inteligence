@@ -209,6 +209,7 @@ export function ChatSidebar({
 
           {/* Pied de page du menu latéral */}
           <div className="space-y-3 border-t border-sidebar-border p-3">
+            {/* Réseaux sociaux */}
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground font-medium">
                 Nous suivre
