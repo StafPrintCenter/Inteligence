@@ -52,9 +52,7 @@ function CguPage() {
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono">{stripProtocol(SITE_LINK.aiUrl)}</code>) est l'assistant conversationnel officiel développé pour le compte de <strong>{SITE.name}</strong>, studio de création, d'impression et centre de formation professionnelle basé à Porto-Novo, République du Bénin.
           </p>
           <p className="text-muted-foreground">
-            Ce service a pour objectif d'orienter les utilisateurs dans le choix de supports d'impression,
-            d'estimer des besoins techniques (bâches, enseignes, papeterie, roll-up), de renseigner sur les catalogues
-            de formation et d'analyser des documents graphiques préparatoires.
+            Ce service a pour objectif d'orienter les utilisateurs dans le choix de supports d'impression, d'estimer des besoins techniques (bâches, enseignes, papeterie, roll-up), de renseigner sur les catalogues de formation et d'analyser des documents graphiques préparatoires.
           </p>
         </section>
 
