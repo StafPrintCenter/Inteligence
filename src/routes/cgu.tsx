@@ -62,8 +62,7 @@ function CguPage() {
             2. Périmètre d'intervention strict de l'intelligence artificielle
           </h2>
           <p className="text-muted-foreground">
-            L'assistant {SITE.tool} est configuré avec un périmètre d'action strictly délimité aux activités
-            de {SITE.name} :
+            L'assistant {SITE.tool} est configuré avec un périmètre d'action strictly délimité aux activités de {SITE.name} :
           </p>
           <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
             <li>Travaux d'impression, signalétique, finitions et spécifications PAO.</li>
