@@ -220,6 +220,14 @@ export function ChatSidebar({
                 <BookOpen className="size-3.5" />
                 <span>Documentation</span>
               </a>
+            </div>
+
+            <div className="flex items-center justify-between text-xs">
+              <span
+                className="inline-flex items-center gap-1.5 text-muted-foreground font-medium"
+              >
+                Nous suivre
+              </span>
 
               <div className="flex items-center gap-1">
                 {socialLinks.map(({ label, href, Icon }) => (
