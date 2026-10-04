@@ -204,6 +204,6 @@ function CguPage() {
           </div>
         </section>
       </div>
-    </CguLayout>
+    </CguLayout >
   );
 }
