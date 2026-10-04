@@ -6,21 +6,10 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { chatWithSpc } from "@/lib/spc/gemini.functions";
 import { detectGeneration, makeGeneratedDocument, makeGeneratedImage } from "@/lib/spc/generation";
 import {
-  canPin,
-  consumeAnonQuota,
-  consumeUserQuota,
-  formatCooldown,
-  getAnonQuota,
-  getTheme,
-  getUser,
-  getUserQuota,
-  loadConversations,
-  newConversation,
-  noticeAccepted,
-  saveConversations,
-  setTheme,
-  signOut,
-  titleFrom,
+  canPin, consumeAnonQuota, consumeUserQuota,
+  formatCooldown, getAnonQuota,
+  getTheme, getUser, getUserQuota, loadConversations, newConversation, noticeAccepted, saveConversations, setTheme,
+  signOut, titleFrom,
   uid,
   type Theme, type UserQuotaState,
 } from "@/lib/spc/store";
