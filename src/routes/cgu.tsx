@@ -49,9 +49,7 @@ function CguPage() {
           </h2>
           <p className="text-muted-foreground">
             La plateforme <strong>{SITE.tool}</strong> (accessible à l'adresse{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono">ai.stafprint.com</code>) est
-            l'assistant conversationnel officiel développé pour le compte de <strong>STAF PRINT CENTER</strong>,
-            studio de création, d'impression et centre de formation professionnelle basé à Porto-Novo, République du Bénin.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono">{stripProtocol(SITE_LINK.aiUrl)}</code>) est l'assistant conversationnel officiel développé pour le compte de <strong>{SITE.name}</strong>, studio de création, d'impression et centre de formation professionnelle basé à Porto-Novo, République du Bénin.
           </p>
           <p className="text-muted-foreground">
             Ce service a pour objectif d'orienter les utilisateurs dans le choix de supports d'impression,
