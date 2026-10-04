@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Info, LogIn, LogOut, MessageSquarePlus, MoreHorizontal, Pencil, Pin, PinOff, Search, Trash2 } from "lucide-react";
+import { BookOpen, Info, LogIn, LogOut, MessageSquarePlus, MoreHorizontal, Pencil, Pin, PinOff, Search, Trash2, ScrollText, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { SpcDeskLogo } from "@/components/site";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "@/components/site/icons";
