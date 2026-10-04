@@ -137,7 +137,7 @@ function CguPage() {
             autorisations nécessaires sur ce document.
           </p>
           <p className="text-muted-foreground">
-            STAF PRINT CENTER ne revendique aucun droit de propriété sur vos fichiers, vos logos ou les textes transmis.
+            {SITE.name} ne revendique aucun droit de propriété sur vos fichiers, vos logos ou les textes transmis.
             Les fichiers téléversés sont traités dans le cadre unique de votre session d'assistance.
           </p>
         </section>
