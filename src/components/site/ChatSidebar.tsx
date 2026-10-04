@@ -236,7 +236,7 @@ export function ChatSidebar({
               <Link to="/cgu"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
               >
-                <BookOpen className="size-3.5" />
+                <ScrollText className="size-3.5" />
                 <span>CGU</span>
               </Link>
 
