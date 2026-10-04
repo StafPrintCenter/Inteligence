@@ -183,7 +183,7 @@ function CguPage() {
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
             >
               <Phone className="size-4" />
-              <span>WhatsApp : +229 01 60 30 06 07</span>
+              <span>WhatsApp : {SITE.whatsapp}</span>
             </a>
             <a
               href={`mailto:${SITE.email}`}
