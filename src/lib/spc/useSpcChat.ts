@@ -278,10 +278,12 @@ export function useSpcChat(conversationId?: string) {
   const quotaLabel = !user
     ? `${quota.left}/${quota.max} messages restants aujourd'hui · connectez-vous pour plus de messages`
     : userQuota?.blocked
-      ? `Limite atteinte (${userQuota.max} messages) · reprise dans ${formatCooldown(userQuota.blockedUntil)}, vers ${new Date(userQuota.blockedUntil).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
-      : userQuota
-        ? `${userQuota.left}/${userQuota.max} messages avant une pause de 3 h`
-        : null;
+      ? `Limite de ${userQuota.max} messages atteinte · renouvellement dans ${formatCooldown(userQuota.blockedUntil)}, vers ${new Date(userQuota.blockedUntil).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
+      : userQuota && userQuota.used > 0
+        ? `${userQuota.left}/${userQuota.max} messages · renouvellement à ${new Date(userQuota.windowStart + 3 * 60 * 60 * 1000).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
+        : userQuota
+          ? `${userQuota.left}/${userQuota.max} messages disponibles`
+          : null;
 
   const retryMessageId =
     active && failedConvId === active.id
