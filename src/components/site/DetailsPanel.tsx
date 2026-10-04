@@ -46,7 +46,7 @@ export function DetailsPanel({
                   dateStyle: "full",
                   timeStyle: "short",
                 })
-                : "—"}
+                : "-"}
             </p>
           </div>
 
