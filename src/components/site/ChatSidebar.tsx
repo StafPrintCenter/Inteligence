@@ -209,6 +209,29 @@ export function ChatSidebar({
 
           {/* Pied de page du menu latéral */}
           <div className="space-y-3 border-t border-sidebar-border p-3">
+            <div className="flex items-center justify-between text-xs">
+              <span
+                className="inline-flex items-center gap-1.5 text-muted-foreground font-medium"
+              >
+                Nous suivre
+              </span>
+
+              <div className="flex items-center gap-1">
+                {socialLinks.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="rounded p-1 text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-primary"
+                  >
+                    <Icon className="size-3.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
             {/* Documentation & Réseaux sociaux */}
             <div className="flex items-center justify-between text-xs">
               <a
