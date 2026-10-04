@@ -7,3 +7,4 @@ export { ChatSidebar } from "./ChatSidebar";
 export { DetailsPanel } from "./DetailsPanel";
 export { PreviewProvider } from "./Preview/Provider";
 export { updateGaConsent } from "./CookieConsent";
+export { CguLayout } from "./CguLayout";
