@@ -36,7 +36,7 @@ function CguPage() {
           Conditions Générales d'Utilisation (CGU)
         </h1>
         <p className="text-sm text-muted-foreground">
-          Dernière mise à jour : {lastUpdated} · Plateforme officielle STAF PRINT CENTER
+          Dernière mise à jour : {lastUpdated}
         </p>
       </div>
 
