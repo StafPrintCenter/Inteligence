@@ -190,7 +190,7 @@ function CguPage() {
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
             >
               <Mail className="size-4" />
-              <span>contact@stafprint.com</span>
+              <span>{SITE.email}</span>
             </a>
             <a
               href="https://docs.stafprint.com"
