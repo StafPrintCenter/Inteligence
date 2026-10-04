@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, BookOpen, Clock, FileText, Mail, Phone, ShieldCheck } from "lucide-react";
-
+import { ArrowLeft, BookOpen, Clock, Mail, Phone, ShieldCheck } from "lucide-react";
 import { SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
 
