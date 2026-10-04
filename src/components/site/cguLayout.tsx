@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { SpcMobLogo } from "@/components/site";
+import { SpcMobLogo, SpcDeskLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "@/components/site/icons";
 import { SITE, SITE_LINK } from "@/data/site";
