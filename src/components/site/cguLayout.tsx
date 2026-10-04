@@ -39,7 +39,7 @@ export function CguLayout({ children }: CguLayoutProps) {
 
       {/* Pied de page */}
       <footer className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        <p>© 2026 {SITE.name} · Tous droits réservés · Porto-Novo, Bénin.</p>
+        <p>© 2026 {SITE.tool} · Tous droits réservés · Porto-Novo, Bénin.</p>
       </footer>
     </div>
   );
