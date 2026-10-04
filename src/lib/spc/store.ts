@@ -121,9 +121,11 @@ export function getUserQuota(userId: string): UserQuotaState {
 export function consumeUserQuota(userId: string): UserQuotaState {
   const current = getUserQuota(userId);
   if (current.blocked) return current;
-  const used = current.used + 1;
-  const blockedUntil = used >= USER_BURST_QUOTA ? Date.now() + USER_COOLDOWN_MS : 0;
-  write(KEYS.userQuota, { userId, used, blockedUntil } satisfies UserQuota);
+  const now = Date.now();
+  const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, windowStart: 0 });
+  /* Premier envoi de la fenêtre : on démarre le compte des 3 h maintenant */
+  const windowStart = current.used === 0 ? now : raw.windowStart;
+  write(KEYS.userQuota, { userId, used: current.used + 1, windowStart });
   return getUserQuota(userId);
 }
 
