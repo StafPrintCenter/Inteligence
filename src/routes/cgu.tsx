@@ -99,8 +99,7 @@ function CguPage() {
                 <span>Membres connectés</span>
               </div>
               <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
-                Fenêtre glissante de <strong>6 messages par session de 3 heures</strong>. Le compteur se réinitialise
-                3 heures après l'envoi du premier message.
+                Fenêtre glissante de <strong>6 messages par session de 3 heures</strong>. Le compteur se réinitialise 3 heures après l'envoi du premier message.
               </p>
             </div>
           </div>
