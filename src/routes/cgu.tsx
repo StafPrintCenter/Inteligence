@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Clock, Mail, Phone, ShieldCheck } from "lucide-react";
 import { CguLayout } from "@/components/site/cguLayout";
-import { SITE } from "@/data/site";
+import { SITE, SITE_LINK } from "@/data/site";
+import { stripProtocol } from "@/lib/domain";
 
 const PAGE_TITLE = `Conditions Générales d'Utilisation - ${SITE.tool} | ${SITE.name}`;
 const PAGE_DESC = `Consultez les conditions générales d'utilisation de ${SITE.tool}, l'assistant IA officiel de ${SITE.name}.`;
