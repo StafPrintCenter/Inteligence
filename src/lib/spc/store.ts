@@ -103,10 +103,12 @@ export function getUserQuota(userId: string): UserQuotaState {
   const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, windowStart: 0 });
   const now = Date.now();
   const sameUser = raw.userId === userId;
-  /* Le blocage expiré remet le compteur à zéro */
-  const expired = raw.blockedUntil > 0 && raw.blockedUntil <= now;
-  const used = !sameUser || expired ? 0 : raw.used;
-  const blockedUntil = !sameUser || expired ? 0 : raw.blockedUntil;
+  const windowEnd = raw.windowStart + USER_COOLDOWN_MS;
+  /* Fenêtre expirée (ou d'un autre compte) : compteur remis à zéro */
+  const expired = !sameUser || raw.windowStart <= 0 || now >= windowEnd;
+  const used = expired ? 0 : raw.used;
+  const windowStart = expired ? 0 : raw.windowStart;
+  const blocked = used >= USER_BURST_QUOTA;
   return {
     used,
     left: Math.max(0, USER_BURST_QUOTA - used),
