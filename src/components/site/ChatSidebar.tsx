@@ -232,10 +232,7 @@ export function ChatSidebar({
 
             {/* Documentation & Réseaux sociaux */}
             <div className="flex items-center justify-between text-xs">
-              <a
-                href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link to="/cgu"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
               >
                 <BookOpen className="size-3.5" />
