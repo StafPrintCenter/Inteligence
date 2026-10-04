@@ -173,7 +173,7 @@ function CguPage() {
         <section className="rounded-2xl border border-primary/20 bg-primary/5 p-6">
           <h3 className="font-bold text-foreground">Une question concernant nos conditions ?</h3>
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-            L'équipe STAF PRINT CENTER est à votre écoute pour toute demande d'assistance ou d'information complémentaire.
+            L'équipe {SITE.name} est à votre écoute pour toute demande d'assistance ou d'information complémentaire.
           </p>
           <div className="mt-4 flex flex-wrap gap-4 text-xs sm:text-sm">
             <a
