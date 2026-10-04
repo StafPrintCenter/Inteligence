@@ -86,9 +86,7 @@ export function consumeAnonQuota() {
   write(KEYS.quota, { day: today(), used: used + 1 } satisfies Quota);
 }
 
-/* ---------------- Quota utilisateur connecté (fenêtre glissante de 3 h) ----------------
-   La fenêtre démarre au premier envoi : 6 messages max pendant 3 h, puis
-   le compteur se renouvelle automatiquement 3 h après le premier envoi. */
+/* ---------------- Quota utilisateur connecté (fenêtre glissante de 3 h) ---------------- */
 
 type UserQuota = { userId: string; used: number; blockedUntil: number };
 
