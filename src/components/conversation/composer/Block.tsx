@@ -53,6 +53,7 @@ export function ComposerBlock({
   quotaLabel: string | null;
   onBlockedUpload: () => void;
   onSend: (text: string, attachments: SpcAttachment[]) => void;
+  initialText?: string;
 }) {
   const isMobile = useIsMobile();
   const preview = usePreview();
