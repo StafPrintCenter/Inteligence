@@ -4,6 +4,9 @@ import { SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
 import { SITE, SITE_LINK } from "@/data/site";
 
+const PAGE_TITLE = `Connexion - ${SITE.tool} | ${SITE.name}`;
+const PAGE_DESC = `Connectez-vous à ${SITE.tool}, l'IA de ${SITE.name} selon votre espace.`;
+
 export const Route = createFileRoute("/cgu")({
   head: () => ({
     meta: [
