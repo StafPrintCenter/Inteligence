@@ -10,17 +10,10 @@ const PAGE_DESC = `Consultez les conditions générales d'utilisation de ${SITE.
 export const Route = createFileRoute("/cgu")({
   head: () => ({
     meta: [
-      { title: "Conditions Générales d'Utilisation — SPC Intelligence" },
-      {
-        name: "description",
-        content:
-          "Consultez les conditions générales d'utilisation de SPC Intelligence (ai.stafprint.com), l'assistant IA officiel de STAF PRINT CENTER à Porto-Novo, Bénin.",
-      },
-      { property: "og:title", content: "Conditions Générales d'Utilisation — SPC Intelligence" },
-      {
-        property: "og:description",
-        content: "Cadre d'utilisation, quotas, propriété intellectuelle et confidentialité des échanges sur SPC Intelligence.",
-      },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
