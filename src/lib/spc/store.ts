@@ -104,7 +104,6 @@ export function getUserQuota(userId: string): UserQuotaState {
   const now = Date.now();
   const sameUser = raw.userId === userId;
   const windowEnd = raw.windowStart + USER_COOLDOWN_MS;
-  /* Fenêtre expirée (ou d'un autre compte) : compteur remis à zéro */
   const expired = !sameUser || raw.windowStart <= 0 || now >= windowEnd;
   const used = expired ? 0 : raw.used;
   const windowStart = expired ? 0 : raw.windowStart;
