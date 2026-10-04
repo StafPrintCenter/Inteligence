@@ -95,7 +95,6 @@ export type UserQuotaState = {
   left: number;
   max: number;
   windowStart: number;
-  /** Fin de la fenêtre courante (0 = aucune limite active). */
   blockedUntil: number;
   blocked: boolean;
 };
