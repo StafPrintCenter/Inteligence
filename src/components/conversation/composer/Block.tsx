@@ -65,6 +65,19 @@ export function ComposerBlock({
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  /* Pré-remplissage depuis le lien (?prompt=…) */
+  useEffect(() => {
+    if (!initialText) return;
+    setText(initialText);
+    requestAnimationFrame(() => {
+      const el = areaRef.current;
+      if (!el) return;
+      el.focus();
+      el.setSelectionRange(initialText.length, initialText.length);
+      setCaret(initialText.length);
+    });
+  }, [initialText]);
+
   /* Hauteur fixe sur mobile, adaptative sur desktop */
   useEffect(() => {
     const el = areaRef.current;
