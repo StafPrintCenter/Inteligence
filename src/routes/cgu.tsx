@@ -177,7 +177,7 @@ function CguPage() {
           </p>
           <div className="mt-4 flex flex-wrap gap-4 text-xs sm:text-sm">
             <a
-              href="https://wa.me/2290160300607"
+              href={SITE.whatsappLink}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
