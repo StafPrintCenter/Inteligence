@@ -186,7 +186,7 @@ function CguPage() {
               <span>WhatsApp : +229 01 60 30 06 07</span>
             </a>
             <a
-              href="mailto:contact@stafprint.com"
+              href={`mailto:${SITE.email}`}
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
             >
               <Mail className="size-4" />
