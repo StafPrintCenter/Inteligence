@@ -277,6 +277,7 @@ export function ChatSidebar({
                 </Button>
               </div>
             ) : (
+              /* Accès au compte */
               <Button asChild variant="outline" className="w-full justify-start">
                 <Link to="/login">
                   <LogIn className="size-4" /> Se connecter
