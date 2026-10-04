@@ -112,8 +112,9 @@ export function getUserQuota(userId: string): UserQuotaState {
     used,
     left: Math.max(0, USER_BURST_QUOTA - used),
     max: USER_BURST_QUOTA,
-    blockedUntil,
-    blocked: blockedUntil > now,
+    windowStart,
+    blockedUntil: blocked ? windowStart + USER_COOLDOWN_MS : 0,
+    blocked,
   };
 }
 
