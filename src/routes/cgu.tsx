@@ -193,7 +193,7 @@ function CguPage() {
               <span>{SITE.email}</span>
             </a>
             <a
-              href="https://docs.stafprint.com"
+              href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
