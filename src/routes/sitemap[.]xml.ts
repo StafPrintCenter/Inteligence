@@ -33,6 +33,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const entries: SitemapEntry[] = [
           { path: "/", lastmod: TODAY, changefreq: "weekly", priority: "1.0" },
           { path: "/login", lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
+          { path: "/cgu", lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
         ];
 
         // 4. Génération XML
