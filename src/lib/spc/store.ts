@@ -123,7 +123,6 @@ export function consumeUserQuota(userId: string): UserQuotaState {
   if (current.blocked) return current;
   const now = Date.now();
   const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, windowStart: 0 });
-  /* Premier envoi de la fenêtre : on démarre le compte des 3 h maintenant */
   const windowStart = current.used === 0 ? now : raw.windowStart;
   write(KEYS.userQuota, { userId, used: current.used + 1, windowStart });
   return getUserQuota(userId);
