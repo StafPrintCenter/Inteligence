@@ -67,7 +67,7 @@ function CguPage() {
           <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
             <li>Travaux d'impression, signalétique, finitions et spécifications PAO.</li>
             <li>Formations professionnelles (React, Canva, After Effects, PAO) et espaces d'apprentissage.</li>
-            <li>Accompagnement digital, maquettage web et documentation technique (docs.stafprint.com).</li>
+            <li>Accompagnement digital, maquettage web et documentation technique ({stripProtocol(SITE_LINK.docsUrl)}).</li>
           </ul>
           <p className="text-muted-foreground">
             Toute sollicitation sans rapport avec les activités de STAF PRINT CENTER (politique, actualités générales,
