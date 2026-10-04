@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, BookOpen, Clock, Mail, Phone, ShieldCheck } from "lucide-react";
 import { SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
+import { SITE, SITE_LINK } from "@/data/site";
 
 export const Route = createFileRoute("/cgu")({
   head: () => ({
