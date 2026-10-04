@@ -242,29 +242,6 @@ export function ChatSidebar({
               </a>
             </div>
 
-            <div className="flex items-center justify-between text-xs">
-              <span
-                className="inline-flex items-center gap-1.5 text-muted-foreground font-medium"
-              >
-                Nous suivre
-              </span>
-
-              <div className="flex items-center gap-1">
-                {socialLinks.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="rounded p-1 text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-primary"
-                  >
-                    <Icon className="size-3.5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-
             {/* Informations utilisateur / Connexion */}
             {user ? (
               <div className="flex items-center gap-2 pt-1 border-t border-sidebar-border/50">
