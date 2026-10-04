@@ -211,7 +211,7 @@ export function ChatSidebar({
           <div className="space-y-3 border-t border-sidebar-border p-3">
             <div className="flex items-center justify-between text-xs">
               <span
-                className="inline-flex items-center gap-1.5 text-muted-foreground font-medium"
+                className="text-muted-foreground font-medium"
               >
                 Nous suivre
               </span>
