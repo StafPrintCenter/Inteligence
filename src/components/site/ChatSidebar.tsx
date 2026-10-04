@@ -267,6 +267,7 @@ export function ChatSidebar({
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
                   {user.name.slice(0, 1).toUpperCase()}
                 </span>
+
                 <div className="min-w-0 flex-1 leading-tight">
                   <p className="truncate text-sm font-semibold">{user.name}</p>
                   <p className="truncate text-xs text-primary">{SPACE_LABELS[user.role]}</p>
