@@ -100,7 +100,7 @@ export type UserQuotaState = {
 };
 
 export function getUserQuota(userId: string): UserQuotaState {
-  const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, blockedUntil: 0 });
+  const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, windowStart: 0 });
   const now = Date.now();
   const sameUser = raw.userId === userId;
   /* Le blocage expiré remet le compteur à zéro */
