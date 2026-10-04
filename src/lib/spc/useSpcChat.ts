@@ -22,8 +22,7 @@ import {
   signOut,
   titleFrom,
   uid,
-  type Theme,
-  type UserQuotaState,
+  type Theme, type UserQuotaState,
 } from "@/lib/spc/store";
 import { toTurns } from "@/lib/spc/turns";
 import type { SpcAttachment, SpcConversation, SpcMessage, SpcUser } from "@/lib/spc/types";
