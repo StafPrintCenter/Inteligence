@@ -5,14 +5,7 @@ import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { chatWithSpc } from "@/lib/spc/gemini.functions";
 import { detectGeneration, makeGeneratedDocument, makeGeneratedImage } from "@/lib/spc/generation";
-import {
-  canPin, consumeAnonQuota, consumeUserQuota,
-  formatCooldown, getAnonQuota,
-  getTheme, getUser, getUserQuota, loadConversations, newConversation, noticeAccepted, saveConversations, setTheme,
-  signOut, titleFrom,
-  uid,
-  type Theme, type UserQuotaState,
-} from "@/lib/spc/store";
+import { canPin, consumeAnonQuota, consumeUserQuota, formatCooldown, getAnonQuota, getTheme, getUser, getUserQuota, loadConversations, newConversation, noticeAccepted, saveConversations, setTheme, signOut, titleFrom, uid, type Theme, type UserQuotaState } from "@/lib/spc/store";
 import { toTurns } from "@/lib/spc/turns";
 import type { SpcAttachment, SpcConversation, SpcMessage, SpcUser } from "@/lib/spc/types";
 import { SITE } from "@/data/site";
