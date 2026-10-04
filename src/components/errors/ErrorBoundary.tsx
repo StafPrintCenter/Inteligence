@@ -26,7 +26,7 @@ export function ErrorComponent({ error, reset }: { error: Error; reset: () => vo
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-bold text-foreground font-display">
-                Erreur de rendu de la documentation
+                Erreur de rendu de la page
               </h1>
               <p className="text-sm text-muted-foreground mt-0.5">
                 Un problème technique est survenu lors du chargement de l'interface Intelligence de {SITE.name}.
