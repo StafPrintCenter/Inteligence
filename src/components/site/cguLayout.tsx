@@ -3,13 +3,24 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
-import { SITE } from "@/data/site";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "@/components/site/icons";
+import { SITE, SITE_LINK } from "@/data/site";
 
 interface CguLayoutProps {
   children: ReactNode;
 }
 
 export function CguLayout({ children }: CguLayoutProps) {
+  const landingBase = SITE_LINK.landingUrl.replace(/\/$/, "");
+
+  const socialLinks = [
+    { label: "LinkedIn", href: SITE.socials.linkedin, Icon: LinkedinIcon },
+    { label: "Facebook", href: SITE.socials.facebook, Icon: FacebookIcon },
+    { label: "Instagram", href: SITE.socials.instagram, Icon: InstagramIcon },
+    { label: "X", href: SITE.socials.x, Icon: XIcon },
+    { label: "WhatsApp", href: SITE.whatsappLink, Icon: WhatsAppIcon },
+  ];
+
   return (
     <div className="min-h-dvh bg-background text-foreground">
       {/* En-tête de navigation */}
