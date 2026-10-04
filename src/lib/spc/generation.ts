@@ -47,7 +47,7 @@ export function makeGeneratedImage(prompt: string): SpcAttachment {
 }
 
 export function makeGeneratedDocument(prompt: string, content: string): SpcAttachment {
-  const md = `# Document ${SITE.tool}\n\n**Demande :** ${prompt}\n\n---\n\n${content}\n\n---\n\n*${SITE.name} — ai.stafprint.com*\n`;
+  const md = `# Document ${SITE.tool}\n\n**Demande :** ${prompt}\n\n---\n\n${content}\n\n---\n\n*${SITE.name} - ai.stafprint.com*\n`;
   return {
     id: uid(),
     name: `spc-document-${Date.now()}.md`,
