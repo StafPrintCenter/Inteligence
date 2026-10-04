@@ -111,8 +111,7 @@ function CguPage() {
             4. Valeur non contractuelle des réponses et estimations
           </h2>
           <p className="text-muted-foreground">
-            Les prix en Francs CFA (XOF), délais de fabrication (ex. 48–72h) ou conseils techniques fournis par {SITE.tool}
-            sont communiqués à <strong>titre purement indicatif et estimatif</strong>.
+            Les prix en Francs CFA (XOF), délais de fabrication (ex. 48–72h) ou conseils techniques fournis par {SITE.tool} sont communiqués à <strong>titre purement indicatif et estimatif</strong>.
           </p>
           <p className="text-muted-foreground">
             Seuls les devis formels émis par le service commercial de STAF PRINT CENTER (par email officiel à{" "}
