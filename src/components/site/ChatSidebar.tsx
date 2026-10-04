@@ -246,7 +246,7 @@ export function ChatSidebar({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
               >
-                <BookOpen className="size-3.5" />
+                <ShieldCheck className="size-3.5" />
                 <span>Confidentialité</span>
               </a>
 
