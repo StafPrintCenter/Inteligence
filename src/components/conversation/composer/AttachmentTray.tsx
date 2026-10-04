@@ -6,7 +6,7 @@ export const STATUS_LABEL: Record<NonNullable<SpcAttachment["extractStatus"]>, s
   pending: "Extraction…",
   ok: "Texte extrait",
   empty: "Aucun texte détecté",
-  visual: "Image — lecture visuelle par l'IA",
+  visual: "Image - lecture visuelle par l'IA",
   error: "Extraction impossible",
 };
 
