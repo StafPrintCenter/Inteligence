@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Clock, Mail, Phone, ShieldCheck } from "lucide-react";
-import { CguLayout } from "@/components/site/cguLayout";
+import { CguLayout } from "@/components/site";
 import { SITE, SITE_LINK } from "@/data/site";
 import { stripProtocol } from "@/lib/domain";
 
