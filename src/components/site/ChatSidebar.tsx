@@ -237,7 +237,7 @@ export function ChatSidebar({
               >
                 <BookOpen className="size-3.5" />
                 <span>CGU</span>
-              </a>
+              </Link>
 
               <a
                 href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
