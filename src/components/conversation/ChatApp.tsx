@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen, ComposerBlock } from "@/components/conversation";
 import { NoticeDialog, ShareDialog, ChatSidebar, DetailsPanel } from "@/components/site";
 import { acceptNotice } from "@/lib/spc/store";
