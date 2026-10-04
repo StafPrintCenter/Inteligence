@@ -41,7 +41,7 @@ function SharedPage() {
       }
       setPayload(data);
       setState("ready");
-      document.title = `${data.title} · Partagé — ${SITE.tool}`;
+      document.title = `${data.title} · Partagé - ${SITE.tool}`;
     });
   }, []);
 
