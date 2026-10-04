@@ -88,7 +88,7 @@ export function consumeAnonQuota() {
 
 /* ---------------- Quota utilisateur connecté (fenêtre glissante de 3 h) ---------------- */
 
-type UserQuota = { userId: string; used: number; blockedUntil: number };
+type UserQuota = { userId: string; used: number; windowStart: number };
 
 export type UserQuotaState = {
   used: number;
