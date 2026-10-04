@@ -46,6 +46,7 @@ export function ComposerBlock({
   quotaLabel,
   onBlockedUpload,
   onSend,
+  initialText,
 }: {
   disabled: boolean;
   canUpload: boolean;
