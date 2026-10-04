@@ -48,7 +48,7 @@ function PreviewBody({ item }: { item: PreviewItem }) {
   if (item.kind === "html") {
     return (
       <iframe
-        title={`Aperçu — ${item.title}`}
+        title={`Aperçu - ${item.title}`}
         sandbox="allow-scripts"
         srcDoc={buildHtmlDoc(item)}
         className="h-full w-full bg-white"
