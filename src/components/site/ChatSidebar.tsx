@@ -240,7 +240,7 @@ export function ChatSidebar({
               </Link>
 
               <a
-                href={`${SITE_LINK.landingUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
+                href={`${SITE_LINK.landingUrl}/legal/mentions#cookies`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
