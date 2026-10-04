@@ -161,7 +161,7 @@ export function useSpcChat(conversationId?: string) {
         setUserQuota(state);
         if (state.blocked) {
           toast.error(
-            `Limite atteinte : ${state.max} messages envoyés. Réessayez dans ${formatCooldown(state.blockedUntil)}.`,
+            `Limite atteinte : ${state.max} messages envoyés. Prochain renouvellement dans ${formatCooldown(state.blockedUntil)}.`,
           );
           return;
         }
