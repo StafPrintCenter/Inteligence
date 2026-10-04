@@ -80,8 +80,7 @@ function CguPage() {
             3. Accès au service et quotas d'utilisation
           </h2>
           <p className="text-muted-foreground">
-            Afin de garantir une qualité de service optimale pour tous les clients et partenaires, l'accès à {SITE.tool}
-            est soumis à des règles de quotas :
+            Afin de garantir une qualité de service optimale pour tous les clients et partenaires, l'accès à {SITE.tool} est soumis à des règles de quotas :
           </p>
           <div className="grid gap-3 pt-2 sm:grid-cols-2">
             <div className="rounded-xl border border-border/80 bg-card p-4">
