@@ -26,12 +26,8 @@ export function CguLayout({ children }: CguLayoutProps) {
       {/* En-tête de navigation */}
       <header className="sticky top-0 z-20 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
-          <Link to="/" className="flex items-center gap-2.5 transition hover:opacity-90">
-            <SpcMobLogo className="size-8" />
-            <div className="text-left">
-              <p className="text-sm font-bold leading-tight tracking-tight">{SITE.tool}</p>
-              <p className="text-xs text-muted-foreground">ai.stafprint.com</p>
-            </div>
+          <Link to="/" className="flex items-center">
+            <SpcDeskLogo className="mx-auto h-14 w-auto" />
           </Link>
 
           <Button asChild variant="ghost" size="sm" className="gap-2">
