@@ -119,7 +119,7 @@ function CguPage() {
               {SITE.email}
             </a>{" "}
             ou validés par WhatsApp officiel au{" "}
-            <a href="https://wa.me/2290160300607" className="text-primary underline underline-offset-4">
+            <a href={SITE.whatsappLink} className="text-primary underline underline-offset-4">
               +229 01 60 30 06 07
             </a>
             ) engagent juridiquement l'entreprise.
