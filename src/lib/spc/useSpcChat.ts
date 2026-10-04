@@ -89,7 +89,7 @@ export function useSpcChat(conversationId?: string) {
     if (typeof document === "undefined") return;
     document.title = active?.title
       ? `${active.title} · ${SITE.tool}`
-      : `${SITE.tool} — Assistant IA de ${SITE.name}`;
+      : `${SITE.tool} - Assistant IA de ${SITE.name}`;
   }, [active?.title]);
 
   const openGate = useCallback((reason: string) => {
@@ -252,7 +252,7 @@ export function useSpcChat(conversationId?: string) {
     setConversations(loadConversations("anonymous"));
     setQuota(getAnonQuota());
     setUserQuota(null);
-    toast.success("Déconnecté — historique du compte masqué.");
+    toast.success("Déconnecté - historique du compte masqué.");
     void navigate({ to: "/" });
   }, [navigate]);
 
