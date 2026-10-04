@@ -231,7 +231,7 @@ export function ChatSidebar({
               </div>
             </div>
 
-            {/* Documentation & Réseaux sociaux */}
+            {/* Liens institutionnels et documentation */}
             <div className="flex items-center justify-between text-xs">
               <Link to="/cgu"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
