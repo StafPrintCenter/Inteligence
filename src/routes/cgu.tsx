@@ -70,8 +70,7 @@ function CguPage() {
             <li>Accompagnement digital, maquettage web et documentation technique ({stripProtocol(SITE_LINK.docsUrl)}).</li>
           </ul>
           <p className="text-muted-foreground">
-            Toute sollicitation sans rapport avec les activités de STAF PRINT CENTER (politique, actualités générales,
-            aide aux devoirs non liés au design, santé, divertissement non autorisé) sera automatiquement déclinée par l'IA.
+            Toute sollicitation sans rapport avec les activités de {SITE.name} (politique, actualités générales, aide aux devoirs non liés au design, santé, divertissement non autorisé) sera automatiquement déclinée par l'IA.
           </p>
         </section>
 
