@@ -14,6 +14,18 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat.active?.messages.length, chat.loading]);
 
+  /* Lit ?prompt= (ou q, message, text) puis nettoie l'URL */
+  useEffect(() => {
+    if (!chat.ready) return;
+    const url = new URL(window.location.href);
+    const keys = ["prompt", "q", "message", "text"];
+    const key = keys.find((k) => url.searchParams.get(k)?.trim());
+    if (!key) return;
+    setPrefill(url.searchParams.get(key)!.slice(0, 4000));
+    keys.forEach((k) => url.searchParams.delete(k));
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+  }, [chat.ready]);
+
   if (!chat.ready) return <div className="min-h-dvh bg-background" />;
 
   return (
