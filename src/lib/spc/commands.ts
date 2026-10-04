@@ -39,6 +39,13 @@ export const SPC_COMMANDS: SpcCommand[] = [
   },
   {
     trigger: "/",
+    key: "preflight",
+    label: "/preflight",
+    description: "Vérifier une maquette avant impression (PAO)",
+    insert: "Effectue un contrôle Pre-flight PAO de la maquette jointe (verdict, résolution, fonds perdus, colorimétrie, recommandations) : ",
+  },
+  {
+    trigger: "/",
     key: "resume",
     label: "/resume",
     description: "Résumer le fichier ou le texte fourni",
