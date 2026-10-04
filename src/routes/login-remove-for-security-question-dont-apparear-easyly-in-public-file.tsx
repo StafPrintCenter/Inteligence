@@ -58,7 +58,7 @@ function LoginPage() {
       setAttempts(next);
       toast.error(
         next >= 3
-          ? "Trop de tentatives — accès administrateur bloqué. Rechargez la page."
+          ? "Trop de tentatives - accès administrateur bloqué. Rechargez la page."
           : `Phrase de sécurité incorrecte (${3 - next} tentative(s) restante(s)).`,
       );
       return;
@@ -81,7 +81,7 @@ function LoginPage() {
       return;
     }
     const user = signIn(email, space);
-    toast.success(`Bienvenue ${user.name} — ${user.space}`);
+    toast.success(`Bienvenue ${user.name} - ${user.space}`);
     void navigate({ to: "/" });
   };
 
@@ -98,12 +98,12 @@ function LoginPage() {
           </h1>
           <p className="max-w-md text-muted-foreground">
             Analyse de documents, génération de visuels et de contenus, accompagnement des clients,
-            apprenants et formateurs — le tout dans une seule conversation.
+            apprenants et formateurs - le tout dans une seule conversation.
           </p>
         </div>
         <p className="text-xs text-muted-foreground">
           <ShieldCheck className="mr-1 inline size-4 text-primary" />
-          Connexion en mode simulation — aucune donnée réelle n'est transmise.
+          Connexion en mode simulation - aucune donnée réelle n'est transmise.
         </p>
       </section>
 
