@@ -283,7 +283,7 @@ export function ChatSidebar({
             )}
           </div>
         </div>
-      </aside>
+      </aside >
     </>
   );
 }
