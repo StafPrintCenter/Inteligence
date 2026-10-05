@@ -115,7 +115,7 @@ export function useSpcChat(conversationId?: string) {
         const assistant: SpcMessage = {
           id: uid(),
           role: "assistant",
-          content: result.text,
+          content: answer,
           createdAt: Date.now(),
           attachments: generated,
           reasoning: result.reasoning,
