@@ -10,6 +10,7 @@ export function MessageList({
   retryMessageId,
   onRetry,
   onShare,
+  onSuggest,
 }: {
   messages: SpcMessage[];
   userName: string;
