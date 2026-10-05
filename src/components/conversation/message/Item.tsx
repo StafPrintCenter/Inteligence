@@ -9,6 +9,8 @@ import { decodeDataUrlText } from "@/lib/spc/dataurl";
 import { useTypewriter } from "@/lib/spc/useTypewriter";
 import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
 
+const ACTION_ICON = { whatsapp: MessageCircle, mail: Mail, phone: Phone, link: ExternalLink };
+
 function initials(name: string) {
   return (
     name
