@@ -21,6 +21,7 @@ export function MessageList({
   onShare?: (id: string) => void;
   onSuggest?: (prompt: string) => void;
 }) {
+  const lastId = messages.at(-1)?.id;
   return (
     <div className="space-y-6">
       {messages.map((m) => (
