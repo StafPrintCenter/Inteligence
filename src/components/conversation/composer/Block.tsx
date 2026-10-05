@@ -67,7 +67,7 @@ export function ComposerBlock({
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /* Pré-remplissage depuis le lien (?prompt=…) */
+  /* Pré-remplissage depuis le lien (?prompt=…) ou une suggestion */
   useEffect(() => {
     if (!initialText) return;
     setText(initialText);
@@ -78,7 +78,7 @@ export function ComposerBlock({
       el.setSelectionRange(initialText.length, initialText.length);
       setCaret(initialText.length);
     });
-  }, [initialText]);
+  }, [initialText, prefillKey]);
 
   /* Hauteur fixe sur mobile, adaptative sur desktop */
   useEffect(() => {
