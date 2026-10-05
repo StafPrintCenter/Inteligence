@@ -1,4 +1,5 @@
-import { Download, Eye, RotateCcw, Share2 } from "lucide-react";
+import { Download, ExternalLink, Eye, Lightbulb, Mail, MessageCircle, Phone, RotateCcw, Share2 } from "lucide-react";
+import { useMemo } from "react";
 import { CopyButton, SpcMobLogo } from "@/components/site";
 import { usePreview } from "@/components/site/Preview/Context";
 import { ReasoningPanel, Markdown } from "@/components/action";
