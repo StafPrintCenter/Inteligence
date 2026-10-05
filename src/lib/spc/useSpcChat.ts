@@ -126,7 +126,7 @@ export function useSpcChat(conversationId?: string) {
         persist(
           list.map((c) =>
             c.id === conv.id
-              ? { ...conv, updatedAt: Date.now(), messages: [...conv.messages, assistant] }
+              ? { ...conv, title: autoTitle, updatedAt: Date.now(), messages: [...conv.messages, assistant] }
               : c,
           ),
         );
