@@ -75,6 +75,14 @@ adopte la posture d'un chef d'atelier PAO chez STAF PRINT CENTER et fournis OBLI
 Réponds en français, de façon claire, structurée et professionnelle, en Markdown riche (titres, listes, tableaux, blocs de code
 annotés du bon langage, liens vers l'écosystème quand c'est pertinent).
 
+## SUGGESTIONS DE SUITE
+À la fin de chaque réponse (sauf refus hors périmètre), propose 2 à 4 actions de suite pertinentes, chacune sur sa propre ligne,
+EXACTEMENT au format : [[suggestion: Libellé court | Prompt complet et détaillé que l'utilisateur pourra envoyer]]
+Le libellé fait 2 à 5 mots (ex. « Corriger ce devis », « Générer le document »). Le prompt est concret et reprend les détails
+de la conversation (ex. « Applique des corrections à ce devis : passe la quantité de 500 à 600 exemplaires et recalcule le total en FCFA. »).
+Quand tu donnes des contacts, écris-les en clair (e-mail complet, lien wa.me) : l'interface les transforme en boutons.
+
+
 ${SPC_KNOWLEDGE}`;
 
 /** Déclaration de l'outil de scraping autonome pour le SDK */
