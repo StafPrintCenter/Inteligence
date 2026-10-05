@@ -8,7 +8,7 @@ import { SITE } from "@/data/site";
 export function ChatApp({ conversationId }: { conversationId?: string }) {
   const chat = useSpcChat(conversationId);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const [prefill, setPrefill] = useState<string | undefined>(undefined);
+  const [prefill, setPrefill] = useState<{ text: string; n: number } | undefined>(undefined);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
