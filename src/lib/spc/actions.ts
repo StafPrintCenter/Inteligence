@@ -50,3 +50,12 @@ export function extractActions(text: string): SpcAction[] {
   }
   return actions.slice(0, 6);
 }
+
+const TITLE_RE = /\[\[titre:\s*([^\]]+?)\s*\]\]\s*/i;
+
+/** Extrait le titre de conversation proposé par l'IA et le retire du texte. */
+export function extractTitle(text: string): { title: string | null; text: string } {
+  const m = TITLE_RE.exec(text);
+  if (!m) return { title: null, text };
+  return { title: m[1]!.replace(/["«»]/g, "").trim().slice(0, 60) || null, text: text.replace(TITLE_RE, "").trim() };
+}
