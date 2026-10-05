@@ -1,6 +1,8 @@
 import { Download, ExternalLink, Eye, Lightbulb, Mail, MessageCircle, Phone, RotateCcw, Share2 } from "lucide-react";
 import { useMemo } from "react";
 import { CopyButton, SpcMobLogo } from "@/components/site";
+import { Button } from "@/components/ui/button";
+import { extractActions, extractSuggestions, stripSuggestions } from "@/lib/spc/actions";
 import { usePreview } from "@/components/site/Preview/Context";
 import { ReasoningPanel, Markdown } from "@/components/action";
 import { decodeDataUrlText } from "@/lib/spc/dataurl";
