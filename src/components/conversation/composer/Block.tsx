@@ -55,6 +55,7 @@ export function ComposerBlock({
   onBlockedUpload: () => void;
   onSend: (text: string, attachments: SpcAttachment[]) => void;
   initialText?: string;
+  prefillKey?: number;
 }) {
   const isMobile = useIsMobile();
   const preview = usePreview();
