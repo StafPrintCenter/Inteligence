@@ -106,6 +106,7 @@ export function MessageItem({
   animate: boolean;
   onRetry?: () => void;
   onShare?: (id: string) => void;
+  onSuggest?: (prompt: string) => void;
 }) {
   const isUser = message.role === "user";
   const shown = useTypewriter(message.content, !isUser && animate);
