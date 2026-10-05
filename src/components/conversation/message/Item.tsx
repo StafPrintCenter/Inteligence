@@ -140,7 +140,40 @@ export function MessageItem({
           ) : (
             <>
               <ReasoningPanel reasoning={message.reasoning ?? ""} sources={message.sources ?? []} />
-              <Markdown>{shown}</Markdown>
+              <Markdown>{stripSuggestions(shown)}</Markdown>
+              {typingDone && actions.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {actions.map((a) => {
+                    const Icon = ACTION_ICON[a.kind];
+                    return (
+                      <Button key={a.href} asChild size="sm" variant={a.kind === "whatsapp" ? "default" : "outline"}>
+                        <a href={a.href} target={a.kind === "link" || a.kind === "whatsapp" ? "_blank" : undefined} rel="noreferrer">
+                          <Icon className="size-4" /> {a.label}
+                        </a>
+                      </Button>
+                    );
+                  })}
+                </div>
+              )}
+              {typingDone && onSuggest && suggestions.length > 0 && (
+                <div className="mt-3 space-y-1.5">
+                  <p className="text-xs font-medium text-muted-foreground">Pour aller plus loin</p>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestions.map((s) => (
+                      <Button
+                        key={s.label}
+                        type="button"
+                        size="sm"
+                        variant="secondary"
+                        title={s.prompt}
+                        onClick={() => onSuggest(s.prompt)}
+                      >
+                        <Lightbulb className="size-3.5 text-primary" /> {s.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
           <Attachments items={message.attachments ?? []} />
