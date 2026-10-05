@@ -179,7 +179,7 @@ export function MessageItem({
           <Attachments items={message.attachments ?? []} />
         </div>
         <div className="mt-1 flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
-          <CopyButton value={message.content} />
+          <CopyButton value={isUser ? message.content : stripSuggestions(message.content)} />
           {onRetry && (
             <button
               type="button"
