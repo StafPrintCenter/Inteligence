@@ -99,6 +99,7 @@ export function MessageItem({
   animate,
   onRetry,
   onShare,
+  onSuggest,
 }: {
   message: SpcMessage;
   userName: string;
