@@ -47,6 +47,7 @@ export function ComposerBlock({
   onBlockedUpload,
   onSend,
   initialText,
+  prefillKey,
 }: {
   disabled: boolean;
   canUpload: boolean;
