@@ -110,6 +110,12 @@ export function MessageItem({
 }) {
   const isUser = message.role === "user";
   const shown = useTypewriter(message.content, !isUser && animate);
+  const typingDone = shown.length >= message.content.length;
+  const actions = useMemo(() => (isUser ? [] : extractActions(message.content)), [isUser, message.content]);
+  const suggestions = useMemo(
+    () => (isUser ? [] : extractSuggestions(message.content)),
+    [isUser, message.content],
+  );
 
   return (
     <div className={`group flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
