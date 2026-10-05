@@ -112,6 +112,13 @@ export function useSpcChat(conversationId?: string) {
           if (kind === "document") generated.push(makeGeneratedDocument(prompt, result.text));
         }
 
+        const { title: aiTitle, text: answer } = extractTitle(result.text);
+        const userCount = conv.messages.filter((m) => m.role === "user").length;
+        const autoTitle =
+          aiTitle && userCount === 1 && conv.title === titleFrom(conv.messages[0]?.content ?? "")
+            ? aiTitle
+            : conv.title;
+
         const assistant: SpcMessage = {
           id: uid(),
           role: "assistant",
