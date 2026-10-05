@@ -91,7 +91,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 chat.openGate("L'envoi de fichiers est réservé aux espaces connectés.")
               }
               onSend={(t, a) => void chat.handleSend(t, a)}
-              {...(prefill ? { initialText: prefill } : {})}
+              {...(prefill ? { initialText: prefill.text, prefillKey: prefill.n } : {})}
             />
           </div>
         </div>
