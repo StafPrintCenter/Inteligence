@@ -74,6 +74,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
                 retryMessageId={chat.retryMessageId}
                 onRetry={chat.retry}
                 onShare={(id) => chat.openShare(id)}
+                onSuggest={(p) => setPrefill({ text: p, n: Date.now() })}
               />
             )}
             <div ref={bottomRef} />
