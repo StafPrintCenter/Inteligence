@@ -82,7 +82,6 @@ Le libellé fait 2 à 5 mots (ex. « Corriger ce devis », « Générer le docum
 de la conversation (ex. « Applique des corrections à ce devis : passe la quantité de 500 à 600 exemplaires et recalcule le total en FCFA. »).
 Quand tu donnes des contacts, écris-les en clair (e-mail complet, lien wa.me) : l'interface les transforme en boutons.
 
-
 ${SPC_KNOWLEDGE}`;
 
 /** Déclaration de l'outil de scraping autonome pour le SDK */
