@@ -19,6 +19,7 @@ export function MessageList({
   retryMessageId?: string | null;
   onRetry?: () => void;
   onShare?: (id: string) => void;
+  onSuggest?: (prompt: string) => void;
 }) {
   return (
     <div className="space-y-6">
