@@ -31,6 +31,7 @@ export function MessageList({
           animate={m.id === animatedId}
           {...(retryMessageId === m.id && onRetry ? { onRetry } : {})}
           {...(onShare ? { onShare } : {})}
+          {...(onSuggest && m.id === lastId && !loading ? { onSuggest } : {})}
         />
       ))}
       {loading && <ReasoningPanel reasoning="" live />}
