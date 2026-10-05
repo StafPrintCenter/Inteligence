@@ -21,7 +21,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
     const keys = ["prompt", "q", "message", "text"];
     const key = keys.find((k) => url.searchParams.get(k)?.trim());
     if (!key) return;
-    setPrefill(url.searchParams.get(key)!.slice(0, 4000));
+    setPrefill({ text: url.searchParams.get(key)!.slice(0, 4000), n: Date.now() });
     keys.forEach((k) => url.searchParams.delete(k));
     window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
   }, [chat.ready]);
