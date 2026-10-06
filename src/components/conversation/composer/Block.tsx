@@ -91,7 +91,8 @@ export function ComposerBlock({
       return;
     }
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
+    const max = isMobile ? MOBILE_MAX_HEIGHT : DESKTOP_MAX_HEIGHT;
+    el.style.height = `${Math.min(el.scrollHeight, max)}px`;
   }, [text, isMobile]);
 
   const token = useMemo(() => detectToken(text, caret), [text, caret]);
