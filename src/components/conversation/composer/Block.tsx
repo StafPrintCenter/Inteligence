@@ -241,7 +241,7 @@ export function ComposerBlock({
             placeholder="Posez votre question… tapez / pour une commande ou @ pour un contexte"
             className={
               isMobile
-                ? "spc-scroll h-14 flex-1 resize-none overflow-y-auto bg-transparent py-2 text-sm outline-none"
+                ? "spc-scroll min-h-14 flex-1 resize-none overflow-y-auto bg-transparent py-2 text-sm outline-none"
                 : "spc-scroll max-h-60 flex-1 resize-none bg-transparent py-2 text-sm outline-none"
             }
           />
