@@ -82,7 +82,7 @@ export function ComposerBlock({
     });
   }, [initialText, prefillKey]);
 
-  /* Hauteur fixe sur mobile, adaptative sur desktop */
+  /* Hauteur adaptative : 2 lignes de base sur mobile, elle grandit à la saisie */
   useEffect(() => {
     const el = areaRef.current;
     if (!el) return;
