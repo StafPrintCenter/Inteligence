@@ -11,6 +11,8 @@ import type { SpcAttachment } from "@/lib/spc/types";
 import { SITE } from "@/data/site";
 
 const ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.pdf,.txt,.md,.csv,.json";
+const DESKTOP_MAX_HEIGHT = 240;
+const MOBILE_MAX_HEIGHT = 108;
 
 function toAttachment(file: File): Promise<SpcAttachment> {
   return new Promise((resolve, reject) => {
