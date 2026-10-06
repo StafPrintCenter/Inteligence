@@ -86,10 +86,6 @@ export function ComposerBlock({
   useEffect(() => {
     const el = areaRef.current;
     if (!el) return;
-    if (isMobile) {
-      el.style.height = "";
-      return;
-    }
     el.style.height = "auto";
     const max = isMobile ? MOBILE_MAX_HEIGHT : DESKTOP_MAX_HEIGHT;
     el.style.height = `${Math.min(el.scrollHeight, max)}px`;
