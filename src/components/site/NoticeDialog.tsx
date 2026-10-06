@@ -79,8 +79,15 @@ export function NoticeDialog({ open, onAccept }: { open: boolean; onAccept: () =
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground pt-1">
-            En continuant, vous acceptez nos conditions d'utilisation. En savoir plus dans nos{" "}
+          <p className="mt-4 text-xs text-muted-foreground">
+            En continuant, vous acceptez nos {" "}
+            <a
+              href="/cgu"
+              className="underline hover:text-primary"
+            >
+              conditions d'utilisation
+            </a>.
+            En savoir plus dans nos{" "}
             <a
               href={`${SITE_LINK.landingUrl}/legal/mentions#cookies`}
               target="_blank"
