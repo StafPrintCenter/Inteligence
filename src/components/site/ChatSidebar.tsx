@@ -251,7 +251,7 @@ export function ChatSidebar({
               </a>
 
               <a
-                href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
+                href={`${SITE_LINK.docsUrl}/docs/ai/index`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary font-medium"
