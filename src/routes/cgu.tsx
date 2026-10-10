@@ -193,7 +193,7 @@ function CguPage() {
               <span>{SITE.email}</span>
             </a>
             <a
-              href={`${SITE_LINK.docsUrl}/docs/ai/fonctionnement-et-commandes-spc-intelligence`}
+              href={`${SITE_LINK.docsUrl}/docs/ai/index`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline"
