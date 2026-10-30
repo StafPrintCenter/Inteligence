@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import { EmbedChat } from "@/components/spc/EmbedChat";
+import { SITE } from "@/data/site";
+
+const PAGE_TITLE = `Widget - ${SITE.tool} | ${SITE.name}`;
+const PAGE_DESC = `Volet de discussion ${SITE.tool} intégré à l'écosystème ${SITE.name}.`;
 
 export const Route = createFileRoute("/embed")({
   validateSearch: (s: Record<string, unknown>) => ({
@@ -8,10 +11,10 @@ export const Route = createFileRoute("/embed")({
   }),
   head: () => ({
     meta: [
-      { title: "SPC Intelligence — Widget" },
-      { name: "description", content: "Volet de discussion SPC Intelligence intégré à l'écosystème STAF PRINT CENTER." },
-      { property: "og:title", content: "SPC Intelligence — Widget" },
-      { property: "og:description", content: "Assistant IA STAF PRINT CENTER intégrable." },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESC },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESC },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
