@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { askGemini, type GeminiTurn } from "./gemini.server";
+import { askGemini, type EmbedContext, type GeminiTurn } from "./gemini.server";
 
-export type ChatInput = { turns: GeminiTurn[] };
+export type ChatInput = { turns: GeminiTurn[]; context?: EmbedContext };
 
 export const chatWithSpc = createServerFn({ method: "POST" })
   .validator((data: ChatInput) => {
@@ -10,4 +10,4 @@ export const chatWithSpc = createServerFn({ method: "POST" })
     }
     return data;
   })
-  .handler(async ({ data }) => askGemini(data.turns));
+  .handler(async ({ data }) => askGemini(data.turns, data.context));
