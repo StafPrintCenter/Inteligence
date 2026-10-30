@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CguRouteImport } from './routes/cgu'
+import { Route as EmbedRouteImport } from './routes/embed'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRouteImport } from './routes/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
 import { Route as SRouteImport } from './routes/s'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const CguRoute = CguRouteImport.update({
   id: '/cgu',
   path: '/cgu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmbedRoute = EmbedRouteImport.update({
+  id: '/embed',
+  path: '/embed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -59,6 +65,7 @@ const CConversationIdRoute = CConversationIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cgu': typeof CguRoute
+  '/embed': typeof EmbedRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cgu': typeof CguRoute
+  '/embed': typeof EmbedRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cgu': typeof CguRoute
+  '/embed': typeof EmbedRoute
   '/login': typeof LoginRoute
   '/login-remove-for-security-question-dont-apparear-easyly-in-public-file': typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   '/s': typeof SRoute
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cgu'
+    | '/embed'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cgu'
+    | '/embed'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/cgu'
+    | '/embed'
     | '/login'
     | '/login-remove-for-security-question-dont-apparear-easyly-in-public-file'
     | '/s'
@@ -117,6 +129,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CguRoute: typeof CguRoute
+  EmbedRoute: typeof EmbedRoute
   LoginRoute: typeof LoginRoute
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute: typeof LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute
   SRoute: typeof SRoute
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       path: '/cgu'
       fullPath: '/cgu'
       preLoaderRoute: typeof CguRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/embed': {
+      id: '/embed'
+      path: '/embed'
+      fullPath: '/embed'
+      preLoaderRoute: typeof EmbedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -181,6 +201,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CguRoute: CguRoute,
+  EmbedRoute: EmbedRoute,
   LoginRoute: LoginRoute,
   LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute:
     LoginRemoveForSecurityQuestionDontApparearEasylyInPublicFileRoute,
