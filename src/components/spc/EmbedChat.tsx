@@ -2,10 +2,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { ExternalLink, RotateCcw, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-
 import { MessageList } from "@/components/conversation/message";
 import { ComposerBlock } from "@/components/conversation/composer";
-import { SpcDeskLogo } from "@/components/site";
+import { SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
 import { extractTitle } from "@/lib/spc/actions";
 import { chatWithSpc } from "@/lib/spc/gemini.functions";
@@ -131,7 +130,7 @@ export function EmbedChat({ app }: { app: string }) {
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
       <header className="flex items-center gap-2 border-b border-border px-3 py-2">
-        <SpcDeskLogo className="h-7 w-7" />
+        <SpcMobLogo className="h-7 w-7" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">SPC Intelligence</p>
           <p className="truncate text-xs text-muted-foreground">Assistant de l'écosystème STAF PRINT</p>
@@ -164,7 +163,7 @@ export function EmbedChat({ app }: { app: string }) {
       <main className="spc-scroll flex-1 overflow-y-auto px-3 py-4">
         {messages.length === 0 ? (
           <div className="mt-10 space-y-3 text-center">
-            <SpcDeskLogo className="mx-auto h-12 w-12" />
+            <SpcMobLogo className="mx-auto h-12 w-12" />
             <p className="text-base font-semibold">Comment puis-je vous aider ?</p>
             <p className="text-sm text-muted-foreground">
               Je tiens compte de la page sur laquelle vous êtes.
