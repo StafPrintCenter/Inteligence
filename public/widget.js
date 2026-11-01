@@ -7,6 +7,7 @@
   var position = (script && script.getAttribute("data-position")) === "left" ? "left" : "right";
   var readPage = !script || script.getAttribute("data-read-page") !== "false";
   var getContext = null;
+  var getUser = null;
 
   var css =
     "#spc-w-btn{position:fixed;bottom:20px;" + position + ":20px;z-index:2147483646;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#0b5cad;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s}" +
@@ -49,6 +50,15 @@
   function post(msg) {
     if (frame && frame.contentWindow) frame.contentWindow.postMessage(msg, origin);
   }
+  function shareUser() {
+    if (typeof getUser !== "function") return;
+    try {
+      var user = getUser();
+      // Liste explicite : jamais de mot de passe, cookie ou jeton du site hôte.
+      if (user === null) post({ type: "spc:user", user: null });
+      else if (user && typeof user.email === "string") post({ type: "spc:user", user: { email: user.email, name: user.name, role: user.role } });
+    } catch (e) { }
+  }
   function open(prompt) {
     if (!frame) {
       frame = document.createElement("iframe");
@@ -58,6 +68,7 @@
       panel.appendChild(frame);
     } else {
       post({ type: "spc:context", context: pageContext() });
+      shareUser();
     }
     panel.classList.add("spc-open");
     btn.style.display = "none";
@@ -72,10 +83,11 @@
   var pendingPrompt = null;
 
   window.addEventListener("message", function (e) {
-    if (e.origin !== origin || !e.data) return;
+    if (e.origin !== origin || !frame || e.source !== frame.contentWindow || !e.data) return;
     if (e.data.type === "spc:ready") {
       ready = true;
       post({ type: "spc:context", context: pageContext() });
+      shareUser();
       if (pendingPrompt) post({ type: "spc:prompt", prompt: pendingPrompt });
       pendingPrompt = null;
     }
@@ -95,5 +107,9 @@
     close: close,
     /** Fournit un contexte personnalisé : fn() => ({ title, text }) */
     setContext: function (fn) { getContext = fn; if (ready) post({ type: "spc:context", context: pageContext() }); },
+    /** Profil local d'affichage : fn() => ({ email, name, role }) ou null à la déconnexion. */
+    setUser: function (fn) { getUser = fn; if (ready) shareUser(); },
+    /** À appeler après un changement de page ou de compte sur le site hôte. */
+    refresh: function () { if (ready) { post({ type: "spc:context", context: pageContext() }); shareUser(); } },
   };
 })();
