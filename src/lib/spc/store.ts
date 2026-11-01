@@ -34,6 +34,7 @@ function write(key: string, value: unknown) {
   if (!isBrowser()) return;
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
+    window.dispatchEvent(new Event("spc:store-changed"));
   } catch {
     /* quota exceeded - ignore */
   }
@@ -68,6 +69,12 @@ export function signIn(email: string, role: SpaceId): SpcUser {
 export function signOut() {
   if (!isBrowser()) return;
   window.localStorage.removeItem(KEYS.user);
+  window.dispatchEvent(new Event("spc:store-changed"));
+}
+
+/** Profil local uniquement : ce n'est pas une authentification ni une attribution de droits. */
+export function setLocalUser(user: SpcUser) {
+  write(KEYS.user, user);
 }
 
 /* ---------------- Quota visiteur anonyme ---------------- */
@@ -86,7 +93,9 @@ export function consumeAnonQuota() {
   write(KEYS.quota, { day: today(), used: used + 1 } satisfies Quota);
 }
 
-/* ---------------- Quota utilisateur connecté (fenêtre glissante de 3 h) ---------------- */
+/* ---------------- Quota utilisateur connecté (fenêtre glissante de 3 h) ----------------
+   La fenêtre démarre au premier envoi : 6 messages max pendant 3 h, puis
+   le compteur se renouvelle automatiquement 3 h après le premier envoi. */
 
 type UserQuota = { userId: string; used: number; windowStart: number };
 
@@ -94,7 +103,9 @@ export type UserQuotaState = {
   used: number;
   left: number;
   max: number;
+  /** Début de la fenêtre courante (0 = aucune fenêtre active). */
   windowStart: number;
+  /** Fin de la fenêtre courante (0 = aucune limite active). */
   blockedUntil: number;
   blocked: boolean;
 };
@@ -104,6 +115,7 @@ export function getUserQuota(userId: string): UserQuotaState {
   const now = Date.now();
   const sameUser = raw.userId === userId;
   const windowEnd = raw.windowStart + USER_COOLDOWN_MS;
+  /* Fenêtre expirée (ou d'un autre compte) : compteur remis à zéro */
   const expired = !sameUser || raw.windowStart <= 0 || now >= windowEnd;
   const used = expired ? 0 : raw.used;
   const windowStart = expired ? 0 : raw.windowStart;
@@ -123,6 +135,7 @@ export function consumeUserQuota(userId: string): UserQuotaState {
   if (current.blocked) return current;
   const now = Date.now();
   const raw = read<UserQuota>(KEYS.userQuota, { userId, used: 0, windowStart: 0 });
+  /* Premier envoi de la fenêtre : on démarre le compte des 3 h maintenant */
   const windowStart = current.used === 0 ? now : raw.windowStart;
   write(KEYS.userQuota, { userId, used: current.used + 1, windowStart });
   return getUserQuota(userId);

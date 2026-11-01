@@ -51,6 +51,25 @@ export function useSpcChat(conversationId?: string) {
     setReady(true);
   }, []);
 
+  /* Le widget et le chat principal relisent le même stockage local. */
+  useEffect(() => {
+    const sync = () => {
+      const currentUser = getUser();
+      setUser(currentUser);
+      setConversations(loadConversations(currentUser?.id ?? "anonymous"));
+      setQuota(getAnonQuota());
+      setUserQuota(currentUser ? getUserQuota(currentUser.id) : null);
+    };
+    window.addEventListener("storage", sync);
+    window.addEventListener("spc:store-changed", sync);
+    window.addEventListener("focus", sync);
+    return () => {
+      window.removeEventListener("storage", sync);
+      window.removeEventListener("spc:store-changed", sync);
+      window.removeEventListener("focus", sync);
+    };
+  }, []);
+
   /* Rafraîchit l'état de la pause pour lever le blocage à son expiration */
   useEffect(() => {
     if (!user || !userQuota?.blocked) return;
