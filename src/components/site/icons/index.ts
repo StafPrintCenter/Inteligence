@@ -3,3 +3,4 @@ export { InstagramIcon } from "./InstagramIcon";
 export { WhatsAppIcon } from "./WhatsAppIcon";
 export { LinkedinIcon } from "./LinkedinIcon";
 export { XIcon } from "./XIcon";
+export { TiktokIcon } from "./TiktokIcon";

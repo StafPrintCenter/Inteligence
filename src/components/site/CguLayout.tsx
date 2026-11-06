@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SpcDeskLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
-import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon } from "@/components/site/icons";
+import { FacebookIcon, InstagramIcon, LinkedinIcon, XIcon, WhatsAppIcon, TiktokIcon } from "@/components/site/icons";
 import { SITE, SITE_LINK } from "@/data/site";
 
 interface CguLayoutProps {
@@ -19,6 +19,7 @@ export function CguLayout({ children }: CguLayoutProps) {
     { label: "Instagram", href: SITE.socials.instagram, Icon: InstagramIcon },
     { label: "X", href: SITE.socials.x, Icon: XIcon },
     { label: "WhatsApp", href: SITE.whatsappLink, Icon: WhatsAppIcon },
+    { label: "TikTok", href: SITE.socials.tiktok, Icon: TiktokIcon },
   ];
 
   return (

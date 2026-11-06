@@ -16,6 +16,7 @@ export const SITE = {
     instagram: "https://www.instagram.com/stafprintcenter/",
     linkedin: "https://linkedin.com/company/stafprintcenter",
     x: "https://x.com/stafprintcenter",
+    tiktok: "https://www.tiktok.com/@stafprintcenter",
   },
   opinion: {
     nb: "120+",
