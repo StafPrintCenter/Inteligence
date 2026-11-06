@@ -10,7 +10,7 @@
   var getUser = null;
 
   var css =
-    "#spc-w-btn{position:fixed;bottom:20px;" + position + ":20px;z-index:2147483646;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#0b5cad;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s}" +
+    "#spc-w-btn{position:fixed;bottom:20px;" + position + ":20px;z-index:2147483646;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#fff;color:#0b5cad;outline:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s}" +
     "#spc-w-btn:hover{transform:scale(1.06)}" +
     "#spc-w-panel{position:fixed;top:0;" + position + ":0;z-index:2147483647;width:400px;max-width:100vw;height:100vh;height:100dvh;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.25);transform:translateX(" + (position === "right" ? "100%" : "-100%") + ");transition:transform .25s ease}" +
     "#spc-w-panel.spc-open{transform:none}" +
