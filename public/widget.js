@@ -24,7 +24,7 @@
   btn.type = "button";
   btn.setAttribute("aria-label", "Ouvrir SPC Intelligence");
   btn.innerHTML =
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+    '<img src="https://cdn.jsdelivr.net/gh/stafprintcenter/Files/Images/Logos/DOCS-MC.png" alt="" width="34" height="34" style="width:34px;height:34px;object-fit:contain;pointer-events:none">';
 
   var panel = document.createElement("div");
   panel.id = "spc-w-panel";
