@@ -64,7 +64,7 @@
       frame = document.createElement("iframe");
       frame.src = origin + "/embed?app=" + encodeURIComponent(app);
       frame.title = "SPC Intelligence";
-      frame.allow = "clipboard-write";
+      frame.allow = "clipboard-write; microphone";
       panel.appendChild(frame);
     } else {
       post({ type: "spc:context", context: pageContext() });

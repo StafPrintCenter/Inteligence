@@ -1,4 +1,5 @@
-import { Paperclip, SendHorizonal } from "lucide-react";
+import { Mic, Paperclip, SendHorizonal, Square } from "lucide-react";
+import { toast } from "sonner";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AttachmentTray, STATUS_LABEL, CommandMenu } from "./";
 import { usePreview } from "@/components/site/Preview/Context";
@@ -7,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { detectToken, SPC_COMMANDS } from "@/lib/spc/commands";
 import { extractAttachmentText } from "@/lib/spc/extract";
 import { uid } from "@/lib/spc/store";
+import { useSpeechRecognition } from "@/lib/spc/voice";
 import type { SpcAttachment } from "@/lib/spc/types";
 import { SITE } from "@/data/site";
 
@@ -68,6 +70,28 @@ export function ComposerBlock({
   const [highlight, setHighlight] = useState(0);
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const baseRef = useRef("");
+
+  /* Dictée vocale : le texte s'ajoute en direct, l'utilisateur valide l'envoi */
+  const voice = useSpeechRecognition((finals, interim) => {
+    const base = baseRef.current;
+    const spoken = (finals + interim).trim();
+    const next = spoken ? (base ? `${base} ${spoken}` : spoken) : base;
+    setText(next);
+    setCaret(next.length);
+  });
+  useEffect(() => {
+    if (voice.error) toast.error(voice.error);
+  }, [voice.error]);
+  const toggleMic = () => {
+    if (voice.listening) {
+      voice.stop();
+      requestAnimationFrame(() => areaRef.current?.focus());
+      return;
+    }
+    baseRef.current = text.trimEnd();
+    voice.start();
+  };
 
   /* Pré-remplissage depuis le lien (?prompt=…) ou une suggestion */
   useEffect(() => {
@@ -154,6 +178,7 @@ export function ComposerBlock({
   const submit = () => {
     const value = text.trim();
     if ((!value && files.length === 0) || disabled) return;
+    if (voice.listening) voice.stop();
     onSend(value || "Analyse les fichiers joints.", files);
     setText("");
     setFiles([]);
@@ -242,6 +267,20 @@ export function ComposerBlock({
                 : "spc-scroll max-h-60 flex-1 resize-none bg-transparent py-2 text-sm outline-none"
             }
           />
+          {voice.supported && (
+            <Button
+              type="button"
+              size="icon"
+              variant={voice.listening ? "destructive" : "ghost"}
+              aria-label={voice.listening ? "Arrêter la dictée" : "Dicter un message"}
+              title={voice.listening ? "Arrêter la dictée" : "Dicter un message"}
+              aria-pressed={voice.listening}
+              className={voice.listening ? "animate-pulse" : undefined}
+              onClick={toggleMic}
+            >
+              {voice.listening ? <Square className="size-4" /> : <Mic className="size-4" />}
+            </Button>
+          )}
           <Button
             type="button"
             size="icon"
@@ -254,7 +293,9 @@ export function ComposerBlock({
         </div>
 
         <p className="px-2 pb-1 text-[0.7rem] text-muted-foreground">
-          {quotaLabel ?? "Glissez-déposez vos fichiers (images, PDF, texte) pour les analyser."}
+          {voice.listening
+            ? "Écoute en cours… parlez, puis recliquez sur le micro. Vous validerez l'envoi."
+            : quotaLabel ?? "Glissez-déposez vos fichiers (images, PDF, texte) pour les analyser."}
         </p>
       </div>
 

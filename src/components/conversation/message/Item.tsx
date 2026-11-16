@@ -1,4 +1,4 @@
-import { Download, ExternalLink, Eye, Lightbulb, Mail, MessageCircle, Phone, RotateCcw, Share2 } from "lucide-react";
+import { Download, ExternalLink, Eye, Lightbulb, Mail, MessageCircle, Phone, RotateCcw, Share2, Square, Volume2 } from "lucide-react";
 import { useMemo } from "react";
 import { CopyButton, SpcMobLogo } from "@/components/site";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { usePreview } from "@/components/site/Preview/Context";
 import { ReasoningPanel, Markdown } from "@/components/action";
 import { decodeDataUrlText } from "@/lib/spc/dataurl";
 import { useTypewriter } from "@/lib/spc/useTypewriter";
+import { useSpeechSynthesis } from "@/lib/spc/voice";
 import type { SpcAttachment, SpcMessage } from "@/lib/spc/types";
 
 const ACTION_ICON = { whatsapp: MessageCircle, mail: Mail, phone: Phone, link: ExternalLink };
@@ -180,6 +181,7 @@ export function MessageItem({
         </div>
         <div className="mt-1 flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
           <CopyButton value={isUser ? message.content : stripSuggestions(message.content)} />
+          {!isUser && <ListenButton id={message.id} text={message.content} />}
           {onRetry && (
             <button
               type="button"
@@ -205,5 +207,22 @@ export function MessageItem({
         </div>
       </div>
     </div>
+  );
+}
+
+function ListenButton({ id, text }: { id: string; text: string }) {
+  const tts = useSpeechSynthesis(id);
+  if (!tts.supported || !text.trim()) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => (tts.speaking ? tts.stop() : tts.speak(text))}
+      aria-label={tts.speaking ? "Arrêter la lecture" : "Écouter la réponse"}
+      title={tts.speaking ? "Arrêter" : "Écouter"}
+      className="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+    >
+      {tts.speaking ? <Square className="size-3.5" /> : <Volume2 className="size-3.5" />}
+      {tts.speaking ? "Arrêter" : "Écouter"}
+    </button>
   );
 }
