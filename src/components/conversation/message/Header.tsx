@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { AudioLines, Info, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
+import { AudioLines, Info, Loader2, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Theme } from "@/lib/spc/store";
 import { SPACE_LABELS, type SpcUser } from "@/lib/spc/types";
@@ -14,6 +14,7 @@ export function ChatHeader({
   onToggleTheme,
   onDetails,
   onShare,
+  onLive,
 }: {
   title: string;
   user: SpcUser | null;
