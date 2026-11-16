@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Info, Loader2, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
+import { AudioLines, Info, LogIn, Moon, PanelLeft, Share2, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Theme } from "@/lib/spc/store";
 import { SPACE_LABELS, type SpcUser } from "@/lib/spc/types";
@@ -23,6 +23,7 @@ export function ChatHeader({
   onToggleTheme: () => void;
   onDetails: () => void;
   onShare: () => void | Promise<void>;
+  onLive?: () => void;
 }) {
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -53,6 +54,12 @@ export function ChatHeader({
           {user ? SPACE_LABELS[user.role] : SPACE_LABELS.public}
         </p>
       </div>
+
+      {onLive && (
+        <Button size="sm" variant="outline" aria-label="Lancer le mode Live" onClick={onLive}>
+          <AudioLines className="size-4" /> <span className="hidden sm:inline">Live</span>
+        </Button>
+      )}
 
       <Button
         size="icon"

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChatHeader, MessageList, SignInGateDialog, WelcomeScreen, ComposerBlock } from "@/components/conversation";
 import { NoticeDialog, ShareDialog, ChatSidebar, DetailsPanel } from "@/components/site";
+import { LiveMode } from "@/components/spc/live/LiveMode";
 import { acceptNotice } from "@/lib/spc/store";
 import { useSpcChat } from "@/lib/spc/useSpcChat";
 import { SITE } from "@/data/site";
@@ -8,6 +9,7 @@ import { SITE } from "@/data/site";
 export function ChatApp({ conversationId }: { conversationId?: string }) {
   const chat = useSpcChat(conversationId);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [live, setLive] = useState(false);
   const [prefill, setPrefill] = useState<{ text: string; n: number } | undefined>(undefined);
 
   useEffect(() => {
@@ -102,6 +104,14 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           conversation={chat.active}
           open={chat.detailsOpen}
           onOpenChange={chat.setDetailsOpen}
+        />
+      )}
+      {live && (
+        <LiveMode
+          messages={chat.active?.messages ?? []}
+          loading={chat.loading}
+          onSend={(t) => void chat.handleSend(t, [])}
+          onClose={() => setLive(false)}
         />
       )}
       <ShareDialog
