@@ -35,6 +35,9 @@ const LABEL: Record<Phase, string> = {
   error: "Micro indisponible",
 };
 
+const norm = (t: string) =>
+  t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
+
 export function LiveMode({
   messages,
   loading,
@@ -60,8 +63,11 @@ export function LiveMode({
   const recRef = useRef<Rec | null>(null);
   const vadRef = useRef<Vad | null>(null);
   const alive = useRef(true);
+  const utterances = useRef<SpeechSynthesisUtterance[]>([]);
   const sendRef = useRef(onSend);
   sendRef.current = onSend;
+  const speakStart = useRef(0);
+  const spokenText = useRef("");
   const lastSpokenId = useRef<string | null>(messages.at(-1)?.id ?? null);
 
   const set = useCallback((p: Phase) => {
@@ -108,8 +114,20 @@ export function LiveMode({
       rec.interimResults = true;
       rec.onresult = (e) => {
         const p = phaseRef.current;
-        // Pendant que l'IA parle ou réfléchit, on ignore (évite d'entendre sa propre voix).
-        if (p === "speaking" || p === "thinking" || p === "muted") return;
+        if (p === "thinking" || p === "muted") return;
+        if (p === "speaking") {
+          // Barge-in seulement si de vrais mots, absents de la réponse lue, sont reconnus
+          // (le micro capte aussi la voix de l'IA : l'énergie seule ne suffit pas).
+          if (performance.now() - speakStart.current < 1200) return;
+          let heard = "";
+          for (let i = e.resultIndex; i < e.results.length; i++) heard += " " + (e.results[i]?.[0].transcript ?? "");
+          const spoken = norm(spokenText.current);
+          const own = norm(heard).split(" ").filter((w) => w.length > 2 && !spoken.includes(w));
+          if (own.length < 2 || performance.now() - voiceSince.current < BARGE_MS || !voiceSince.current) return;
+          window.speechSynthesis.cancel();
+          resetTranscript();
+          set("hearing");
+        }
         let it = "";
         for (let i = e.resultIndex; i < e.results.length; i++) {
           const r = e.results[i];
@@ -148,12 +166,6 @@ export function LiveMode({
         if (voice) {
           lastVoice.current = now;
           if (!voiceSince.current) voiceSince.current = now;
-          // Barge-in : l'utilisateur coupe la parole à l'IA.
-          if (p === "speaking" && now - voiceSince.current > BARGE_MS) {
-            window.speechSynthesis.cancel();
-            resetTranscript();
-            set("hearing");
-          }
         } else {
           voiceSince.current = 0;
         }
@@ -195,15 +207,23 @@ export function LiveMode({
     }
     const synth = window.speechSynthesis;
     synth.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "fr-FR";
-    const voice = synth.getVoices().find((v) => v.lang.toLowerCase().startsWith("fr"));
-    if (voice) u.voice = voice;
-    u.onend = u.onerror = () => {
-      if (phaseRef.current === "speaking") set("listening");
-    };
+    spokenText.current = text;
+    speakStart.current = performance.now();
     set("speaking");
-    synth.speak(u);
+    // Phrases courtes en file : Chrome coupe les longues lectures et perd les énoncés non référencés.
+    const chunks = text.match(/[^.!?…]+[.!?…]*/g)?.map((c) => c.trim()).filter(Boolean) ?? [text];
+    const voice = synth.getVoices().find((v) => v.lang.toLowerCase().startsWith("fr"));
+    utterances.current = chunks.map((c, i) => {
+      const u = new SpeechSynthesisUtterance(c);
+      u.lang = "fr-FR";
+      if (voice) u.voice = voice;
+      if (i === chunks.length - 1)
+        u.onend = () => {
+          if (phaseRef.current === "speaking") set("listening");
+        };
+      return u;
+    });
+    utterances.current.forEach((u) => synth.speak(u));
   }, [messages, loading, set]);
 
   const toggleMute = () => {
