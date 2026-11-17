@@ -58,6 +58,7 @@ export function ChatApp({ conversationId }: { conversationId?: string }) {
           onToggleTheme={chat.toggleTheme}
           onDetails={() => chat.setDetailsOpen(true)}
           onShare={() => chat.openShare()}
+          onLive={() => (chat.blocked ? undefined : setLive(true))}
         />
 
         <main className="spc-scroll flex-1 overflow-y-auto">
